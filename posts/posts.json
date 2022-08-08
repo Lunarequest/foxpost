@@ -1,0 +1,10 @@
+{
+"posts": [
+{
+	"title": "Archlinux with secureboot on a nvidia machine",
+	"date": "2022-03-26T19",
+	"tags": ["arch", "linux","secureboot", "nvidia"],
+	"draft": "false"
+}
+]
+}
