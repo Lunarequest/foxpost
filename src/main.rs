@@ -15,6 +15,13 @@ fn index() -> Template {
 async fn assets(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("assets").join(file)).await.ok()
 }
+#[get("/assets/css/<file>")]
+async fn css(file: PathBuf) -> Option<NamedFile> {
+    NamedFile::open(Path::new("assets/css").join(file))
+        .await
+        .ok()
+}
+
 #[get("/favicon.ico")]
 async fn favicon() -> Option<NamedFile> {
     NamedFile::open(Path::new("assets/favicon.ico")).await.ok()
@@ -23,7 +30,7 @@ async fn favicon() -> Option<NamedFile> {
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        .mount("/", routes![index, assets, favicon])
+        .mount("/", routes![index, assets, favicon, css])
         .attach(Template::fairing())
         .attach(stage())
 }
