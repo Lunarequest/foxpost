@@ -11,3 +11,5 @@ rocket_dyn_templates = {version="0.1.0-rc.2", features=["tera"]}
 pulldown-cmark = "0.9.2"
 syntect = "5.0.0"
 glob = "0.3.0"
+markdown-parser = "0.1.2"
+markdown = "0.3.0"

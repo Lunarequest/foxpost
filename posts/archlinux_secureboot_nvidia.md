@@ -1,7 +1,7 @@
 ---
 title: "Archlinux with secureboot on a nvidia machine"
 date: 2022-03-26T19:12:17+05:30
-tags: ['arch', 'linux','secureboot', 'nvidia']
+tags: ["arch", "linux","secureboot", "nvidia"]
 draft: false
 ---
 
