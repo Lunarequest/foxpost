@@ -1,4 +1,3 @@
-use markdown;
 use markdown_parser::read_file;
 use rocket_dyn_templates::{context, Template};
 
