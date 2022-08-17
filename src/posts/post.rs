@@ -1,15 +1,9 @@
 use markdown_parser::read_file;
-use rocket_dyn_templates::{context, Template};
+use rocket::serde::json::serde_json::{json,Value};
 
 #[get("/<id>")]
-pub fn render_post(id: String) -> Template {
+pub fn render_post(id: String) -> Value {
     let md = read_file(format!("posts/{id}.md")).expect("");
     let content = md.content();
-    let html: String = markdown::to_html(content);
-    Template::render(
-        "post",
-        context! {
-            html: html
-        },
-    )
+    json!({content:content})
 }
