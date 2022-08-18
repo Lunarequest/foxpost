@@ -1,10 +1,12 @@
 #[macro_use]
 extern crate rocket;
-use posts::stage;
+#[macro_use]
+extern crate diesel;
+mod auth;
 mod posts;
+mod schema;
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build()
-        .attach(stage())
+    rocket::build().attach(posts::stage()).attach(auth::stage())
 }
