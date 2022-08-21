@@ -1,4 +1,7 @@
-use argon2::{Argon2, PasswordHash, PasswordHasher, PasswordVerifier};
+use argon2::{
+    password_hash::{rand_core::OsRng, PasswordHash, PasswordHasher, PasswordVerifier, SaltString},
+    Argon2,
+};
 use diesel::{Insertable, Queryable};
 
 #[derive(Queryable, Debug)]
@@ -7,15 +10,16 @@ pub struct User {
     pub username: String,
     pub email: String,
     pub passwd: String,
+    pub salt: String,
 }
 
-//FIXME: fix this weird jank
 #[derive(Insertable, Clone, Debug)]
 #[table_name = "users"]
 pub struct NewUser {
     pub username: String,
     pub email: String,
     pub passwd: String,
+    pub salt: String,
 }
 
 impl NewUser {
@@ -25,12 +29,13 @@ impl NewUser {
         email: String,
         passwd1: String,
         passwd2: String,
+        salt: &[u8],
     ) -> Result<NewUser, &'static str> {
         if passwd1 != passwd2 {
             return Err("passwords do not match");
         }
         let password = passwd1.as_bytes();
-        let salt = "";
+        let salt = SaltString::generate(&mut OsRng);
         let argon2 = Argon2::default();
         let password_hash = argon2.hash_password(password, &salt);
         match password_hash {
@@ -44,6 +49,7 @@ impl NewUser {
         }
         self.email = email;
         self.username = username;
+        self.salt = salt.to_string();
         return Ok(self.to_owned());
     }
 }

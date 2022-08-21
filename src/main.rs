@@ -5,6 +5,7 @@ extern crate diesel;
 mod auth;
 mod posts;
 mod schema;
+mod db;
 
 #[launch]
 fn rocket() -> _ {

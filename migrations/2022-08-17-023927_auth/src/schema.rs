@@ -4,6 +4,6 @@ table! {
         username -> Varchar,
         email -> Varchar,
         passwd -> Varchar,
-        salt -> Text,
+        salt -> Bytea,
     }
 }
