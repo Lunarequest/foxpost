@@ -3,6 +3,7 @@ use argon2::{
     Argon2,
 };
 use diesel::{Insertable, Queryable};
+use crate::schema::users;
 
 #[derive(Queryable, Debug)]
 pub struct User {
@@ -28,8 +29,6 @@ impl NewUser {
         username: String,
         email: String,
         passwd1: String,
-        passwd2: String,
-        salt: &[u8],
     ) -> Result<NewUser, &'static str> {
         if passwd1 != passwd2 {
             return Err("passwords do not match");
