@@ -12,3 +12,4 @@ diesel = {version="*",features = ["postgres"]}
 argon2 = { version = "0.4.1", features = ["parallel"] }
 markdown-parser = "0.1.2"
 serde = { version = "1.0.144", features = ["derive"] }
+chrono = "0.4.22"

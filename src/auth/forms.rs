@@ -1,4 +1,4 @@
-use rocket::serde::Deserialize;
+use rocket::serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SignUp {
@@ -12,4 +12,11 @@ pub struct SignUp {
 pub struct Login {
     pub username: String,
     pub passwd: String,
+}
+
+#[derive(Debug,Clone,Serialize)]
+pub struct  Session {
+    pub authkey: String,
+    pub user: String,
+    pub timestamp: i64
 }
