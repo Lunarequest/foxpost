@@ -3,9 +3,9 @@ extern crate rocket;
 #[macro_use]
 extern crate diesel;
 mod auth;
+mod db;
 mod posts;
 mod schema;
-mod db;
 
 #[launch]
 fn rocket() -> _ {

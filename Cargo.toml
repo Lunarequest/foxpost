@@ -11,3 +11,4 @@ rocket_sync_db_pools = {version="0.1.0-rc.2",features=["diesel_postgres_pool"]}
 diesel = {version="*",features = ["postgres"]}
 argon2 = { version = "0.4.1", features = ["parallel"] }
 markdown-parser = "0.1.2"
+serde = { version = "1.0.144", features = ["derive"] }
