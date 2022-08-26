@@ -1,8 +1,11 @@
 use rocket::fairing::AdHoc;
+use routes::{login, signup};
 mod database;
+mod forms;
+mod routes;
 
 pub fn stage() -> AdHoc {
-    AdHoc::on_ignite("Posts", |rocket| async {
-        rocket.mount("/posts/", routes![])
+    AdHoc::on_ignite("Users", |rocket| async {
+        rocket.mount("/users/", routes![signup, login])
     })
 }
