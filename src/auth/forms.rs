@@ -14,9 +14,9 @@ pub struct Login {
     pub passwd: String,
 }
 
-#[derive(Debug,Clone,Serialize)]
-pub struct  Session {
+#[derive(Debug, Clone, Serialize)]
+pub struct Session {
     pub authkey: String,
     pub user: String,
-    pub timestamp: i64
+    pub timestamp: i64,
 }

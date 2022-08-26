@@ -1,13 +1,16 @@
 use super::{
     database::{NewUser, User},
-    forms::{Login, SignUp, Session},
+    forms::{Login, Session, SignUp},
 };
 use crate::{
     db,
     schema::{users, users::dsl::*},
 };
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
-use rocket::{serde::json::{json, Json, Value}, http::{Cookie, SameSite, CookieJar}};
+use rocket::{
+    http::{Cookie, CookieJar, SameSite},
+    serde::json::{json, Json, Value},
+};
 
 fn now() -> i64 {
     chrono::Utc::now().timestamp()
@@ -36,14 +39,16 @@ pub async fn signup(db: db::BlogDBConn, signup: Json<SignUp>) -> Result<Value, &
 }
 
 #[post("/login", data = "<login>")]
-pub async fn login(jar:&CookieJar<'_>, db: db::BlogDBConn, login: Json<Login>) -> Result<Value, &'static str> {
+pub async fn login(
+    jar: &CookieJar<'_>,
+    db: db::BlogDBConn,
+    login: Json<Login>,
+) -> Result<Value, &'static str> {
     let login_value = login.clone();
     match db
         .run(move |conn| {
             users::table
-                .filter(
-                    users::username.eq(login_value.username.clone())
-            )
+                .filter(users::username.eq(login_value.username.clone()))
                 .first::<User>(conn)
         })
         .await
@@ -55,17 +60,17 @@ pub async fn login(jar:&CookieJar<'_>, db: db::BlogDBConn, login: Json<Login>) -
                 let session = Session {
                     authkey: user.id.to_string(),
                     user: user.username,
-                    timestamp: now()
+                    timestamp: now(),
                 };
-                let to_str = format!("{}",json!(session));
-                let cookie= Cookie::build("user", to_str)
-                .path("/")
-                .same_site(SameSite::Strict)
-                .finish();
+                let to_str = format!("{}", json!(session));
+                let cookie = Cookie::build("user", to_str)
+                    .path("/")
+                    .same_site(SameSite::Strict)
+                    .finish();
 
                 jar.add_private(cookie);
                 Ok(json!(session))
-            },
+            }
         },
     }
 }
