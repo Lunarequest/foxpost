@@ -11,8 +11,7 @@ jobs:
   release:
     name: Release Packaging
     env:
-      PROJECT_NAME_UNDERSCORE: rust_ci_github_actions_workflow
-    runs-on: ubuntu-latest
+      PROJECT_NAME_UNDERSCORE: blog
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
