@@ -45,7 +45,7 @@ impl NewUser {
             Err(e) => {
                 eprintln!("{e}");
                 Err("unable to hash password")
-            },
+            }
             Ok(passwd) => {
                 let user = NewUser {
                     username,

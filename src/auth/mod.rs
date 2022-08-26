@@ -6,6 +6,6 @@ mod routes;
 
 pub fn stage() -> AdHoc {
     AdHoc::on_ignite("Users", |rocket| async {
-        rocket.mount("/users/", routes![signup, login])
+        rocket.mount("/api/users/", routes![signup, login])
     })
 }
