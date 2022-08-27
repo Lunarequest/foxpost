@@ -1,8 +1,7 @@
 use rocket::fairing::AdHoc;
-mod json;
-mod post;
-use json::posts;
-use post::render_post;
+use routes::{posts,render_post};
+mod routes;
+mod database;
 
 pub fn stage() -> AdHoc {
     AdHoc::on_ignite("Posts", |rocket| async {
