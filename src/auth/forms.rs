@@ -1,9 +1,13 @@
-use super::database::User;
 use rocket::{
     request::{FromRequest, Outcome},
     serde::{Deserialize, Serialize},
-    Error, Request,
+    Request, http::Status,
 };
+use serde_json;
+
+pub fn now() -> i64 {
+    chrono::Utc::now().timestamp()
+}
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SignUp {
@@ -19,18 +23,32 @@ pub struct Login {
     pub passwd: String,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Session {
     pub authkey: String,
     pub user: String,
     pub timestamp: i64,
 }
 
-/* #[async_trait]
+#[async_trait]
 impl<'r> FromRequest<'r> for Session {
-    type Error = Error;
-    async fn from_request(req: &'r Request<'_>) -> Outcome<User, Error> {
-        Outcome::Success(Session)
+    type Error = &'static str;
+    async fn from_request(req: &'r Request<'_>) -> Outcome<Self, Self::Error> {
+        let cookies = req.cookies();
+        let session_str = match cookies.get_private("user") {
+            Some(cookie) => cookie.value().to_owned(),
+            None => return Outcome::Failure((Status::Forbidden, "You must be logged in to see this page"))
+        };
+
+        let session = match serde_json::from_str::<Session>(session_str.as_str()) {
+            Ok(sess) => sess,
+            Err(_) => return Outcome::Forward(())
+        };
+        
+        if now()-session.timestamp>43200 {
+            return Outcome::Failure((Status::Forbidden, "Session has timed out"))
+        }
+        rocket::outcome::Outcome::Success(session)
+
     }
 }
- */
