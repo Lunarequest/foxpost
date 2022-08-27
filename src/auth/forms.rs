@@ -4,7 +4,6 @@ use rocket::{
     serde::{Deserialize, Serialize},
     Request,
 };
-use serde_json;
 
 pub fn now() -> i64 {
     chrono::Utc::now().timestamp()
