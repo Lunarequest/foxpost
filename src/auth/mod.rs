@@ -1,7 +1,7 @@
 use rocket::fairing::AdHoc;
 use routes::{login, logout, signup};
 mod database;
-mod forms;
+pub mod forms;
 mod routes;
 
 pub fn stage() -> AdHoc {

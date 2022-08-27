@@ -1,8 +1,13 @@
+use super::database::{NewPost, Post};
+use crate::auth::forms::Session;
+use crate::db::BlogDBConn;
+use crate::diesel::RunQueryDsl;
+use crate::schema::posts as Posts;
 use markdown_parser::read_file;
 use rocket::{
-    serde::json::serde_json::{json, Value},
     fs::NamedFile,
-    response::content::RawJson
+    response::content::RawJson,
+    serde::json::{json, Json, Value},
 };
 
 #[get("/<id>")]
@@ -18,4 +23,36 @@ pub async fn posts() -> RawJson<NamedFile> {
         .await
         .expect("unable to open file");
     RawJson(file)
+}
+
+#[post("/new", data = "<post>")]
+pub async fn new_post(
+    db: BlogDBConn,
+    sess: Session,
+    post: Json<NewPost>,
+) -> Result<(), RawJson<&'static str>> {
+    if !sess.isadmin {
+        let errors = "{\"errors\":\"you musted be logged in as an admin\"}";
+        Err(RawJson(errors))
+    } else {
+        let post_value = post.clone();
+        let post = Post::new(
+            post_value.title.clone(),
+            post_value.description.clone(),
+            post_value.content.clone(),
+            post_value.draft,
+            sess.user,
+        );
+        match db
+            .run(move |conn| {
+                diesel::insert_into(Posts::table)
+                    .values(&post)
+                    .execute(conn)
+            })
+            .await
+        {
+            Err(_) => Err(RawJson("{\"errors\":\"unable to inster into db\"}")),
+            Ok(_) => Ok(()),
+        }
+    }
 }

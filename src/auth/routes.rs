@@ -56,6 +56,7 @@ pub async fn login(
                 let session = Session {
                     authkey: user.id.to_string(),
                     user: user.username,
+                    isadmin: user.isadmin,
                     timestamp: now(),
                 };
                 let to_str = format!("{}", json!(session));

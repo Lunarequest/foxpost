@@ -27,6 +27,7 @@ pub struct Login {
 pub struct Session {
     pub authkey: String,
     pub user: String,
+    pub isadmin: bool,
     pub timestamp: i64,
 }
 
