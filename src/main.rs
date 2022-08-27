@@ -9,5 +9,8 @@ mod schema;
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().attach(posts::stage()).attach(auth::stage())
+    rocket::build()
+        .attach(db::BlogDBConn::fairing())
+        .attach(posts::stage())
+        .attach(auth::stage())
 }

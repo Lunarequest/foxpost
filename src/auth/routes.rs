@@ -74,3 +74,8 @@ pub async fn login(
         },
     }
 }
+
+#[post("/logout")]
+pub async fn logout(jar: &CookieJar<'_>) {
+    jar.remove_private(Cookie::named("user"))
+}

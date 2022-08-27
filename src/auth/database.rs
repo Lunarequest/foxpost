@@ -12,6 +12,7 @@ pub struct User {
     pub id: i32,
     pub username: String,
     pub email: String,
+    pub isadmin: bool,
     #[serde(skip_deserializing)]
     pub passwd: String,
     #[serde(skip_deserializing)]
@@ -24,6 +25,7 @@ pub struct NewUser {
     pub username: String,
     pub email: String,
     pub passwd: String,
+    pub isadmin: bool,
     pub salt: String,
 }
 
@@ -50,6 +52,7 @@ impl NewUser {
                 let user = NewUser {
                     username,
                     email,
+                    isadmin: false,
                     passwd: passwd.to_string(),
                     salt: salt.to_string(),
                 };

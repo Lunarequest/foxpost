@@ -1,0 +1,2 @@
+[default.databases.blog]
+url="postgres://luna:luna@localhost/luna"

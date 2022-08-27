@@ -1,4 +1,9 @@
-use rocket::serde::{Deserialize, Serialize};
+use super::database::User;
+use rocket::{
+    request::{FromRequest, Outcome},
+    serde::{Deserialize, Serialize},
+    Error, Request,
+};
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct SignUp {
@@ -20,3 +25,12 @@ pub struct Session {
     pub user: String,
     pub timestamp: i64,
 }
+
+/* #[async_trait]
+impl<'r> FromRequest<'r> for Session {
+    type Error = Error;
+    async fn from_request(req: &'r Request<'_>) -> Outcome<User, Error> {
+        Outcome::Success(Session)
+    }
+}
+ */
