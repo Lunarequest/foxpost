@@ -1,7 +1,8 @@
 use rocket::{
+    http::Status,
     request::{FromRequest, Outcome},
     serde::{Deserialize, Serialize},
-    Request, http::Status,
+    Request,
 };
 use serde_json;
 
@@ -37,18 +38,22 @@ impl<'r> FromRequest<'r> for Session {
         let cookies = req.cookies();
         let session_str = match cookies.get_private("user") {
             Some(cookie) => cookie.value().to_owned(),
-            None => return Outcome::Failure((Status::Forbidden, "You must be logged in to see this page"))
+            None => {
+                return Outcome::Failure((
+                    Status::Forbidden,
+                    "You must be logged in to see this page",
+                ))
+            }
         };
 
         let session = match serde_json::from_str::<Session>(session_str.as_str()) {
             Ok(sess) => sess,
-            Err(_) => return Outcome::Forward(())
+            Err(_) => return Outcome::Forward(()),
         };
-        
-        if now()-session.timestamp>43200 {
-            return Outcome::Failure((Status::Forbidden, "Session has timed out"))
+
+        if now() - session.timestamp > 43200 {
+            return Outcome::Failure((Status::Forbidden, "Session has timed out"));
         }
         rocket::outcome::Outcome::Success(session)
-
     }
 }

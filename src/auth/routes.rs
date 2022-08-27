@@ -1,6 +1,6 @@
 use super::{
     database::{NewUser, User},
-    forms::{Login, Session, SignUp,now},
+    forms::{now, Login, Session, SignUp},
 };
 use crate::{
     db,
@@ -11,8 +11,6 @@ use rocket::{
     http::{Cookie, CookieJar, SameSite},
     serde::json::{json, Json, Value},
 };
-
-
 
 #[post("/signup", data = "<signup>")]
 pub async fn signup(db: db::BlogDBConn, signup: Json<SignUp>) -> Result<Value, &'static str> {
@@ -74,6 +72,6 @@ pub async fn login(
 }
 
 #[post("/logout")]
-pub async fn logout(jar: &CookieJar<'_>,_sess: Session) {
+pub async fn logout(jar: &CookieJar<'_>, _sess: Session) {
     jar.remove_private(Cookie::named("user"))
 }
