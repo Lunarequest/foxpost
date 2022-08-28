@@ -1,4 +1,4 @@
-use super::database::{NewPost, Post};
+use super::database::{NewPost, Post, UpdatePost};
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
@@ -55,5 +55,44 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             }
             Ok(_) => Ok(()),
         }
+    }
+}
+
+#[post("/<slug>/update", data = "<post>")]
+pub async fn update_post(
+    db: BlogDBConn,
+    sess: Session,
+    post: Json<UpdatePost>,
+    slug: String,
+) -> Result<(), Value> {
+    let posts: Post = match db
+        .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+        .await
+    {
+        Ok(post) => post,
+        Err(_e) => return Err(json!("missing post")),
+    };
+    if sess.user != posts.author || !sess.isadmin {
+        return Err(json!({"errors":"you can not edit a post you didn't create"}));
+    }
+    posts.clone().update(
+        post.title.clone(),
+        post.description.clone(),
+        post.content.clone(),
+    );
+    match db
+        .run(move |conn| {
+            diesel::insert_into(Posts::table)
+                .values(&posts.clone())
+                .execute(conn)
+        })
+        .await
+    {
+        Err(_) => {
+            return Err(
+                json!({"Errors":"a error occrued while trying to insert into the database"}),
+            );
+        }
+        Ok(_) => Ok(()),
     }
 }

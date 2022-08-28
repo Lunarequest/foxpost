@@ -13,6 +13,12 @@ pub struct Post {
     pub draft: bool,
     pub author: String,
 }
+#[derive(Debug, Clone, Deserialize)]
+pub struct UpdatePost {
+    pub title: Option<String>,
+    pub description: Option<String>,
+    pub content: Option<String>,
+}
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct NewPost {
