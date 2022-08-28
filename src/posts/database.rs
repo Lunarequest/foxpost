@@ -1,9 +1,10 @@
 use crate::schema::posts;
-use diesel::{Insertable, Queryable};
-use rocket::serde::Deserialize;
+use diesel::{Identifiable, Insertable, Queryable};
+use rocket::serde::{Deserialize, Serialize};
 use slug::slugify;
 
-#[derive(Debug, Clone, Queryable, Insertable)]
+#[derive(Debug, Clone, Queryable, Identifiable, Insertable, Serialize)]
+#[primary_key(slug)]
 pub struct Post {
     pub slug: String,
     pub title: String,

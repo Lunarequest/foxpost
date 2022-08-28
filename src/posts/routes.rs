@@ -1,20 +1,16 @@
 use super::database::{NewPost, Post};
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
-use crate::diesel::RunQueryDsl;
+use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
-use markdown_parser::read_file;
-use rocket::{
-    fs::NamedFile,
-    response::content::RawJson,
-    serde::json::{json, Json, Value},
-};
+use rocket::{fs::NamedFile, response::content::RawJson, serde::json::{Json,json, Value}};
 
-#[get("/<id>")]
-pub fn render_post(id: String) -> Value {
-    let md = read_file(format!("posts/{id}.md")).expect("");
-    let content = md.content();
-    json!({ content: content })
+#[get("/<slug>")]
+pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Json<Post>> {
+    db.run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+        .await
+        .map(Json)
+        .ok()
 }
 
 #[get("/json")]
@@ -30,10 +26,9 @@ pub async fn new_post(
     db: BlogDBConn,
     sess: Session,
     post: Json<NewPost>,
-) -> Result<(), RawJson<&'static str>> {
+) -> Result<(), Value> {
     if !sess.isadmin {
-        let errors = "{\"errors\":\"you musted be logged in as an admin\"}";
-        Err(RawJson(errors))
+        Err(json!({"errors":"you musted be logged in as an admin"}))
     } else {
         let post_value = post.clone();
         let post = Post::new(
@@ -51,7 +46,7 @@ pub async fn new_post(
             })
             .await
         {
-            Err(_) => Err(RawJson("{\"errors\":\"unable to inster into db\"}")),
+            Err(_) => Err(json!({"Errors":"a error occrued while trying to insert into the database"})),
             Ok(_) => Ok(()),
         }
     }

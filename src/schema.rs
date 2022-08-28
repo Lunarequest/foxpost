@@ -1,6 +1,6 @@
 table! {
     posts (slug) {
-        slug -> Text,
+        slug -> Varchar,
         title -> Varchar,
         description -> Nullable<Varchar>,
         content -> Nullable<Text>,
@@ -20,4 +20,7 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(posts, users,);
+allow_tables_to_appear_in_same_query!(
+    posts,
+    users,
+);
