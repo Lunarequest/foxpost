@@ -6,6 +6,7 @@ table! {
         content -> Nullable<Text>,
         draft -> Bool,
         author -> Varchar,
+        published -> Int8,
     }
 }
 

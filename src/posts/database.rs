@@ -3,6 +3,10 @@ use diesel::{Identifiable, Insertable, Queryable};
 use rocket::serde::{Deserialize, Serialize};
 use slug::slugify;
 
+pub fn now() -> i64 {
+    chrono::Utc::now().timestamp()
+}
+
 #[derive(Debug, Clone, Queryable, Identifiable, Insertable, Serialize)]
 #[primary_key(slug)]
 pub struct Post {
@@ -12,6 +16,7 @@ pub struct Post {
     pub content: Option<String>,
     pub draft: bool,
     pub author: String,
+    pub published: i64,
 }
 #[derive(Debug, Clone, Deserialize)]
 pub struct UpdatePost {
@@ -44,11 +49,13 @@ impl Post {
             content,
             draft,
             author,
+            published: now(),
         }
     }
 
     pub fn publish(mut self) {
         self.draft = false;
+        self.published = now();
     }
 
     pub fn update(
@@ -63,5 +70,6 @@ impl Post {
         };
         self.description = description;
         self.content = content;
+        self.published = now();
     }
 }
