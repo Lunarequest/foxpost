@@ -3,11 +3,7 @@ use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
-use rocket::{
-    fs::NamedFile,
-    response::content::RawJson,
-    serde::json::{json, Json, Value},
-};
+use rocket::serde::json::{json, Json, Value};
 
 #[get("/<slug>")]
 pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Json<Post>> {
@@ -18,11 +14,19 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Json<Post>> {
 }
 
 #[get("/json")]
-pub async fn posts() -> RawJson<NamedFile> {
-    let file = NamedFile::open("posts/posts.json")
+pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<Post>>, String> {
+    match db
+        .run(move |conn| {
+            Posts::table
+                .filter(Posts::draft.eq(true))
+                .limit(5)
+                .load::<Post>(conn)
+        })
         .await
-        .expect("unable to open file");
-    RawJson(file)
+    {
+        Ok(posts) => return Ok(Json(posts)),
+        Err(e) => return Err(format!("{e}")),
+    }
 }
 
 #[post("/new", data = "<post>")]
