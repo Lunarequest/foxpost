@@ -63,7 +63,7 @@ impl Post {
         title: Option<String>,
         description: Option<String>,
         content: Option<String>,
-    ) {
+    ) -> Self {
         match title {
             Some(title) => self.title = title,
             None => {}
@@ -71,5 +71,6 @@ impl Post {
         self.description = description;
         self.content = content;
         self.published = now();
+        return self;
     }
 }

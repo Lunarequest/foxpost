@@ -65,7 +65,7 @@ pub async fn update_post(
     post: Json<UpdatePost>,
     slug: String,
 ) -> Result<(), Value> {
-    let posts: Post = match db
+    let mut posts: Post = match db
         .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
         .await
     {
@@ -75,7 +75,7 @@ pub async fn update_post(
     if sess.user != posts.author || !sess.isadmin {
         return Err(json!({"errors":"you can not edit a post you didn't create"}));
     }
-    posts.clone().update(
+    posts = posts.clone().update(
         post.title.clone(),
         post.description.clone(),
         post.content.clone(),
@@ -83,7 +83,7 @@ pub async fn update_post(
     match db
         .run(move |conn| {
             diesel::insert_into(Posts::table)
-                .values(&posts.clone())
+                .values(&posts)
                 .execute(conn)
         })
         .await
