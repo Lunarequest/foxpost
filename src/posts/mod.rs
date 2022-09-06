@@ -1,6 +1,6 @@
 use rocket::fairing::AdHoc;
 use routes::{new_post, posts, render_post, update_post};
-mod database;
+pub mod database;
 mod routes;
 
 pub fn stage() -> AdHoc {

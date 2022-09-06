@@ -1,0 +1,12 @@
+{% extends "base" %}
+{% block content %}
+    <center>
+        <div class="posts">
+            {% if posts %}
+                <p>there are posts</p>
+            {% else %}
+                <p>there are no posts</p>
+            {% endif %}
+        </div>
+    </center>
+{% endblock content %}

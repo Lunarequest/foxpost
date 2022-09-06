@@ -24,8 +24,8 @@ pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<Post>>, String> {
         })
         .await
     {
-        Ok(posts) => return Ok(Json(posts)),
-        Err(e) => return Err(format!("{e}")),
+        Ok(posts) => Ok(Json(posts)),
+        Err(e) => Err(format!("{e}")),
     }
 }
 
@@ -88,11 +88,7 @@ pub async fn update_post(
         })
         .await
     {
-        Err(_) => {
-            return Err(
-                json!({"Errors":"a error occrued while trying to insert into the database"}),
-            );
-        }
+        Err(_) => Err(json!({"Errors":"a error occrued while trying to insert into the database"})),
         Ok(_) => Ok(()),
     }
 }

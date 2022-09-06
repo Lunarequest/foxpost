@@ -71,6 +71,6 @@ impl Post {
         self.description = description;
         self.content = content;
         self.published = now();
-        return self;
+        self
     }
 }

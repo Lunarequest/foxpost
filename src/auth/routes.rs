@@ -11,6 +11,12 @@ use rocket::{
     http::{Cookie, CookieJar, SameSite},
     serde::json::{json, Json, Value},
 };
+use rocket_dyn_templates::{context, Template};
+
+#[get("/signup")]
+pub async fn signup_page() -> Template {
+    return Template::render("signup", context! {title:"Sign Up"});
+}
 
 #[post("/signup", data = "<signup>")]
 pub async fn signup(db: db::BlogDBConn, signup: Json<SignUp>) -> Result<Value, &'static str> {
