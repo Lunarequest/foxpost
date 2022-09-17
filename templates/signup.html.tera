@@ -1,6 +1,7 @@
 {% extends "base" %}
 {% block meta %}
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
     .margin-all {
         margin-top: 5%;
@@ -14,7 +15,7 @@
 {% block content %}
 <center>
     <div class="h-100 p-5 margin-all border rounded-3">
-        <form>
+        <form method="post" id="reg" name="reg">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" id="username" name="username" class="form-control me-2"
@@ -36,11 +37,31 @@
             </div>
             <div class="mb-3">
                 <label for="passwd2" class="form-label">Confirm Password</label>
-                <input type="password" id="passwd2" class="form-control" aria-describedby="ConfirmPasswordHelp">
+                <input type="password" id="passwd2" name="passwd2" class="form-control"
+                    aria-describedby="ConfirmPasswordHelp">
                 <div id="ConfirmPasswordHelp" class="form-text">Confirm your password</div>
             </div>
+            <div class="h-captcha" data-sitekey="{{site_key}}"></div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </center>
+<script>
+    $("#reg").on('submit', function (e) {
+        e.preventDefault();
+        form = new FormData(document.getElementById("reg"));
+        json = Object.fromEntries(form.entries())
+        h_captcha_response = json["h-captcha-response"];
+        json["h_recaptcha_response"] = h_captcha_response;
+        delete h_captcha_response["h-captcha-response"]
+        $.post({
+            url: '/users/signup',
+            cache: false,
+            data: JSON.stringify(json),
+            success: function (json) {
+                alert("User has been created, please check your email for the account activation email")
+            }
+        })
+    })
+</script>
 {% endblock content %}

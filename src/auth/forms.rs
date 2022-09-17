@@ -1,3 +1,4 @@
+use hcaptcha::Hcaptcha;
 use rocket::{
     http::Status,
     request::{FromRequest, Outcome},
@@ -9,12 +10,14 @@ pub fn now() -> i64 {
     chrono::Utc::now().timestamp()
 }
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Hcaptcha)]
 pub struct SignUp {
     pub username: String,
     pub email: String,
     pub passwd1: String,
     pub passwd2: String,
+    #[captcha]
+    pub h_recaptcha_response: String,
 }
 
 #[derive(Debug, Clone, Deserialize)]

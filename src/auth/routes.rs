@@ -7,19 +7,39 @@ use crate::{
     schema::{users, users::dsl::*},
 };
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
+use hcaptcha::Hcaptcha;
 use rocket::{
     http::{Cookie, CookieJar, SameSite},
     serde::json::{json, Json, Value},
 };
 use rocket_dyn_templates::{context, Template};
 
+#[cfg(debug_assertions)]
+const SITE_KEY: &str = "20000000-ffff-ffff-ffff-000000000002";
+#[cfg(debug_assertions)]
+const SECRET_KEY: &str = "0x0000000000000000000000000000000000000000";
+#[cfg(not(debug_assertions))]
+const SITE_KEY: &str = std::env!("SITE_KEY");
+#[cfg(not(debug_assertions))]
+const SECRET_KEY: &str = std::env!("SECRET_KEY");
+
 #[get("/signup")]
 pub async fn signup_page() -> Template {
-    return Template::render("signup", context! {title:"Sign Up"});
+    return Template::render(
+        "signup",
+        context! {
+            title:"Sign Up",
+            site_key: SITE_KEY
+        },
+    );
 }
 
 #[post("/signup", data = "<signup>")]
 pub async fn signup(db: db::BlogDBConn, signup: Json<SignUp>) -> Result<Value, &'static str> {
+    match signup.valid_response(&SECRET_KEY, None).await {
+        Ok(resp) => resp,
+        Err(_e) => return Err("invalid captcha"),
+    };
     let new_user = NewUser::new(
         signup.username.clone(),
         signup.email.clone(),
