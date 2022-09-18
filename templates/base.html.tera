@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light dark">
         <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
-        <script src="/static/js/alpinejs" defer></script>
+        <script src="/static/js/alpine.js" defer></script>
         <title>{% block title %}{{ title }}{% endblock title %}</title>
         {% block meta %}
         {% endblock meta %}
