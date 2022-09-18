@@ -17,6 +17,7 @@ pub struct SignUp {
     pub passwd1: String,
     pub passwd2: String,
     #[captcha]
+    #[serde(rename(deserialize = "h-recaptcha-response"))]
     pub h_recaptcha_response: String,
 }
 

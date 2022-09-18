@@ -2,9 +2,16 @@
 extern crate rocket;
 #[macro_use]
 extern crate diesel;
+#[macro_use]
+extern crate diesel_migrations;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
+use diesel_migrations::embed_migrations;
 use posts::database::Post;
-use rocket::fs::{relative, NamedFile};
+use rocket::{
+    fairing::AdHoc,
+    fs::{relative, NamedFile},
+    Build, Rocket,
+};
 use rocket_dyn_templates::{context, Template};
 use schema::posts as Posts;
 use std::path::{Path, PathBuf};
@@ -68,12 +75,29 @@ async fn index(db: db::BlogDBConn) -> Template {
     )
 }
 
+async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
+    embed_migrations!("migrations");
+
+    let conn = db::BlogDBConn::get_one(&rocket)
+        .await
+        .expect("database connection");
+    conn.run(|c| embedded_migrations::run(c))
+        .await
+        .expect("diesel migrations");
+
+    rocket
+}
+
 #[launch]
 fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index, images, js, css])
         .attach(Template::fairing())
         .attach(db::BlogDBConn::fairing())
+        .attach(AdHoc::on_ignite(
+            "Diesel Migrations",
+            run_migrations_fairing,
+        ))
         .attach(posts::stage())
         .attach(auth::stage())
 }

@@ -25,15 +25,16 @@ const SECRET_KEY: &str = std::env!("SECRET_KEY");
 
 #[get("/signup")]
 pub async fn signup_page() -> Template {
-    return Template::render(
+    Template::render(
         "signup",
         context! {
             title:"Sign Up",
             site_key: SITE_KEY
         },
-    );
+    )
 }
 
+//TODO: better errors
 #[post("/signup", data = "<signup>")]
 pub async fn signup(db: db::BlogDBConn, signup: Json<SignUp>) -> Result<Value, &'static str> {
     match signup.valid_response(&SECRET_KEY, None).await {

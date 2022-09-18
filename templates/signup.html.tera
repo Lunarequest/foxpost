@@ -47,13 +47,11 @@
     </div>
 </center>
 <script>
+    //TODO: write js to authenticate forms
     $("#reg").on('submit', function (e) {
         e.preventDefault();
         form = new FormData(document.getElementById("reg"));
         json = Object.fromEntries(form.entries())
-        h_captcha_response = json["h-captcha-response"];
-        json["h_recaptcha_response"] = h_captcha_response;
-        delete h_captcha_response["h-captcha-response"]
         $.post({
             url: '/users/signup',
             cache: false,
