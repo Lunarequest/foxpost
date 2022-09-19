@@ -1,11 +1,12 @@
-use super::{
-    database::{NewUser, User},
-    forms::{now, Login, Session, SignUp},
-};
-use crate::{
-    db,
-    schema::{users, users::dsl::*},
-};
+use super::{database::{
+    NewUser,
+    User},
+    forms::{
+        SignUp,
+        now, Login, Session
+    }};
+use crate::schema::users::dsl::*;
+use crate::{db, schema::users};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use hcaptcha::Hcaptcha;
 use rocket::{
@@ -34,7 +35,7 @@ pub async fn signup_page() -> Template {
     )
 }
 
-//TODO: better errors
+//TODO: actually finish this
 #[post("/signup", data = "<signup>")]
 pub async fn signup(db: db::BlogDBConn, signup: Json<SignUp>) -> Result<Value, &'static str> {
     match signup.valid_response(&SECRET_KEY, None).await {

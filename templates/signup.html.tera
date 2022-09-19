@@ -1,7 +1,7 @@
 {% extends "base" %}
 {% block meta %}
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@kingshott/iodine@8.1.0/dist/iodine.min.umd.js" defer></script>
 <style>
     .margin-all {
         margin-top: 5%;
@@ -15,31 +15,37 @@
 {% block content %}
 <center>
     <div class="h-100 p-5 margin-all border rounded-3">
-        <form method="post" id="reg" name="reg">
+        <form method="post" x-data="form()" @submit="submit" id="reg" name="reg">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control me-2"
+                <input type="text" data-rules='["required"]' id="username" name="username" class="form-control me-2"
                     aria-describedby="usernameHelp">
                 <div id="usernameHelp" class="form-text">Your user name between 1 & 100 characters</div>
+                <p class="text-danger" x-show.transition.in="username.errorMessage" x-text="username.errorMessage"></p>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" class="form-control" aria-describedby="EmailHelp">
+                <input type="email" id="email" data-rules='["required", "email"]' name="email" class="form-control"
+                    aria-describedby="EmailHelp">
                 <div id="EmailHelp" class="form-text">We'll never share your email</div>
+                <p class="text-danger" x-show.transition.in="email.errorMessage" x-text="email.errorMessage"></p>
             </div>
             <div class="mb-3">
                 <label for="passwd1" class="form-label">Password</label>
-                <input type="password" id="passwd1" name="passwd1" class="form-control" aria-describedby="PasswordHelp">
+                <input type="password" id="passwd1" name="passwd1" data-rules='["required","min:8"]'
+                    class="form-control" aria-describedby="PasswordHelp">
                 <div id="PasswordHelp" class="form-text">
                     your password must be between 8-20 charecters long contain letters and numbers, and must not contain
                     spaces, special characters, or emoji.
                 </div>
+                <p class="text-danger" x-show.transition.in="passwd1.errorMessage" x-text="passwd1.errorMessage"></p>
             </div>
             <div class="mb-3">
                 <label for="passwd2" class="form-label">Confirm Password</label>
-                <input type="password" id="passwd2" name="passwd2" class="form-control"
-                    aria-describedby="ConfirmPasswordHelp">
+                <input type="password" id="passwd2" data-rules='["required","min:8"]' name="passwd2"
+                    class="form-control" aria-describedby="ConfirmPasswordHelp">
                 <div id="ConfirmPasswordHelp" class="form-text">Confirm your password</div>
+                <p class="text-danger" x-show.transition.in="passwd2.errorMessage" x-text="passwd2.errorMessage"></p>
             </div>
             <div class="h-captcha" data-sitekey="{{site_key}}"></div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -47,19 +53,9 @@
     </div>
 </center>
 <script>
-    //TODO: write js to authenticate forms
-    $("#reg").on('submit', function (e) {
-        e.preventDefault();
-        form = new FormData(document.getElementById("reg"));
-        json = Object.fromEntries(form.entries())
-        $.post({
-            url: '/users/signup',
-            cache: false,
-            data: JSON.stringify(json),
-            success: function (json) {
-                alert("User has been created, please check your email for the account activation email")
-            }
-        })
-    })
+    window.reg = () => {
+        return {
+        }
+    }
 </script>
 {% endblock content %}
