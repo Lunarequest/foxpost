@@ -1,5 +1,6 @@
-use hcaptcha::Hcaptcha;
+/*use hcaptcha::Hcaptcha;*/
 use rocket::{
+    form::FromForm,
     http::Status,
     request::{FromRequest, Outcome},
     serde::{Deserialize, Serialize},
@@ -10,7 +11,7 @@ pub fn now() -> i64 {
     chrono::Utc::now().timestamp()
 }
 
-#[derive(Debug, Clone, Deserialize, Hcaptcha)]
+/* #[derive(Debug, Clone, Deserialize, Hcaptcha)]
 pub struct SignUp {
     pub username: String,
     pub email: String,
@@ -19,9 +20,9 @@ pub struct SignUp {
     #[captcha]
     #[serde(rename(deserialize = "h-captcha-response"))]
     pub h_captcha_response: String,
-}
+} */
 
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, FromForm)]
 pub struct Login {
     pub username: String,
     pub passwd: String,

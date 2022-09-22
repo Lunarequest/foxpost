@@ -4,12 +4,14 @@ extern crate rocket;
 extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
+use auth::forms::Session;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use diesel_migrations::embed_migrations;
 use posts::database::Post;
 use rocket::{
     fairing::AdHoc,
     fs::{relative, NamedFile},
+    request::FlashMessage,
     Build, Rocket,
 };
 use rocket_dyn_templates::{context, Template};
@@ -48,7 +50,11 @@ async fn images(asset: PathBuf) -> Option<NamedFile> {
 }
 
 #[get("/")]
-async fn index(db: db::BlogDBConn) -> Template {
+async fn index(
+    db: db::BlogDBConn,
+    flash: Option<FlashMessage<'_>>,
+    sess: Option<Session>,
+) -> Template {
     let posts = match db
         .run(move |conn| {
             Posts::table
@@ -70,7 +76,9 @@ async fn index(db: db::BlogDBConn) -> Template {
         "index",
         context! {
                                             title:"Home",
-                                            posts:posts
+                                            posts:posts,
+                                            flash:flash,
+                                            sess:sess,
         },
     )
 }
