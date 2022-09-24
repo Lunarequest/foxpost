@@ -4,6 +4,7 @@ use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use rocket::serde::json::{json, Json, Value};
+use rocket_dyn_templates::{context, Template};
 
 #[get("/<slug>")]
 pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Json<Post>> {
@@ -11,6 +12,11 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Json<Post>> {
         .await
         .map(Json)
         .ok()
+}
+
+#[get("/new")]
+pub async fn editor(sess: Session) -> Template {
+    Template::render("editor", context! {title:"new post",sess:sess})
 }
 
 #[get("/json")]
@@ -30,7 +36,7 @@ pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<Post>>, String> {
 }
 
 #[post("/new", data = "<post>")]
-pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Result<(), Value> {
+pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Result<Value, Value> {
     if !sess.isadmin {
         Err(json!({"errors":"you musted be logged in as an admin"}))
     } else {
@@ -42,10 +48,11 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             post_value.draft,
             sess.user,
         );
+        let slug = post.slug.clone();
         match db
             .run(move |conn| {
                 diesel::insert_into(Posts::table)
-                    .values(&post)
+                    .values(post.clone())
                     .execute(conn)
             })
             .await
@@ -53,7 +60,7 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             Err(_) => {
                 Err(json!({"Errors":"a error occrued while trying to insert into the database"}))
             }
-            Ok(_) => Ok(()),
+            Ok(_) => Ok(json!({ "slug": slug })),
         }
     }
 }

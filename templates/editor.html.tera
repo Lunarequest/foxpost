@@ -1,0 +1,89 @@
+{% extends "base" %}
+{% block meta %}
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
+{% endblock meta %}
+{% block content %}
+<div>
+    <form id="editor_form">
+        <div class="row mb-3">
+                <label for="title" class="col-sm col-form-label">Title:</label>
+                <div class="col-sm-11">
+                    <input type="text" id="title" name="title" class="form-control">
+                </div>
+        </div>
+        <div class="row mb-3">
+            <label for="description" class="col-sm col-form-lable">Description:</label>
+            <div class="col-sm-11">
+                <input type="text" name="description" id="description" maxlength="200" class="form-control">
+            </div>
+        </div>
+        <div class="form-check form-switch">
+            <label class="form-check-label" for="draft">Draft?</label>
+            <input type="checkbox" value="not_draft" id="raft" name="draft" class="form-check-input">
+        </div>
+        <textarea id="editor" name="content"></textarea>
+        <button type="submit" id="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+<script>
+    const easyMDE = new EasyMDE({
+        element: document.getElementById("editor"),
+        autosave: {
+            enabled: true,
+            delay: 1000,
+            uniqueId: 'blog-post',
+        },
+        indentWithTabs: true,
+        renderingConfig: {
+            codeSyntaxHighlighting: true,
+        },
+        tabSize: 4,
+    })
+    const editor = document.getElementById("editor_form");
+    editor.addEventListener('submit', function (e) {
+        update_or_new_post(e);
+    });
+    //TODO: Actually finish this editor
+    async function update_or_new_post(e) {
+        e.preventDefault();
+        const btn_submit = document.getElementById("submit");
+        btn_submit.disabled = true;
+        setTimeout(() => btn_submit.disabled = false, 2000);
+        console.log(document.getElementById("editor_form"));
+        slug = localStorage.getItem("slug");
+        form = new FormData(editor);
+        json = Object.fromEntries(form);
+        if (json.draft == "not_draft") {
+            json.draft=false;
+        }else{
+            json.draft=true;
+        }
+        console.log(json.draft);
+        if (localStorage.getItem("slug")) {
+        } else {
+            console.log(JSON.stringify(json))
+            fetch("/api/posts/new", {
+                method: 'POST',
+                mode: "same-origin",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(json)
+            }).then(function(response) {
+                return response.json();
+            }).then(function(resp){
+                if (resp.slug) {
+                    alert("post has been created")
+                }else{
+                    alert(resp.Errors)
+                }
+            })
+        }
+    }
+</script>
+{% endblock content %}
