@@ -4,6 +4,7 @@ use super::{
 };
 use crate::{db, schema::users};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
+use hcaptcha::Hcaptcha;
 use rocket::{
     form::Form,
     http::{Cookie, CookieJar, SameSite},
@@ -13,6 +14,15 @@ use rocket::{
 };
 use rocket_dyn_templates::{context, Template};
 
+#[cfg(debug_assertions)]
+const SITE_KEY: &str = "20000000-ffff-ffff-ffff-000000000002";
+#[cfg(debug_assertions)]
+const SECRET_KEY: &str = "0x0000000000000000000000000000000000000000";
+#[cfg(not(debug_assertions))]
+const SITE_KEY: &str = std::env!("SITE_KEY");
+#[cfg(not(debug_assertions))]
+const SECRET_KEY: &str = std::env!("SECRET_KEY");
+
 #[post("/login", data = "<login>")]
 pub async fn login(
     jar: &CookieJar<'_>,
@@ -20,10 +30,20 @@ pub async fn login(
     login: Form<Login>,
 ) -> Result<Flash<Redirect>, Flash<Redirect>> {
     let login_value = login.clone();
+    match login.valid_response(&SECRET_KEY, None).await {
+        Ok(_) => {}
+        Err(e) => {
+            eprintln!("{e}");
+            return Err(Flash::error(
+                Redirect::to("/users/login"),
+                "Invalid captcha response",
+            ));
+        }
+    }
     match db
         .run(move |conn| {
             users::table
-                .filter(users::username.eq(login_value.username.clone()))
+                .filter(users::username.eq(login_value.username))
                 .first::<User>(conn)
         })
         .await
@@ -74,7 +94,10 @@ pub async fn login_get(
             Redirect::to(uri!(crate::index)),
             "You are already logged in",
         )),
-        None => Ok(Template::render("login", context! {title:"login",flash})),
+        None => Ok(Template::render(
+            "login",
+            context! {title:"login",site_key:SITE_KEY, flash:flash},
+        )),
     }
 }
 

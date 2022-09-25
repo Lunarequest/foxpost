@@ -1,4 +1,4 @@
-/*use hcaptcha::Hcaptcha;*/
+use hcaptcha::Hcaptcha;
 use rocket::{
     form::FromForm,
     http::Status,
@@ -22,10 +22,13 @@ pub struct SignUp {
     pub h_captcha_response: String,
 } */
 
-#[derive(Debug, Clone, FromForm)]
+#[derive(Debug, Clone, FromForm, Hcaptcha)]
 pub struct Login {
     pub username: String,
     pub passwd: String,
+    #[captcha]
+    #[field(name = "h-captcha-response")]
+    pub h_captcha_response: String,
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]

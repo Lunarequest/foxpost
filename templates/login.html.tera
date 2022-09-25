@@ -1,5 +1,6 @@
 {% extends "base" %}
 {% block meta %}
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <style>
     .margin-all {
         margin-top: 5%;
@@ -28,6 +29,7 @@
                     spaces, special characters, or emoji.
                 </div>
             </div>
+            <div class="h-captcha" data-sitekey="{{site_key}}"></div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         {% if flash %}

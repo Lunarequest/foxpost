@@ -28,10 +28,10 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
             return None;
         }
     };
-    if post.draft == true {
+    if post.draft {
         return None;
     }
-    let content = render_to_html(post.clone().content.unwrap_or("".to_string()));
+    let content = render_to_html(post.clone().content.unwrap_or_else(|| "".to_string()));
     Some(Template::render(
         "post",
         context! {
@@ -85,11 +85,7 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
         );
         let slug = post.slug.clone();
         match db
-            .run(move |conn| {
-                diesel::insert_into(Posts::table)
-                    .values(post.clone())
-                    .execute(conn)
-            })
+            .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
             .await
         {
             Err(_) => {
@@ -109,11 +105,7 @@ pub async fn update_post(
 ) -> Result<Value, Value> {
     let slugval = slug.clone();
     let posts: Post = match db
-        .run(move |conn| {
-            Posts::table
-                .filter(Posts::slug.eq(slug.clone()))
-                .first(conn)
-        })
+        .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
         .await
     {
         Ok(post) => post,
