@@ -3,20 +3,52 @@ use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
+use pulldown_cmark::{html, Options, Parser};
 use rocket::serde::json::{json, Json, Value};
 use rocket_dyn_templates::{context, Template};
 
+fn render_to_html(markdown: String) -> String {
+    let mut options = Options::empty();
+    options.insert(Options::all());
+    let parser = Parser::new_ext(&markdown, options);
+    let mut html_output = String::new();
+    html::push_html(&mut html_output, parser);
+    html_output
+}
+
 #[get("/<slug>")]
-pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Json<Post>> {
-    db.run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
+    let post: Post = match db
+        .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
         .await
-        .map(Json)
-        .ok()
+    {
+        Ok(post) => post,
+        Err(e) => {
+            eprintln!("{e}");
+            return None;
+        }
+    };
+    let content = render_to_html(post.clone().content.unwrap_or("".to_string()));
+    Some(Template::render(
+        "post",
+        context! {
+            title: post.title.clone(),
+            content:content,
+            post: post
+        },
+    ))
 }
 
 #[get("/new")]
-pub async fn editor(sess: Session) -> Template {
-    Template::render("editor", context! {title:"new post",sess:sess})
+pub async fn editor(sess: Session) -> Result<Template, ()> {
+    if sess.isadmin {
+        Ok(Template::render(
+            "editor",
+            context! {title:"new post",sess:sess},
+        ))
+    } else {
+        Err(())
+    }
 }
 
 #[get("/json")]

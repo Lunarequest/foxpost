@@ -1,11 +1,30 @@
 {% extends "base" %}
+{% block meta %}
+<link rel="stylesheet" href="/static/css/style.css">
+<script defer src="/static/js/app.js"></script>
+{% endblock meta %}
 {% block content %}
 <center>
     <div class="posts">
         {% if posts %}
-        <p>there are posts</p>
+        {% for post in posts %}
+        <section class="hidden">
+            <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <a href="/posts/{{post.slug}}">
+                    <h2>{{post.title}}</h2>
+                </a>
+                <p>
+                    {{post.description}}
+                </p>
+            </div>
+        </section>
+        {% endfor %}
         {% else %}
-        <p>there are no posts</p>
+        <section>
+            <h2>
+                <p>There are no posts now, please come back later!</p>
+            </h2>
+        </section>
         {% endif %}
     </div>
 </center>

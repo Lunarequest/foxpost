@@ -1,0 +1,21 @@
+section {
+    display: grid;
+    place-items: center;
+    align-items: center;
+    margin-top: 5%;
+}
+
+.hidden {
+    opacity: 0;
+    transition: all 1s;
+}
+
+.show {
+    opacity: 1;
+}
+
+@media(prefers-reduced-motion){
+    .hidden {
+        transition: none;
+    }
+}
