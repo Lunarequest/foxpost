@@ -1,14 +1,44 @@
 {% extends "base" %}
+{% block meta %}
+<style>
+    code {
+        text-align: left;
+    }
+</style>
+<link rel="stylesheet" title="dark"
+    href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/solarized-dark.min.css">
+<!--<link rel="stylesheet" title="light"
+    href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/solarized-light.min.css">-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+<script defer>hljs.highlightAll();</script>
+{% endblock meta %}
 {% block content %}
 <div>
-    <h1>{{post.title}}</h1>
-    <div>
+    <center>
+        <div class="title">
+            <h1>{{post.title}}</h1>
+        </div>
+    </center>
+    <div class="content">
         {{content|safe}}
     </div>
-
 </div>
 <div id="disqus_thread"></div>
 <script>
+    /**var dark = darkmode.inDarkMode;
+    if (dark) {
+        document
+            .querySelector(`link[title="dark"]`)
+            .removeAttribute("disabled");
+        document.querySelector(`link[title="light"]`)
+            .setAttribute("disabled", "disabled");
+    }else{
+        document
+            .querySelector(`link[title="light"]`)
+            .removeAttribute("disabled");
+        document.querySelector(`link[title="dark"]`)
+            .setAttribute("disabled", "disabled");
+    }**/
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 
      *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR 
@@ -17,10 +47,10 @@
      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: 
      *  https://disqus.com/admin/universalcode/#configuration-variables
      */
-    
+
     var disqus_config = function () {
         this.page.url = "/posts/{{post.slug}}";
-        this.page.identifier = "{{post.slug}}"; 
+        this.page.identifier = "{{post.slug}}";
         this.page.title = "{{post.title}}";
     };
 
@@ -30,7 +60,7 @@
         // IMPORTANT: Replace EXAMPLE with your forum shortname!
         if (window.location.href.includes("127.0.0.1")) {
             s.src = 'http://null-s-blog.disqus.com/embed.js';
-        }else{
+        } else {
             s.src = 'https://null-s-blog.disqus.com/embed.js';
         }
 

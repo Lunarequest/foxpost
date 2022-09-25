@@ -18,12 +18,6 @@ pub struct Post {
     pub author: String,
     pub published: i64,
 }
-#[derive(Debug, Clone, Deserialize)]
-pub struct UpdatePost {
-    pub title: Option<String>,
-    pub description: Option<String>,
-    pub content: Option<String>,
-}
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct NewPost {

@@ -1,4 +1,4 @@
-use super::database::{NewPost, Post, UpdatePost};
+use super::database::{NewPost, Post};
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
@@ -28,6 +28,9 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
             return None;
         }
     };
+    if post.draft == true {
+        return None;
+    }
     let content = render_to_html(post.clone().content.unwrap_or("".to_string()));
     Some(Template::render(
         "post",
@@ -101,33 +104,46 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
 pub async fn update_post(
     db: BlogDBConn,
     sess: Session,
-    post: Json<UpdatePost>,
+    post: Json<NewPost>,
     slug: String,
-) -> Result<(), Value> {
-    let mut posts: Post = match db
-        .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+) -> Result<Value, Value> {
+    let slugval = slug.clone();
+    let posts: Post = match db
+        .run(move |conn| {
+            Posts::table
+                .filter(Posts::slug.eq(slug.clone()))
+                .first(conn)
+        })
         .await
     {
         Ok(post) => post,
-        Err(_e) => return Err(json!("missing post")),
+        Err(e) => {
+            eprintln!("{e}");
+            return Err(json!({"Errors":"missing post"}));
+        }
     };
     if sess.user != posts.author || !sess.isadmin {
-        return Err(json!({"errors":"you can not edit a post you didn't create"}));
+        return Err(json!({"Errors":"you can not edit a post you didn't create"}));
     }
-    posts = posts.clone().update(
-        post.title.clone(),
-        post.description.clone(),
-        post.content.clone(),
-    );
     match db
         .run(move |conn| {
-            diesel::insert_into(Posts::table)
-                .values(&posts)
+            diesel::update(Posts::table.find(slugval))
+                .set((
+                    Posts::dsl::draft.eq(post.draft),
+                    Posts::dsl::title.eq(post.title.clone()),
+                    Posts::dsl::description.eq(post.description.clone()),
+                    Posts::dsl::content.eq(post.content.clone()),
+                ))
                 .execute(conn)
         })
         .await
     {
-        Err(_) => Err(json!({"Errors":"a error occrued while trying to insert into the database"})),
-        Ok(_) => Ok(()),
+        Err(e) => {
+            eprintln!("{e}");
+            Err(
+                json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+            )
+        }
+        Ok(_) => Ok(json!({"status":"sucess"})),
     }
 }

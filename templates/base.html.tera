@@ -10,6 +10,17 @@
         <title>{% block title %}{{ title }}{% endblock title %}</title>
         {% block meta %}
         {% endblock meta %}
+        <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Kalam:wght@400;700&display=swap');
+
+                * {
+                        font-family: 'Kalam';
+                }
+
+                code {
+                        font-family: 'Inconsolata', monospace;
+                }
+        </style>
         <link href="/static/css/bootstrap-blackbox.min.css" rel="stylesheet">
 </head>
 
@@ -51,7 +62,7 @@
                                                 aria-label="Search">
                                         <button class="btn btn-success" type="submit">Search </button>
                                 </form>
-                                <button id="darkmode"><i class="fa-regular fa-sun"></i></button>
+                                <button id="darkmode"><i class="fa-solid fa-circle-half-stroke"></i></button>
                         </div>
                 </div>
         </nav>

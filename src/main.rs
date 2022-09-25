@@ -58,8 +58,8 @@ async fn index(
     let posts = match db
         .run(move |conn| {
             Posts::table
-                .filter(Posts::draft.eq(true))
-                .limit(5)
+                .filter(Posts::draft.eq(false))
+                .order_by(Posts::published)
                 .load::<Post>(conn)
         })
         .await

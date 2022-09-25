@@ -9,10 +9,10 @@
 <div>
     <form id="editor_form">
         <div class="row mb-3">
-                <label for="title" class="col-sm col-form-label">Title:</label>
-                <div class="col-sm-11">
-                    <input type="text" id="title" name="title" class="form-control">
-                </div>
+            <label for="title" class="col-sm col-form-label">Title:</label>
+            <div class="col-sm-11">
+                <input type="text" id="title" name="title" class="form-control">
+            </div>
         </div>
         <div class="row mb-3">
             <label for="description" class="col-sm col-form-lable">Description:</label>
@@ -46,7 +46,6 @@
     editor.addEventListener('submit', function (e) {
         update_or_new_post(e);
     });
-    //TODO: Actually finish this editor
     async function update_or_new_post(e) {
         e.preventDefault();
         const btn_submit = document.getElementById("submit");
@@ -57,12 +56,32 @@
         form = new FormData(editor);
         json = Object.fromEntries(form);
         if (json.draft == "not_draft") {
-            json.draft=false;
-        }else{
-            json.draft=true;
+            json.draft = false;
+        } else {
+            json.draft = true;
         }
         console.log(json.draft);
-        if (localStorage.getItem("slug")) {
+        if (sessionStorage.getItem("slug")) {
+            slug = sessionStorage.getItem("slug");
+            json["slug"] = slug;
+            fetch(`/api/posts/${slug}/update`, {
+                method: 'POST',
+                mode: "same-origin",
+                cache: "no-cache",
+                credentials: "same-origin",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(json)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (resp) {
+                if ('Errors' in resp) {
+                    alert(resp.Errors);
+                } else {
+                    alert("post has been successfully updated")
+                }
+            })
         } else {
             console.log(JSON.stringify(json))
             fetch("/api/posts/new", {
@@ -74,12 +93,13 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(json)
-            }).then(function(response) {
+            }).then(function (response) {
                 return response.json();
-            }).then(function(resp){
-                if (resp.slug) {
+            }).then(function (resp) {
+                if ('slug' in resp) {
+                    sessionStorage.setItem('slug', resp.slug);
                     alert("post has been created")
-                }else{
+                } else {
                     alert(resp.Errors)
                 }
             })
