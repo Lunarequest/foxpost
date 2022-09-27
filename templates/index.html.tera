@@ -13,6 +13,7 @@
                 <a href="/posts/{{post.slug}}">
                     <h2>{{post.title}}</h2>
                 </a>
+                <sub>published on {{convert(timestamp=post.published)}} by {{post.author}}</sub>
                 <p>
                     {{post.description}}
                 </p>

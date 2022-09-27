@@ -5,6 +5,7 @@ extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
 use auth::forms::Session;
+use chrono::{DateTime, NaiveDateTime, Utc};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use diesel_migrations::embed_migrations;
 use posts::database::Post;
@@ -14,8 +15,10 @@ use rocket::{
     request::FlashMessage,
     Build, Rocket,
 };
-use rocket_dyn_templates::{context, Template};
+use rocket_dyn_templates::tera::{from_value, to_value, Error, Value};
+use rocket_dyn_templates::{context, Engines, Template};
 use schema::posts as Posts;
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 mod auth;
 mod db;
@@ -64,7 +67,14 @@ async fn index(
         })
         .await
     {
-        Ok(posts) => Some(posts),
+        Ok(posts) => {
+            let mut posts = posts;
+            //for some reason order by returns
+            // small->large
+            //we want large->small
+            posts.reverse();
+            Some(posts)
+        }
         Err(e) => {
             //if there are error's we will know
             eprintln!("{e}");
@@ -96,11 +106,30 @@ async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
     rocket
 }
 
+fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
+    let timestamp = match from_value::<i64>(
+        args.get("timestamp")
+            .ok_or::<Error>("no timestamp".into())?
+            .clone(),
+    ) {
+        Ok(time) => time,
+        Err(_) => return Err("is the timestamp a int?".into()),
+    };
+    let naive = NaiveDateTime::from_timestamp(timestamp, 0);
+    let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
+    match to_value(datetime.to_string()) {
+        Ok(time) => Ok(time),
+        Err(e) => Err(format!("{e}").into()),
+    }
+}
+
 #[launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
     rocket::build()
         .mount("/", routes![index, images, js, css])
-        .attach(Template::fairing())
+        .attach(Template::custom(|engines: &mut Engines| {
+            engines.tera.register_function("convert", convert)
+        }))
         .attach(db::BlogDBConn::fairing())
         .attach(AdHoc::on_ignite(
             "Diesel Migrations",
