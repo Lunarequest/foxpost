@@ -1,0 +1,10 @@
+{% extends "base" %}
+{% block content %}
+<div class="container-fluid">
+    {% for post in posts %}
+        <div clas="g-0 border overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <p><a href="/posts/edit/{{post.slug}}">{{post.title}}</a> draft: {% if post.draft %}✅{% else %}❌{% endif %}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

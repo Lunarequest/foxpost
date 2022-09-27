@@ -4,6 +4,7 @@ use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use pulldown_cmark::{html, Options, Parser};
+use rocket::http::Status;
 use rocket::serde::json::{json, Json, Value};
 use rocket_dyn_templates::{context, Template};
 
@@ -14,6 +15,28 @@ fn render_to_html(markdown: String) -> String {
     let mut html_output = String::new();
     html::push_html(&mut html_output, parser);
     html_output
+}
+
+#[get("/all")]
+pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, String)> {
+    if sess.isadmin {
+        let posts: Vec<Post> = match db.run(move |conn| Posts::table.load(conn)).await {
+            Ok(posts) => posts,
+            Err(e) => return Err((Status::UnprocessableEntity, e.to_string())),
+        };
+        Ok(Template::render(
+            "all_posts",
+            context! {
+                title: "All",
+                posts:posts
+            },
+        ))
+    } else {
+        Err((
+            Status::Unauthorized,
+            String::from("you are not authorised to view this page"),
+        ))
+    }
 }
 
 #[get("/<slug>")]

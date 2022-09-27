@@ -17,6 +17,7 @@
     <center>
         <div class="title">
             <h1>{{post.title}}</h1>
+            <sub>published on {{convert(timestamp=post.published)}}<br>By {{post.author}}</sub>
         </div>
     </center>
     <div class="content">

@@ -2,16 +2,24 @@
 {% block meta %}
 <link rel="stylesheet" href="/static/css/style.css">
 <script defer src="/static/js/app.js"></script>
+<style>
+    .my-custom-jumbotron {
+        margin-top: 5%;
+        width: 30%;
+    }
+</style>
 {% endblock meta %}
 {% block content %}
 <center>
     <div class="posts">
         {% if posts %}
         {% for post in posts %}
-        <section class="hidden">
+        <section class="hidden my-custom-jumbotron">
             <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <a href="/posts/{{post.slug}}">
-                    <h2>{{post.title}}</h2>
+                    <span>
+                        <h2>{{post.title}}</h2>
+                    </span>
                 </a>
                 <sub>published on {{convert(timestamp=post.published)}} by {{post.author}}</sub>
                 <p>
