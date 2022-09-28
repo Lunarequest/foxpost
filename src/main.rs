@@ -22,34 +22,43 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 mod auth;
 mod db;
+mod image;
 mod posts;
 mod schema;
 
-#[get("/static/js/<asset>")]
-async fn js(asset: PathBuf) -> Option<NamedFile> {
-    let path = Path::new(relative!("static/js")).join(asset);
-    if path.is_dir() {
-        return None;
+#[get("/static/<type>/<asset>")]
+async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
+    match r#type.as_str() {
+        "css" => {
+            let path = Path::new(relative!("static/css")).join(asset);
+            if path.is_dir() {
+                return None;
+            }
+            NamedFile::open(path).await.ok()
+        }
+        "js" => {
+            let path = Path::new(relative!("static/js")).join(asset);
+            if path.is_dir() {
+                return None;
+            }
+            NamedFile::open(path).await.ok()
+        }
+        "images" => {
+            let path = Path::new(relative!("static/images")).join(asset);
+            if path.is_dir() {
+                return None;
+            }
+            NamedFile::open(path).await.ok()
+        }
+        "webfonts" => {
+            let path = Path::new(relative!("static/webfonts")).join(asset);
+            if path.is_dir() {
+                return None;
+            }
+            NamedFile::open(path).await.ok()
+        }
+        _ => None,
     }
-    NamedFile::open(path).await.ok()
-}
-
-#[get("/static/css/<asset>")]
-async fn css(asset: PathBuf) -> Option<NamedFile> {
-    let path = Path::new(relative!("static/css")).join(asset);
-    if path.is_dir() {
-        return None;
-    }
-    NamedFile::open(path).await.ok()
-}
-
-#[get("/static/images/<asset>")]
-async fn images(asset: PathBuf) -> Option<NamedFile> {
-    let path = Path::new(relative!("static/images")).join(asset);
-    if path.is_dir() {
-        return None;
-    }
-    NamedFile::open(path).await.ok()
 }
 
 #[get("/")]
@@ -107,6 +116,7 @@ async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
 }
 
 fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
+    #[allow(clippy::or_fun_call)]
     let timestamp = match from_value::<i64>(
         args.get("timestamp")
             .ok_or::<Error>("no timestamp".into())?
@@ -126,7 +136,7 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
 #[launch]
 async fn rocket() -> _ {
     rocket::build()
-        .mount("/", routes![index, images, js, css])
+        .mount("/", routes![index, static_files])
         .attach(Template::custom(|engines: &mut Engines| {
             engines.tera.register_function("convert", convert)
         }))
@@ -137,4 +147,5 @@ async fn rocket() -> _ {
         ))
         .attach(posts::stage())
         .attach(auth::stage())
+        .attach(image::stage())
 }

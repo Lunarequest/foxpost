@@ -17,13 +17,47 @@ fn render_to_html(markdown: String) -> String {
     html_output
 }
 
+#[get("/edit/<slug>")]
+pub async fn edit(
+    db: BlogDBConn,
+    sess: Session,
+    slug: String,
+) -> Result<Template, (Status, String)> {
+    if sess.isadmin {
+        match db
+            .run(move |conn| {
+                Posts::table
+                    .filter(Posts::slug.eq(slug))
+                    .first::<Post>(conn)
+            })
+            .await
+        {
+            Err(e) => Err((Status::UnprocessableEntity, e.to_string())),
+            Ok(post) => Ok(Template::render(
+                "edit_post",
+                context! {
+                    title: format!("edit {}",post.title),
+                    post: post,
+                },
+            )),
+        }
+    } else {
+        Err((
+            Status::Unauthorized,
+            String::from("you are not authorised to view this page"),
+        ))
+    }
+}
+
 #[get("/all")]
 pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, String)> {
     if sess.isadmin {
-        let posts: Vec<Post> = match db.run(move |conn| Posts::table.load(conn)).await {
+        let mut posts: Vec<Post> = match db.run(move |conn| Posts::table.load(conn)).await {
             Ok(posts) => posts,
             Err(e) => return Err((Status::UnprocessableEntity, e.to_string())),
         };
+        //newest first
+        posts.reverse();
         Ok(Template::render(
             "all_posts",
             context! {

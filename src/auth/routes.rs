@@ -30,7 +30,7 @@ pub async fn login(
     login: Form<Login>,
 ) -> Result<Flash<Redirect>, Flash<Redirect>> {
     let login_value = login.clone();
-    match login.valid_response(&SECRET_KEY, None).await {
+    match login.valid_response(SECRET_KEY, None).await {
         Ok(_) => {}
         Err(e) => {
             eprintln!("{e}");

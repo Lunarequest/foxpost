@@ -5,8 +5,10 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light dark">
-        <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
+        <meta name="generator" content="luna's blog">
+        <meta name="rating" content="General">
         <script src="/static/js/alpine.js" defer></script>
+        <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
         <title>{% block title %}{{ title }}{% endblock title %}</title>
         {% block meta %}
         {% endblock meta %}
@@ -19,6 +21,12 @@
 
                 code {
                         font-family: 'Inconsolata', monospace;
+                }
+
+                .dark-toggle {
+                        padding: 0;
+                        border: none;
+                        background: none;
                 }
         </style>
         <link href="/static/css/bootstrap-blackbox.min.css" rel="stylesheet">
@@ -62,7 +70,8 @@
                                                 aria-label="Search">
                                         <button class="btn btn-success" type="submit">Search </button>
                                 </form>
-                                <button id="darkmode"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                                <button class="dark-toggle" id="darkmode"><em class="fas fa-sun" id="dark-mode-toggle"
+                                                aria-label="Toggle Dark Mode"></em></button>
                         </div>
                 </div>
         </nav>
@@ -73,9 +82,30 @@
                 crossorigin="anonymous"></script>
         <script src="/static/js/darkmode.min.js"></script>
         <script>
+                window.onload = function (_e) {
+                        let element = document.getElementById("dark-mode-toggle");
+                        if (darkmode.inDarkMode) {
+                                console.log("in darkness we live")
+                                element.classList.remove("fa-moon");
+                                element.classList.add("fa-sun");
+                        } else {
+                                console.log('let there be light')
+                                element.classList.remove("fa-sun")
+                                element.classList.add("fa-moon");
+                        }
+                }
                 document.querySelector("#darkmode").onclick = function (e) {
                         darkmode.toggleDarkMode();
-                        let element = document.getElementById("darkmode");
+                        let element = document.getElementById("dark-mode-toggle");
+                        if (darkmode.inDarkMode) {
+                                console.log('let there be light')
+                                element.classList.remove("fa-moon");
+                                element.classList.add("fa-sun");
+                        } else {
+                                console.log("in darkness we live")
+                                element.classList.remove("fa-sun")
+                                element.classList.add("fa-moon");
+                        }
                 }
         </script>
 </body>
