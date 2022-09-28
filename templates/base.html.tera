@@ -7,7 +7,6 @@
         <meta name="color-scheme" content="light dark">
         <meta name="generator" content="luna's blog">
         <meta name="rating" content="General">
-        <script src="/static/js/alpine.js" defer></script>
         <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
         <title>{% block title %}{{ title }}{% endblock title %}</title>
         {% block meta %}
@@ -65,11 +64,8 @@
                                         </li>
                                         {% endif %}
                                 </ul>
-                                <form class="d-flex">
-                                        <input class="form-control me-2" type="search" placeholder="Search"
-                                                aria-label="Search">
-                                        <button class="btn btn-success" type="submit">Search </button>
-                                </form>
+                                <a href="/search" id="Search"><em class="fas fa-search fa-lg"></em></a>
+                                &nbsp;
                                 <button class="dark-toggle" id="darkmode"><em class="fas fa-sun" id="dark-mode-toggle"
                                                 aria-label="Toggle Dark Mode"></em></button>
                         </div>

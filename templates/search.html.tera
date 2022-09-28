@@ -1,0 +1,21 @@
+{% extends "base" %}
+{% block meta %}
+<script src="https://cdn.jsdelivr.net/gh/nextapps-de/flexsearch@0.7.2/dist/flexsearch.bundle.js"></script>
+{% endblock meta %}
+{% block content %}
+<center>
+    <div>
+        <div class="mb-3">
+            <label for="searchBox" class="form-label">Search...</label>
+            <input type="text" id="searchBox" name="searchBox" class="form-control me-2"
+                aria-describedby="searchHelp">
+            <div id="searchHelp" class="form-text">Search</div>
+        </div>
+        <div id="searchResults" class="searchResults" style="display: none;"></div>
+    </div>
+</center>
+<script src="/static/js/search.js"></script>
+<script defer>
+    document.onload = init()
+</script>
+{% endblock content %}

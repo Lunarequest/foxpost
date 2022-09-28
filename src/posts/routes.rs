@@ -1,8 +1,10 @@
 use super::database::{NewPost, Post};
+use super::json::JsonEntry;
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
+use chrono::{DateTime, NaiveDateTime, Utc};
 use pulldown_cmark::{html, Options, Parser};
 use rocket::http::Status;
 use rocket::serde::json::{json, Json, Value};
@@ -74,6 +76,24 @@ pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, 
 }
 
 #[get("/<slug>")]
+pub async fn get_content(db: BlogDBConn, slug: String) -> String {
+    let post: Post = match db
+        .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+        .await
+    {
+        Ok(post) => post,
+        Err(e) => {
+            eprintln!("{e}");
+            return String::new();
+        }
+    };
+    match post.content {
+        Some(content) => content,
+        None => String::new(),
+    }
+}
+
+#[get("/<slug>")]
 pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
     let post: Post = match db
         .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
@@ -111,18 +131,39 @@ pub async fn editor(sess: Session) -> Result<Template, ()> {
     }
 }
 
+fn convert(timestamp: i64) -> String {
+    let naive = NaiveDateTime::from_timestamp(timestamp, 0);
+    let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
+    datetime.to_string()
+}
+
 #[get("/json")]
-pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<Post>>, String> {
+pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, String> {
     match db
         .run(move |conn| {
             Posts::table
-                .filter(Posts::draft.eq(true))
+                .filter(Posts::draft.eq(false))
                 .limit(5)
                 .load::<Post>(conn)
         })
         .await
     {
-        Ok(posts) => Ok(Json(posts)),
+        Ok(posts) => {
+            let mut search_posts: Vec<JsonEntry> = vec![];
+            let mut count: u32 = 0;
+            for post in posts {
+                let entry = JsonEntry {
+                    id: count,
+                    href: format!("/posts/{}", post.slug),
+                    title: post.title,
+                    date: convert(post.published),
+                    body: post.description,
+                };
+                search_posts.append(&mut vec![entry]);
+                count += 1;
+            }
+            Ok(Json(search_posts))
+        }
         Err(e) => Err(format!("{e}")),
     }
 }

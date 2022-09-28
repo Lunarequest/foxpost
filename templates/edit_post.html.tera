@@ -22,11 +22,11 @@
             </div>
         </div>
         <div class="form-check form-switch">
-            <label class="form-check-label" for="draft">Draft?</label>
-            {% if not post.draft %}
+            <label class="form-check-label" for="draft">Publish?</label>
+            {% if post.draft %}
             <input type="checkbox" value="not_draft" id="draft" name="draft" class="form-check-input">
             {% else %}
-            <input type="checkbox" value="draft" id="draft" name="draft" class="form-check-input">
+            <input type="checkbox" checked value="not_draft" id="draft" name="draft" class="form-check-input">
             {% endif %}
         </div>
         <textarea id="editor" name="content"></textarea>
@@ -34,10 +34,20 @@
     </form>
 </div>
 <script>
+    function getData(url) {
+        return new Promise((resolve, reject) => {
+            fetch(url)
+                .then(response => {
+                    return response.text();
+                }).then(data => {
+                    resolve(data);
+                })
+        })
+    }
     function setslug() {
         sessionStorage.setItem('slug', "{{post.slug}}")
     }
-    window.onload = setslug;
+    window.onload = setslug();
     const easyMDE = new EasyMDE({
         element: document.getElementById("editor"),
         autosave: {
@@ -50,7 +60,11 @@
             codeSyntaxHighlighting: true,
         },
         tabSize: 4,
-    })
+    });
+    getData("/api/posts/{{post.slug}}").then(data => {
+        let content = data;
+        easyMDE.value(content);
+    });
     const editor = document.getElementById("editor_form");
     editor.addEventListener('submit', function (e) {
         update_or_new_post(e);

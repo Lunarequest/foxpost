@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="form-check form-switch">
-            <label class="form-check-label" for="draft">Draft?</label>
+            <label class="form-check-label" for="draft">Publish?</label>
             <input type="checkbox" value="not_draft" id="raft" name="draft" class="form-check-input">
         </div>
         <textarea id="editor" name="content"></textarea>

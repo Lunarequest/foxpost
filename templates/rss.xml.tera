@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<channel>
+    <title>Null's blog on Null's blog</title>
+    <link>{{host}}</link>
+    <description>Recent content in Null's blog </description>
+    <generator>foxblog</generator>
+    <language>en-us</language>
+    <managingEditor>Page("Null's blog") (Nullrequest)</managingEditor>
+    <lastBuildDate>Mon, 18 Apr 2022 17:07:02 +0530</lastBuildDate>
+    <atom:link href="/" rel="self" type="application/rss+xml"/>
+    {% for post in posts %}
+        <item>
+            <title>{{post.title}}</title>
+            <link>{{host}}/posts/{{post.slug}}</link>
+            <pubDate>{{convert(timestamp=post.published)}}</pubDate>
+            <guid>{{host}}/posts/{{post.slug}}</guid>
+            <description>{{post.description}}</description>
+        </item>
+    {% endfor %}
+</channel>
+</rss>

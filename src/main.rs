@@ -25,6 +25,7 @@ mod db;
 mod image;
 mod posts;
 mod schema;
+mod xml;
 
 #[get("/static/<type>/<asset>")]
 async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
@@ -94,10 +95,10 @@ async fn index(
     Template::render(
         "index",
         context! {
-                                            title:"Home",
-                                            posts:posts,
-                                            flash:flash,
-                                            sess:sess,
+            title:"Home",
+            posts:posts,
+            flash:flash,
+            sess:sess,
         },
     )
 }
@@ -113,6 +114,11 @@ async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
         .expect("diesel migrations");
 
     rocket
+}
+
+#[get("/search")]
+async fn search() -> Template {
+    Template::render("search", context! {title:"search"})
 }
 
 fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
@@ -136,7 +142,7 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
 #[launch]
 async fn rocket() -> _ {
     rocket::build()
-        .mount("/", routes![index, static_files])
+        .mount("/", routes![index, static_files, search])
         .attach(Template::custom(|engines: &mut Engines| {
             engines.tera.register_function("convert", convert)
         }))
@@ -148,4 +154,5 @@ async fn rocket() -> _ {
         .attach(posts::stage())
         .attach(auth::stage())
         .attach(image::stage())
+        .attach(xml::stage())
 }
