@@ -5,6 +5,7 @@ use super::{
 use crate::{db, schema::users};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use hcaptcha::Hcaptcha;
+use lazy_static::lazy_static;
 use rocket::{
     form::Form,
     http::{Cookie, CookieJar, SameSite},
@@ -13,15 +14,12 @@ use rocket::{
     serde::json::json,
 };
 use rocket_dyn_templates::{context, Template};
+use std::env::var;
 
-#[cfg(debug_assertions)]
-const SITE_KEY: &str = "20000000-ffff-ffff-ffff-000000000002";
-#[cfg(debug_assertions)]
-const SECRET_KEY: &str = "0x0000000000000000000000000000000000000000";
-#[cfg(not(debug_assertions))]
-const SITE_KEY: &str = std::env!("SITE_KEY");
-#[cfg(not(debug_assertions))]
-const SECRET_KEY: &str = std::env!("SECRET_KEY");
+lazy_static! {
+    static ref SITE_KEY: String = var("SITE_KEY").expect("Missing SITE_KEY");
+    static ref SECRET_KEY: String = var("SECRET_KEY").expect("Missing SECRET_KEY");
+}
 
 #[post("/login", data = "<login>")]
 pub async fn login(
@@ -30,7 +28,7 @@ pub async fn login(
     login: Form<Login>,
 ) -> Result<Flash<Redirect>, Flash<Redirect>> {
     let login_value = login.clone();
-    match login.valid_response(SECRET_KEY, None).await {
+    match login.valid_response(&*SECRET_KEY, None).await {
         Ok(_) => {}
         Err(e) => {
             eprintln!("{e}");
@@ -96,7 +94,7 @@ pub async fn login_get(
         )),
         None => Ok(Template::render(
             "login",
-            context! {title:"login",site_key:SITE_KEY, flash:flash},
+            context! {title:"login",site_key: SITE_KEY.clone(), flash:flash},
         )),
     }
 }
