@@ -22,6 +22,7 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 mod auth;
 mod db;
+mod errors;
 mod image;
 mod posts;
 mod schema;
@@ -146,6 +147,7 @@ async fn rocket() -> _ {
         .attach(Template::custom(|engines: &mut Engines| {
             engines.tera.register_function("convert", convert)
         }))
+        .attach(errors::stage())
         .attach(db::BlogDBConn::fairing())
         .attach(AdHoc::on_ignite(
             "Diesel Migrations",
