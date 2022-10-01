@@ -1,0 +1,5 @@
+[phases.build]
+nixPkgs = ['...','openssl', 'postgresql']
+
+[variables]
+ROCKET_ADDRESS='0.0.0.0'
