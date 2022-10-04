@@ -1,5 +1,6 @@
 [phases.build]
-nixPkgs = ['...','openssl', 'postgresql']
+nixPkgs = ['...']
+nixLibs = ['postgresql', 'openssl']
 
 [variables]
 ROCKET_ADDRESS='0.0.0.0'
