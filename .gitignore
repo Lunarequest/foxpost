@@ -5,3 +5,9 @@ rocket.toml
 media
 *_key
 fly.toml
+*.rsa*
+*.apk
+work
+packages
+*.tar*
+sbom*

@@ -106,7 +106,7 @@ async fn index(
 
 async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
     embed_migrations!("migrations");
-
+    println!("running migrations");
     let conn = db::BlogDBConn::get_one(&rocket)
         .await
         .expect("database connection");
