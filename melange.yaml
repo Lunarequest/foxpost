@@ -1,6 +1,6 @@
 package:
   name: Lunas-blog
-  version: 0.1.0
+  version: 0.1.1
   description: Luna's blog
   target-architecture:
     - amd64
@@ -38,7 +38,7 @@ pipeline:
       TARGETDIR="$(mktemp -d)"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
       cargo build --release --target-dir "${TARGETDIR}"
-      cp "${TARGETDIR}/release/blog" "${EXEC_DIR}"
+      cp ``"${TARGETDIR}/release/blog" "${EXEC_DIR}"
       cp wait-for-postgres.sh "${EXEC_DIR}"
-      cp -r static "${{target.destdir}}/static"
-      cp -r templates "${{targets.destdir}}/templates"
+      cp -rv static    "${{targets.destdir}}/static"
+      cp -rv templates "${{targets.destdir}}/templates"
