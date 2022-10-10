@@ -38,7 +38,7 @@ pipeline:
       TARGETDIR="$(mktemp -d)"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
       cargo build --release --target-dir "${TARGETDIR}"
-      cp ``"${TARGETDIR}/release/blog" "${EXEC_DIR}"
+      cp "${TARGETDIR}/release/blog" "${EXEC_DIR}"
       cp wait-for-postgres.sh "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
