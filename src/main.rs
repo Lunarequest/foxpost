@@ -10,16 +10,18 @@ use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use diesel_migrations::embed_migrations;
 use posts::database::Post;
 use rocket::{
+    fs::NamedFile,
     fairing::AdHoc,
-    fs::{relative, NamedFile},
     request::FlashMessage,
     Build, Rocket,
 };
 use rocket_dyn_templates::tera::{from_value, to_value, Error, Value};
 use rocket_dyn_templates::{context, Engines, Template};
 use schema::posts as Posts;
-use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::{
+    collections::HashMap,
+    path::{Path,PathBuf}
+};
 mod auth;
 mod db;
 mod errors;
@@ -32,28 +34,28 @@ mod xml;
 async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
     match r#type.as_str() {
         "css" => {
-            let path = Path::new(relative!("static/css")).join(asset);
+            let path = Path::new("/static/css").join(asset);
             if path.is_dir() {
                 return None;
             }
             NamedFile::open(path).await.ok()
         }
         "js" => {
-            let path = Path::new(relative!("static/js")).join(asset);
+            let path = Path::new("/static/js").join(asset);
             if path.is_dir() {
                 return None;
             }
             NamedFile::open(path).await.ok()
         }
         "images" => {
-            let path = Path::new(relative!("static/images")).join(asset);
+            let path = Path::new("/static/images").join(asset);
             if path.is_dir() {
                 return None;
             }
             NamedFile::open(path).await.ok()
         }
         "webfonts" => {
-            let path = Path::new(relative!("static/webfonts")).join(asset);
+            let path = Path::new("/static/webfonts").join(asset);
             if path.is_dir() {
                 return None;
             }
@@ -62,6 +64,7 @@ async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
         _ => None,
     }
 }
+
 
 #[get("/")]
 async fn index(

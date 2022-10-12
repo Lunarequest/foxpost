@@ -19,8 +19,8 @@ package:
 environment:
   contents:
     repositories:
-      - https://dl-cdn.alpinelinux.org/alpine/edge/main
-      - https://dl-cdn.alpinelinux.org/alpine/edge/community
+      - https://dl-cdn.alpinelinux.org/alpine/v3.16/main
+      - https://dl-cdn.alpinelinux.org/alpine/v3.16/community
     packages:
       - alpine-baselayout-data
       - musl-dev
@@ -42,3 +42,4 @@ pipeline:
       cp wait-for-postgres.sh "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
+      mkdir "${{targets.destdir}}/assets"

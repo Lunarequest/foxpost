@@ -2,7 +2,7 @@ use crate::auth::forms::Session;
 use rocket::{
     data::ToByteUnit,
     form::Form,
-    fs::{relative, NamedFile, TempFile},
+    fs::{NamedFile, TempFile},
     http::Status,
     request::FlashMessage,
     response::{Flash, Redirect},
@@ -27,7 +27,7 @@ pub async fn upload(
 ) -> Result<Flash<Redirect>, (Status, Flash<Redirect>)> {
     let filename = image.file.clone();
     if sess.isadmin {
-        let path = Path::new(relative!("media")).join(PathBuf::from(filename.clone()));
+        let path = Path::new("assets").join(PathBuf::from(filename.clone()));
         if path.exists() {
             return Err((
                 Status::UnprocessableEntity,
@@ -88,7 +88,7 @@ pub async fn image_form(
 
 #[get("/<asset>")]
 pub async fn media(asset: PathBuf) -> Option<NamedFile> {
-    let path = Path::new(relative!("media")).join(asset);
+    let path = PathBuf::from("/assets").join(asset);
     if path.is_dir() {
         return None;
     }
