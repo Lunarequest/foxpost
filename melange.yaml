@@ -11,10 +11,8 @@ package:
         - "*"
   dependencies:
     runtime:
-      - busybox
       - libpq
       - ca-certificates-bundle
-      - openssl
 
 environment:
   contents:
@@ -27,6 +25,7 @@ environment:
       - ca-certificates-bundle
       - pkgconf 
       - openssl-dev
+      - openssl-libs-static
       - libpq-dev
       - busybox
       - cargo
@@ -37,9 +36,8 @@ pipeline:
       BLOG_HOME="${{targets.destdir}}/"      
       TARGETDIR="$(mktemp -d)"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
-      cargo build --release --target-dir "${TARGETDIR}"
+      OPENSSL_LIB_DIR=/usr/lib/ OPENSSL_INCLUDE_DIR=/usr/include/openssl OPENSSL_STATIC=1  cargo build --release --target-dir "${TARGETDIR}"
       cp "${TARGETDIR}/release/blog" "${EXEC_DIR}"
-      cp wait-for-postgres.sh "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
       mkdir "${{targets.destdir}}/assets"

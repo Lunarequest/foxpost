@@ -9,18 +9,13 @@ use chrono::{DateTime, NaiveDateTime, Utc};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use diesel_migrations::embed_migrations;
 use posts::database::Post;
-use rocket::{
-    fs::NamedFile,
-    fairing::AdHoc,
-    request::FlashMessage,
-    Build, Rocket,
-};
+use rocket::{fairing::AdHoc, fs::NamedFile, request::FlashMessage, Build, Rocket};
 use rocket_dyn_templates::tera::{from_value, to_value, Error, Value};
 use rocket_dyn_templates::{context, Engines, Template};
 use schema::posts as Posts;
 use std::{
     collections::HashMap,
-    path::{Path,PathBuf}
+    path::{Path, PathBuf},
 };
 mod auth;
 mod db;
@@ -64,7 +59,6 @@ async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
         _ => None,
     }
 }
-
 
 #[get("/")]
 async fn index(
