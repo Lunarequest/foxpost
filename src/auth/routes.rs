@@ -89,7 +89,7 @@ pub async fn login_get(
 ) -> Result<Template, Flash<Redirect>> {
     match sess {
         Some(_) => Err(Flash::error(
-            Redirect::to(uri!(crate::index)),
+            Redirect::to(uri!(crate::routes::index)),
             "You are already logged in",
         )),
         None => Ok(Template::render(

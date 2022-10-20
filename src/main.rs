@@ -4,102 +4,20 @@ extern crate rocket;
 extern crate diesel;
 #[macro_use]
 extern crate diesel_migrations;
-use auth::forms::Session;
 use chrono::{DateTime, NaiveDateTime, Utc};
-use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use diesel_migrations::embed_migrations;
-use posts::database::Post;
-use rocket::{fairing::AdHoc, fs::NamedFile, request::FlashMessage, Build, Rocket};
+use rocket::{fairing::AdHoc, Build, Rocket};
 use rocket_dyn_templates::tera::{from_value, to_value, Error, Value};
-use rocket_dyn_templates::{context, Engines, Template};
-use schema::posts as Posts;
-use std::{
-    collections::HashMap,
-    path::{Path, PathBuf},
-};
+use rocket_dyn_templates::{Engines, Template};
+use std::collections::HashMap;
 mod auth;
 mod db;
 mod errors;
 mod image;
 mod posts;
+mod routes;
 mod schema;
 mod xml;
-
-#[get("/static/<type>/<asset>")]
-async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
-    match r#type.as_str() {
-        "css" => {
-            let path = Path::new("/static/css").join(asset);
-            if path.is_dir() {
-                return None;
-            }
-            NamedFile::open(path).await.ok()
-        }
-        "js" => {
-            let path = Path::new("/static/js").join(asset);
-            if path.is_dir() {
-                return None;
-            }
-            NamedFile::open(path).await.ok()
-        }
-        "images" => {
-            let path = Path::new("/static/images").join(asset);
-            if path.is_dir() {
-                return None;
-            }
-            NamedFile::open(path).await.ok()
-        }
-        "webfonts" => {
-            let path = Path::new("/static/webfonts").join(asset);
-            if path.is_dir() {
-                return None;
-            }
-            NamedFile::open(path).await.ok()
-        }
-        _ => None,
-    }
-}
-
-#[get("/")]
-async fn index(
-    db: db::BlogDBConn,
-    flash: Option<FlashMessage<'_>>,
-    sess: Option<Session>,
-) -> Template {
-    let posts = match db
-        .run(move |conn| {
-            Posts::table
-                .filter(Posts::draft.eq(false))
-                .order_by(Posts::published)
-                .load::<Post>(conn)
-        })
-        .await
-    {
-        Ok(posts) => {
-            let mut posts = posts;
-            //for some reason order by returns
-            // small->large
-            //we want large->small
-            posts.reverse();
-            Some(posts)
-        }
-        Err(e) => {
-            //if there are error's we will know
-            eprintln!("{e}");
-            None
-        }
-    };
-
-    Template::render(
-        "index",
-        context! {
-            title:"Home",
-            posts:posts,
-            flash:flash,
-            sess:sess,
-        },
-    )
-}
 
 async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
     embed_migrations!("migrations");
@@ -112,11 +30,6 @@ async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
         .expect("diesel migrations");
 
     rocket
-}
-
-#[get("/search")]
-async fn search() -> Template {
-    Template::render("search", context! {title:"search"})
 }
 
 fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
@@ -140,7 +53,10 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
 #[launch]
 async fn rocket() -> _ {
     rocket::build()
-        .mount("/", routes![index, static_files, search])
+        .mount(
+            "/",
+            routes![routes::index, routes::static_files, routes::search],
+        )
         .attach(Template::custom(|engines: &mut Engines| {
             engines.tera.register_function("convert", convert)
         }))
