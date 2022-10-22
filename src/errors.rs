@@ -3,7 +3,7 @@ use rocket_dyn_templates::{context, Template};
 
 #[catch(404)]
 async fn not_found(_req: &Request<'_>) -> Template {
-    Template::render("404", context! {title:"this page doesn't exist"})
+    Template::render("404", context! {title: "this page doesn't exist"})
 }
 
 #[catch(505)]
@@ -16,6 +16,7 @@ async fn default_catcher(status: Status, _req: &Request<'_>) -> Template {
     Template::render(
         "error",
         context! {
+            title: "Unkown error",
             error: status.code,
         },
     )

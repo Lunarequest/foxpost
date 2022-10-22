@@ -55,7 +55,13 @@ async fn rocket() -> _ {
     rocket::build()
         .mount(
             "/",
-            routes![routes::index, routes::static_files, routes::search],
+            routes![
+                routes::index,
+                routes::static_files,
+                routes::search,
+                routes::about,
+                routes::favicon
+            ],
         )
         .attach(Template::custom(|engines: &mut Engines| {
             engines.tera.register_function("convert", convert)

@@ -10,32 +10,42 @@ pub async fn search() -> Template {
     Template::render("search", context! {title:"search"})
 }
 
+#[get("/favicon.ico")]
+pub async fn favicon() -> Option<NamedFile> {
+    NamedFile::open("./static/images/favicon.ico").await.ok()
+}
+
+#[get("/about")]
+pub async fn about() -> Template {
+    Template::render("about", context! { title: "about"})
+}
+
 #[get("/static/<type>/<asset>")]
 pub async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
     match r#type.as_str() {
         "css" => {
-            let path = Path::new("/static/css").join(asset);
+            let path = Path::new("./static/css").join(asset);
             if path.is_dir() {
                 return None;
             }
             NamedFile::open(path).await.ok()
         }
         "js" => {
-            let path = Path::new("/static/js").join(asset);
+            let path = Path::new("./static/js").join(asset);
             if path.is_dir() {
                 return None;
             }
             NamedFile::open(path).await.ok()
         }
         "images" => {
-            let path = Path::new("/static/images").join(asset);
+            let path = Path::new("./static/images").join(asset);
             if path.is_dir() {
                 return None;
             }
             NamedFile::open(path).await.ok()
         }
         "webfonts" => {
-            let path = Path::new("/static/webfonts").join(asset);
+            let path = Path::new("./static/webfonts").join(asset);
             if path.is_dir() {
                 return None;
             }
