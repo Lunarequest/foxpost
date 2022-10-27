@@ -21,6 +21,9 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     name: tests
     runs-on: ubuntu-latest
+    env:
+      ROCKET_DATABASES: {blog={url="postgres://postgres:poestgres@database:5432/db_test"}}
+      ROCKET_SECRET_KEY: test
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -29,9 +32,6 @@ jobs:
           toolchain: stable
           override: true
       - uses: actions-rs/cargo@v1
-        env:
-          ROCKET_DATABASES: {blog={url="postgres://postgres:poestgres@database:5432/db_test"}}
-          ROCKET_SECRET_KEY: test
         with:
           command: test
   check:
