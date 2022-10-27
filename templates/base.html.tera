@@ -27,6 +27,15 @@
                         border: none;
                         background: none;
                 }
+
+                .bottom {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        left: 0;
+                        padding: 1rem;
+                        text-align: center;
+                }
         </style>
         <link href="/static/css/bootstrap-blackbox.min.css" rel="stylesheet">
 </head>
@@ -73,12 +82,40 @@
         </nav>
         {% block content %}
         {% endblock content %}
+        <div>
+        <div class="container bottom">
+                <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                        <div class="col-md-4 d-flex align-items-center">
+                                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                                        <svg class="bi" width="30" height="24">
+                                                <use xlink:href="/"></use>
+                                        </svg>
+                                </a>
+                                <span class="text-muted">© <i id="copyright">2021 Advaith Madhukar</i></span>
+                        </div>
+
+                        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+                                                        <use xlink:href="#twitter"></use>
+                                                </svg></a></li>
+                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+                                                        <use xlink:href="#instagram"></use>
+                                                </svg></a></li>
+                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
+                                                        <use xlink:href="#facebook"></use>
+                                                </svg></a></li>
+                        </ul>
+                </footer>
+        </div>
         <script src="/static/js/bootstrap.bundle.min.js"
                 integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
                 crossorigin="anonymous"></script>
         <script src="/static/js/darkmode.min.js"></script>
         <script>
                 window.onload = function (_e) {
+                        let copyright = document.getElementById("copyright");
+                        let year =  new Date().getFullYear();
+                        copyright.innerText=`${year} Advaith Madhukar`;
                         let element = document.getElementById("dark-mode-toggle");
                         if (darkmode.inDarkMode) {
                                 console.log("in darkness we live")

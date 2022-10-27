@@ -17,9 +17,9 @@
             picked
             up a variety of skill including google-fu and a knack of containerizing applications. I am currently run
             arch linux, debian and nixos on my computers. I like working on a varity of projects. Feel free to reach out to me
-            through my <a href="/contact/">contact form</a></p>
-        <p>If you want to know where I got my profile pic. It was by KamidoRei(super greatful for the free art) you can
-            check her <a href="https://www.deviantart.com/kamidorei">devient art</a>.</p>
+            through my <a href="mailto:nullrequest@vivaldi.net">email</a>.</p>
+        <p>If you want to know where I got my profile pic. It was drawn by KamidoRei(super grateful for the free art) you can
+            check out her <a href="https://www.deviantart.com/kamidorei">devient art</a>.</p>
     </center>
 </article>
 {% endblock content %}
