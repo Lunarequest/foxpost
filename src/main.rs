@@ -17,6 +17,8 @@ mod image;
 mod posts;
 mod routes;
 mod schema;
+#[cfg(test)]
+mod tests;
 mod xml;
 
 async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
@@ -51,7 +53,7 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
 }
 
 #[launch]
-async fn rocket() -> _ {
+fn rocket() -> _ {
     rocket::build()
         .mount(
             "/",
