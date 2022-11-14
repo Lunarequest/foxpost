@@ -1,0 +1,7 @@
+-- Your SQL goes here
+CREATE TABLE tags (
+    tag VARCHAR(20) NOT NULL PRIMARY KEY
+);
+
+ALTER TABLE Posts
+ADD tags TEXT [] NOT NULL;

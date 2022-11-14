@@ -174,11 +174,21 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
         Err(json!({"errors":"you musted be logged in as an admin"}))
     } else {
         let post_value = post.clone();
+        let mut tags: Vec<Option<String>> = vec![];
+        if post_value.tags.is_empty() {
+            let tag_split = post_value.tags.split(" ");
+            for tag in tag_split {
+                tags.append(&mut vec![Some(tag.to_string())])
+            }
+        } else {
+            tags.append(&mut vec![None])
+        }
         let post = Post::new(
             post_value.title.clone(),
             post_value.description.clone(),
             post_value.content.clone(),
             post_value.draft,
+            tags,
             sess.user,
         );
         let slug = post.slug.clone();

@@ -17,6 +17,7 @@ pub struct Post {
     pub draft: bool,
     pub author: String,
     pub published: i64,
+    pub tags: Vec<Option<String>>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -24,6 +25,7 @@ pub struct NewPost {
     pub title: String,
     pub description: Option<String>,
     pub content: Option<String>,
+    pub tags: String,
     pub draft: bool,
 }
 
@@ -33,6 +35,7 @@ impl Post {
         description: Option<String>,
         content: Option<String>,
         draft: bool,
+        tags: Vec<Option<String>>,
         author: String,
     ) -> Self {
         let slug = slugify(title.clone());
@@ -43,6 +46,7 @@ impl Post {
             content,
             draft,
             author,
+            tags,
             published: now(),
         }
     }
