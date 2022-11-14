@@ -62,10 +62,9 @@ impl Post {
         description: Option<String>,
         content: Option<String>,
     ) -> Self {
-        match title {
-            Some(title) => self.title = title,
-            None => {}
-        };
+        if let Some(title) = title {
+            self.title = title
+        }
         self.description = description;
         self.content = content;
         self.published = now();

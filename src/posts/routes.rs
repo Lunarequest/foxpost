@@ -108,7 +108,7 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
     if post.draft {
         return None;
     }
-    let content = render_to_html(post.clone().content.unwrap_or_else(|| "".to_string()));
+    let content = render_to_html(post.clone().content.unwrap_or_default());
     Some(Template::render(
         "post",
         context! {
@@ -150,8 +150,7 @@ pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, String> {
     {
         Ok(posts) => {
             let mut search_posts: Vec<JsonEntry> = vec![];
-            let mut count: u32 = 0;
-            for post in posts {
+            for (count, post) in (32..).zip(posts.into_iter()) {
                 let entry = JsonEntry {
                     id: count,
                     href: format!("/posts/{}", post.slug),
@@ -160,7 +159,6 @@ pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, String> {
                     body: post.description,
                 };
                 search_posts.append(&mut vec![entry]);
-                count += 1;
             }
             Ok(Json(search_posts))
         }
@@ -176,7 +174,7 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
         let post_value = post.clone();
         let mut tags: Vec<Option<String>> = vec![];
         if post_value.tags.is_empty() {
-            let tag_split = post_value.tags.split(" ");
+            let tag_split = post_value.tags.split(' ');
             for tag in tag_split {
                 tags.append(&mut vec![Some(tag.to_string())])
             }
