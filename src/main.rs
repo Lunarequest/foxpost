@@ -44,7 +44,7 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
         Ok(time) => time,
         Err(_) => return Err("is the timestamp a int?".into()),
     };
-    let naive = NaiveDateTime::from_timestamp(timestamp, 0);
+    let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
     let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
     match to_value(datetime.to_string()) {
         Ok(time) => Ok(time),

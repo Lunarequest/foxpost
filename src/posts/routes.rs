@@ -132,7 +132,7 @@ pub async fn editor(sess: Session) -> Result<Template, ()> {
 }
 
 fn convert(timestamp: i64) -> String {
-    let naive = NaiveDateTime::from_timestamp(timestamp, 0);
+    let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
     let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
     datetime.to_string()
 }

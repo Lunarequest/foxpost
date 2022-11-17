@@ -17,15 +17,13 @@ package:
 environment:
   contents:
     repositories:
-      - https://dl-cdn.alpinelinux.org/alpine/v3.16/main
-      - https://dl-cdn.alpinelinux.org/alpine/v3.16/community
+      - https://dl-cdn.alpinelinux.org/alpine/latest-stable/main
+      - https://dl-cdn.alpinelinux.org/alpine/latest-stable/community
     packages:
       - alpine-baselayout-data
       - musl-dev
       - ca-certificates-bundle
-      - pkgconf 
-      - openssl-dev
-      - openssl-libs-static
+      - pkgconf
       - libpq-dev
       - busybox
       - cargo
@@ -36,7 +34,7 @@ pipeline:
       BLOG_HOME="${{targets.destdir}}/"      
       TARGETDIR="$(mktemp -d)"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
-      OPENSSL_LIB_DIR=/usr/lib/ OPENSSL_INCLUDE_DIR=/usr/include/openssl OPENSSL_STATIC=1  cargo build --release --target-dir "${TARGETDIR}"
+      cargo build --release --target-dir "${TARGETDIR}"
       cp "${TARGETDIR}/release/blog" "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
