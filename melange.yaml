@@ -20,6 +20,8 @@ environment:
       - https://dl-cdn.alpinelinux.org/alpine/edge/main
       - https://dl-cdn.alpinelinux.org/alpine/edge/community
     packages:
+      - clang
+      - mold
       - alpine-baselayout-data
       - musl-dev
       - ca-certificates-bundle
