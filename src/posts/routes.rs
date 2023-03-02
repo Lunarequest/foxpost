@@ -1,4 +1,4 @@
-use super::database::{NewPost, Post};
+use super::database::{NewPost, Post, Tag, Tagpost};
 use super::json::JsonEntry;
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
@@ -17,6 +17,12 @@ fn render_to_html(markdown: String) -> String {
     let mut html_output = String::new();
     html::push_html(&mut html_output, parser);
     html_output
+}
+
+fn convert(timestamp: i64) -> String {
+    let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
+    let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
+    datetime.to_string()
 }
 
 #[get("/edit/<slug>")]
@@ -131,12 +137,6 @@ pub async fn editor(sess: Session) -> Result<Template, ()> {
     }
 }
 
-fn convert(timestamp: i64) -> String {
-    let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
-    let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
-    datetime.to_string()
-}
-
 #[get("/json")]
 pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, String> {
     match db
@@ -178,8 +178,6 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             for tag in tag_split {
                 tags.append(&mut vec![Some(tag.to_string())])
             }
-        } else {
-            tags.append(&mut vec![None])
         }
         let post = Post::new(
             post_value.title.clone(),
@@ -189,6 +187,7 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             tags,
             sess.user,
         );
+        let tag_posts: Vec<Tagpost> = vec![];
         let slug = post.slug.clone();
         match db
             .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))

@@ -30,7 +30,6 @@ async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
     conn.run(|c| embedded_migrations::run(c))
         .await
         .expect("diesel migrations");
-
     rocket
 }
 

@@ -1,11 +1,9 @@
 contents:
   repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/edge/main
-    - https://dl-cdn.alpinelinux.org/alpine/edge/community
-    - '@local /work/packages'
-  packages:
-    - alpine-baselayout-data
-    - Lunas-blog@local
+      - https://packages.wolfi.dev/os
+      - '@local /work/packages'
+  keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
 accounts:
   groups:
     - groupname: nonroot

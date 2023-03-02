@@ -1,4 +1,4 @@
-use crate::schema::posts;
+use crate::schema::{posts, tagposts, tags};
 use diesel::{Identifiable, Insertable, Queryable};
 use rocket::serde::{Deserialize, Serialize};
 use slug::slugify;
@@ -18,6 +18,19 @@ pub struct Post {
     pub author: String,
     pub published: i64,
     pub tags: Vec<Option<String>>,
+}
+
+#[derive(Debug, Clone, Insertable, Queryable, Identifiable)]
+#[primary_key(tag)]
+pub struct Tag {
+    pub tag: String,
+}
+
+#[derive(Debug, Clone, Insertable, Queryable, Identifiable)]
+#[primary_key(tag)]
+pub struct Tagpost {
+    pub tag: String,
+    pub post: Vec<Option<String>>,
 }
 
 #[derive(Debug, Clone, Deserialize)]

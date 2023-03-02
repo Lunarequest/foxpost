@@ -11,24 +11,27 @@ package:
         - "*"
   dependencies:
     runtime:
-      - libpq
+      - libpq-15
       - ca-certificates-bundle
 
 environment:
   contents:
     repositories:
-      - https://dl-cdn.alpinelinux.org/alpine/edge/main
-      - https://dl-cdn.alpinelinux.org/alpine/edge/community
+      - https://packages.wolfi.dev/os
+    keyring:
+      - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     packages:
-      - clang
+      - clang-15
+      - gcc
       - mold
-      - alpine-baselayout-data
-      - musl-dev
+      - glibc-dev
+      - wolfi-baselayout
       - ca-certificates-bundle
       - pkgconf
-      - libpq-dev
+      - libpq-15
+      - postgresql-15-dev
       - busybox
-      - cargo
+      - rust
 pipeline:
   - name: Build Luna's blog
     runs: |
