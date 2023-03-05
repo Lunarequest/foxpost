@@ -91,7 +91,7 @@
                                                 <use xlink:href="/"></use>
                                         </svg>
                                 </a>
-                                <span class="text-muted">© <i id="copyright">2021 Advaith Madhukar</i></span>
+                                <span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span>
                         </div>
 
                         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
@@ -115,7 +115,7 @@
                 window.onload = function (_e) {
                         let copyright = document.getElementById("copyright");
                         let year =  new Date().getFullYear();
-                        copyright.innerText=`${year} Advaith Madhukar`;
+                        copyright.innerText=`${year} Luna Dragon`;
                         let element = document.getElementById("dark-mode-toggle");
                         if (darkmode.inDarkMode) {
                                 console.log("in darkness we live")
