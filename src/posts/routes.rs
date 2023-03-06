@@ -6,6 +6,7 @@ use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
+use diesel::pg::upsert::excluded;
 use pulldown_cmark::{html, Options, Parser};
 use rocket::http::Status;
 use rocket::serde::json::{json, Json, Value};
@@ -192,20 +193,27 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
         );
         let slug = post.slug.clone();
         match db
-            .run(move |conn|    diesel::insert_into(Posts::table).values(post).execute(conn))
+            .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
             .await
         {
             Err(_) => {
                 Err(json!({"Errors":"a error occrued while trying to insert into the database"}))
             }
             Ok(_) => {
-                match db.run(move |conn| diesel::insert_into(Tags::table).values(&tag_insert).execute(conn)).await {
+                match db
+                    .run(move |conn| {
+                        diesel::insert_into(Tags::table)
+                            .values(&tag_insert)
+                            .execute(conn)
+                    })
+                    .await
+                {
                     Ok(_) => Ok(json!({ "slug": slug })),
-                    Err(_) => {
-                        Err(json!({"Errors":"a error occrued while trying to insert into the database"}))
-                    }
+                    Err(_) => Err(
+                        json!({"Errors":"a error occrued while trying to insert into the database"}),
+                    ),
                 }
-            },
+            }
         }
     }
 }
@@ -231,6 +239,16 @@ pub async fn update_post(
     if sess.user != posts.author || !sess.isadmin {
         return Err(json!({"Errors":"you can not edit a post you didn't create"}));
     }
+    let mut tags: Vec<Option<String>> = vec![];
+    let mut tag_insert: Vec<Tag> = vec![];
+    let tags_split = post.tags.split(", ");
+    for tag in tags_split {
+        tags.append(&mut vec![Some(tag.to_string())]);
+        tag_insert.append(&mut vec![Tag {
+            tag: tag.to_string(),
+        }]);
+    }
+    //over write tags in posts and update tags db
     match db
         .run(move |conn| {
             diesel::update(Posts::table.find(slugval))
@@ -239,7 +257,7 @@ pub async fn update_post(
                     Posts::dsl::title.eq(post.title.clone()),
                     Posts::dsl::description.eq(post.description.clone()),
                     Posts::dsl::content.eq(post.content.clone()),
-                    Posts::dsl::tags.eq(array_append(Posts::dsl::tags, &post.tags)),
+                    Posts::dsl::tags.eq(tags),
                 ))
                 .execute(conn)
         })
@@ -251,6 +269,23 @@ pub async fn update_post(
                 json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
             )
         }
-        Ok(_) => Ok(json!({"status":"sucess"})),
+        Ok(_) => {
+            match db.run(move | conn | {
+                diesel::insert_into(Tags::table)
+                .values(tag_insert)
+                .on_conflict(Tags::tag)
+                .do_update()
+                .set(Tags::tag.eq(excluded(Tags::tag)))
+                .execute(conn)
+            }).await {
+                Ok(_) => Ok(json!({"status":"sucess"})),
+                Err(e) => {
+                    eprintln!("{e}");
+                    Err(
+                        json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+                    )
+                }
+            }
+        },
     }
 }
