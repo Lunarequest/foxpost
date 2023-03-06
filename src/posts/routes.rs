@@ -1,9 +1,10 @@
-use super::database::{NewPost, Post, Tag, array_append};
+use super::database::{array_append, NewPost, Post, Tag};
 use super::json::JsonEntry;
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
+use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
 use pulldown_cmark::{html, Options, Parser};
 use rocket::http::Status;
@@ -172,12 +173,14 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
         Err(json!({"errors":"you musted be logged in as an admin"}))
     } else {
         let post_value = post.clone();
+        let tags_split = post_value.tags.split(", ");
         let mut tags: Vec<Option<String>> = vec![];
-        if post_value.tags.is_empty() {
-            let tag_split = post_value.tags.split(' ');
-            for tag in tag_split {
-                tags.append(&mut vec![Some(tag.to_string())])
-            }
+        let mut tag_insert: Vec<Tag> = vec![];
+        for tag in tags_split {
+            tags.append(&mut vec![Some(tag.to_string())]);
+            tag_insert.append(&mut vec![Tag {
+                tag: tag.to_string(),
+            }]);
         }
         let post = Post::new(
             post_value.title.clone(),
@@ -189,13 +192,20 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
         );
         let slug = post.slug.clone();
         match db
-            .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
+            .run(move |conn|    diesel::insert_into(Posts::table).values(post).execute(conn))
             .await
         {
             Err(_) => {
                 Err(json!({"Errors":"a error occrued while trying to insert into the database"}))
             }
-            Ok(_) => Ok(json!({ "slug": slug })),
+            Ok(_) => {
+                match db.run(move |conn| diesel::insert_into(Tags::table).values(&tag_insert).execute(conn)).await {
+                    Ok(_) => Ok(json!({ "slug": slug })),
+                    Err(_) => {
+                        Err(json!({"Errors":"a error occrued while trying to insert into the database"}))
+                    }
+                }
+            },
         }
     }
 }
@@ -231,7 +241,6 @@ pub async fn update_post(
                     Posts::dsl::content.eq(post.content.clone()),
                     Posts::dsl::tags.eq(array_append(Posts::dsl::tags, &post.tags)),
                 ))
-                
                 .execute(conn)
         })
         .await

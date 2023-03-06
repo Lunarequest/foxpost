@@ -81,7 +81,8 @@ fn rocket() -> _ {
             ],
         )
         .attach(Template::custom(|engines: &mut Engines| {
-            engines.tera.register_function("convert", convert).register_function("tags_to_list", tags_to_list)
+            engines.tera.register_function("convert", convert);
+            engines.tera.register_function("tags_to_list", tags_to_list);
         }))
         .attach(errors::stage())
         .attach(db::BlogDBConn::fairing())

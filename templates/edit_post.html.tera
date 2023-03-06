@@ -22,7 +22,7 @@
             </div>
             <label for="description" class="col-sm col-form-label">Tags:</label>
             <div class="col-sm-11">
-                <input type="text" name="tags" id="tags" value="{{post.tags.join(', ')}}" class="form-control">
+                <input type="text" name="tags" id="tags" value="{{tags_to_list(tags=post.tags)}}" class="form-control">
             </div> 
         </div>
         <div class="form-check form-switch">
