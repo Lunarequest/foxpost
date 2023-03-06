@@ -14,13 +14,6 @@ diesel::table! {
 }
 
 diesel::table! {
-    tagposts (tag) {
-        tag -> Varchar,
-        post -> Array<Nullable<Text>>,
-    }
-}
-
-diesel::table! {
     tags (tag) {
         tag -> Varchar,
     }
@@ -38,4 +31,8 @@ diesel::table! {
     }
 }
 
-diesel::allow_tables_to_appear_in_same_query!(posts, tagposts, tags, users,);
+diesel::allow_tables_to_appear_in_same_query!(
+    posts,
+    tags,
+    users,
+);

@@ -15,10 +15,14 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label for="description" class="col-sm col-form-lable">Description:</label>
+            <label for="description" class="col-sm col-form-label">Description:</label>
             <div class="col-sm-11">
                 <input type="text" name="description" id="description" maxlength="200" class="form-control">
             </div>
+            <label for="description" class="col-sm col-form-label">Tags:</label>
+            <div class="col-sm-11">
+                <input type="text" name="tags" id="tags" class="form-control">
+            </div> 
         </div>
         <div class="form-check form-switch">
             <label class="form-check-label" for="draft">Publish?</label>
@@ -64,6 +68,7 @@
         if (sessionStorage.getItem("slug")) {
             slug = sessionStorage.getItem("slug");
             json["slug"] = slug;
+            json["tags"] = json["tags"].split(", ");
             fetch(`/api/posts/${slug}/update`, {
                 method: 'POST',
                 mode: "same-origin",

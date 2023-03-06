@@ -1,4 +1,4 @@
-use super::database::{NewPost, Post, Tag, Tagpost};
+use super::database::{NewPost, Post, Tag, array_append};
 use super::json::JsonEntry;
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
@@ -187,7 +187,6 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             tags,
             sess.user,
         );
-        let tag_posts: Vec<Tagpost> = vec![];
         let slug = post.slug.clone();
         match db
             .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
@@ -230,7 +229,9 @@ pub async fn update_post(
                     Posts::dsl::title.eq(post.title.clone()),
                     Posts::dsl::description.eq(post.description.clone()),
                     Posts::dsl::content.eq(post.content.clone()),
+                    Posts::dsl::tags.eq(array_append(Posts::dsl::tags, &post.tags)),
                 ))
+                
                 .execute(conn)
         })
         .await

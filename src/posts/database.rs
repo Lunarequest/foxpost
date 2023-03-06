@@ -1,7 +1,25 @@
-use crate::schema::{posts, tagposts, tags};
-use diesel::{Identifiable, Insertable, Queryable};
+use crate::schema::{posts, tags};
+use diesel::{
+    sql_types::{Array, Nullable, Text},
+    Identifiable, Insertable, Queryable,
+};
 use rocket::serde::{Deserialize, Serialize};
 use slug::slugify;
+
+sql_function! {
+    /// Appends an element to the end of an array (same as the anycompatiblearray || anycompatible operator).
+    fn array_append(x: Array<Nullable<Text>>, y: Text) -> Array<Nullable<Text>>;
+}
+
+sql_function! {
+    /// Removes all elements equal to the given value from the array. The array must be one-dimensional. Comparisons are done using IS NOT DISTINCT FROM semantics, so it is possible to remove NULLs.
+    fn array_remove(x: Array<Nullable<Text>>, y: Text) -> Array<Nullable<Text>>;
+}
+
+sql_function! {
+    /// Replaces each array element equal to the second argument with the third argument.
+    fn array_replace(x: Array<Nullable<Text>>, y: Text) -> Array<Nullable<Text>>;
+}
 
 pub fn now() -> i64 {
     chrono::Utc::now().timestamp()
@@ -24,13 +42,6 @@ pub struct Post {
 #[primary_key(tag)]
 pub struct Tag {
     pub tag: String,
-}
-
-#[derive(Debug, Clone, Insertable, Queryable, Identifiable)]
-#[primary_key(tag)]
-pub struct Tagpost {
-    pub tag: String,
-    pub post: Vec<Option<String>>,
 }
 
 #[derive(Debug, Clone, Deserialize)]

@@ -2,4 +2,4 @@
 ALTER TABLE Posts
 DROP tags;
 DROP TABLE tags;
-DROP TABLE tagposts;
+DROP INDEX IF EXISTS posts_tag_index;

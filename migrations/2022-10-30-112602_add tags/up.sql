@@ -3,10 +3,7 @@ CREATE TABLE tags (
     tag VARCHAR(20) NOT NULL PRIMARY KEY
 );
 
-CREATE TABLE tagposts (
-    tag VARCHAR(20) NOT NULL PRIMARY KEY,
-    post TEXT [] NOT NULL
-);
-
 ALTER TABLE Posts
 ADD tags TEXT [] NOT NULL;
+
+CREATE INDEX posts_tag_index ON Posts (tags);
