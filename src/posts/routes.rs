@@ -270,14 +270,17 @@ pub async fn update_post(
             )
         }
         Ok(_) => {
-            match db.run(move | conn | {
-                diesel::insert_into(Tags::table)
-                .values(tag_insert)
-                .on_conflict(Tags::tag)
-                .do_update()
-                .set(Tags::tag.eq(excluded(Tags::tag)))
-                .execute(conn)
-            }).await {
+            match db
+                .run(move |conn| {
+                    diesel::insert_into(Tags::table)
+                        .values(tag_insert)
+                        .on_conflict(Tags::tag)
+                        .do_update()
+                        .set(Tags::tag.eq(excluded(Tags::tag)))
+                        .execute(conn)
+                })
+                .await
+            {
                 Ok(_) => Ok(json!({"status":"sucess"})),
                 Err(e) => {
                     eprintln!("{e}");
@@ -286,6 +289,6 @@ pub async fn update_post(
                     )
                 }
             }
-        },
+        }
     }
 }

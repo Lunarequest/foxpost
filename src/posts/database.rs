@@ -26,7 +26,7 @@ pub fn now() -> i64 {
 }
 
 #[derive(Debug, Clone, Queryable, Identifiable, Insertable, Serialize)]
-#[primary_key(slug)]
+#[diesel(primary_key(slug))]
 pub struct Post {
     pub slug: String,
     pub title: String,
@@ -39,7 +39,7 @@ pub struct Post {
 }
 
 #[derive(Debug, Clone, Insertable, Queryable, Identifiable)]
-#[primary_key(tag)]
+#[diesel(primary_key(tag))]
 pub struct Tag {
     pub tag: String,
 }

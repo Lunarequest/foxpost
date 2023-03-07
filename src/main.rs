@@ -2,10 +2,8 @@
 extern crate rocket;
 #[macro_use]
 extern crate diesel;
-#[macro_use]
-extern crate diesel_migrations;
 use chrono::{DateTime, NaiveDateTime, Utc};
-use diesel_migrations::embed_migrations;
+use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use rocket::{fairing::AdHoc, Build, Rocket};
 use rocket_dyn_templates::tera::{from_value, to_value, Error, Value};
 use rocket_dyn_templates::{Engines, Template};
@@ -22,14 +20,16 @@ mod tests;
 mod xml;
 
 async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
-    embed_migrations!("migrations");
+    const MIGRATIONS: EmbeddedMigrations = embed_migrations!();
     println!("running migrations");
-    let conn = db::BlogDBConn::get_one(&rocket)
+    db::BlogDBConn::get_one(&rocket)
         .await
-        .expect("database connection");
-    conn.run(|c| embedded_migrations::run(c))
-        .await
-        .expect("diesel migrations");
+        .expect("database connection")
+        .run(|c| {
+            c.run_pending_migrations(MIGRATIONS)
+                .expect("Diesel migrations");
+        })
+        .await;
     rocket
 }
 
@@ -51,19 +51,17 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
     }
 }
 
-fn tags_to_list(args: &HashMap<String,Value>) -> Result<Value,Error> {
+fn tags_to_list(args: &HashMap<String, Value>) -> Result<Value, Error> {
     let tags = match from_value::<Vec<String>>(
-        args.get("tags")
-            .ok_or::<Error>("No tags?".into())?
-            .clone()
+        args.get("tags").ok_or::<Error>("No tags?".into())?.clone(),
     ) {
         Ok(tags) => tags,
-        Err(e) =>  return Err(format!("{e}").into()),
+        Err(e) => return Err(format!("{e}").into()),
     };
     let tag_string = tags.join(", ");
     match to_value(tag_string.to_string()) {
         Ok(tags) => Ok(tags),
-        Err(e) =>  Err(format!("{e}").into()),
+        Err(e) => Err(format!("{e}").into()),
     }
 }
 

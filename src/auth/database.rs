@@ -22,7 +22,7 @@ pub struct User {
 }
 
 #[derive(Insertable, Clone, Debug)]
-#[table_name = "users"]
+#[diesel(table_name = users)]
 pub struct NewUser {
     pub username: String,
     pub email: String,
