@@ -6,6 +6,7 @@ use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
+use diesel::PgArrayExpressionMethods;
 use diesel::pg::upsert::excluded;
 use pulldown_cmark::{html, Options, Parser};
 use rocket::http::Status;
@@ -25,6 +26,27 @@ fn convert(timestamp: i64) -> String {
     let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
     let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
     datetime.to_string()
+}
+
+#[get("/tag/<tag>")]
+pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Status, String)> {
+    let posts = match db
+        .run(move |conn| {
+            Posts::table
+                .filter(Posts::tags.contains(vec![Some(tag)]))
+                .execute(conn)
+        })
+        .await
+    {
+        Ok(posts) => posts,
+        Err(e) => return Err((Status::InternalServerError, format!("{e}"))),
+    };
+    Ok(Template::render(
+        "tags",
+        context! {
+            posts: posts
+        },
+    ))
 }
 
 #[get("/edit/<slug>")]
