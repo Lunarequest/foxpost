@@ -6,8 +6,8 @@ use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
-use diesel::PgArrayExpressionMethods;
 use diesel::pg::upsert::excluded;
+use diesel::PgArrayExpressionMethods;
 use pulldown_cmark::{html, Options, Parser};
 use rocket::http::Status;
 use rocket::serde::json::{json, Json, Value};
@@ -30,11 +30,12 @@ fn convert(timestamp: i64) -> String {
 
 #[get("/tag/<tag>")]
 pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Status, String)> {
+    let tag_cloned = tag.clone();
     let posts = match db
         .run(move |conn| {
             Posts::table
-                .filter(Posts::tags.contains(vec![Some(tag)]))
-                .execute(conn)
+                .filter(Posts::tags.contains(vec![Some(tag_cloned)]))
+                .load::<Post>(conn)
         })
         .await
     {
@@ -44,6 +45,7 @@ pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Sta
     Ok(Template::render(
         "tags",
         context! {
+            title: format!("all posts with tag {}", tag),
             posts: posts
         },
     ))
