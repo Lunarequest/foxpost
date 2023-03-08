@@ -16,8 +16,6 @@ pub struct User {
     pub passwd: String,
     pub isadmin: bool,
     #[serde(skip_deserializing)]
-    pub salt: String,
-    #[serde(skip_deserializing)]
     pub confirmed: bool,
 }
 
@@ -28,7 +26,6 @@ pub struct NewUser {
     pub email: String,
     pub passwd: String,
     pub isadmin: bool,
-    pub salt: String,
     pub confirmed: bool,
 }
 
@@ -57,7 +54,6 @@ impl NewUser {
                     email,
                     isadmin: false,
                     passwd: passwd.to_string(),
-                    salt: salt.to_string(),
                     confirmed: false,
                 };
                 Ok(user)
