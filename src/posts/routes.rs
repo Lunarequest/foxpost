@@ -1,4 +1,4 @@
-use super::database::{array_append, NewPost, Post, Tag};
+use super::database::{NewPost, Post, Tag};
 use super::json::JsonEntry;
 use crate::auth::forms::Session;
 use crate::db::BlogDBConn;
@@ -128,19 +128,19 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
 }
 
 #[get("/new")]
-pub async fn editor(sess: Session) -> Result<Template, ()> {
+pub async fn editor(sess: Session) -> Result<Template, Status> {
     if sess.isadmin {
         Ok(Template::render(
             "editor",
             context! {title:"new post",sess:sess},
         ))
     } else {
-        Err(())
+        Err(Status::Unauthorized)
     }
 }
 
 #[get("/json")]
-pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, String> {
+pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, (Status, String)> {
     match db
         .run(move |conn| {
             Posts::table
@@ -164,14 +164,21 @@ pub async fn posts(db: BlogDBConn) -> Result<Json<Vec<JsonEntry>>, String> {
             }
             Ok(Json(search_posts))
         }
-        Err(e) => Err(format!("{e}")),
+        Err(e) => Err((Status::InternalServerError, format!("{e}"))),
     }
 }
 
 #[post("/new", data = "<post>")]
-pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Result<Value, Value> {
+pub async fn new_post(
+    db: BlogDBConn,
+    sess: Session,
+    post: Json<NewPost>,
+) -> Result<Value, (Status, Value)> {
     if !sess.isadmin {
-        Err(json!({"errors":"you musted be logged in as an admin"}))
+        Err((
+            Status::Unauthorized,
+            json!({"errors":"you musted be logged in as an admin"}),
+        ))
     } else {
         let post_value = post.clone();
         let tags_split = post_value.tags.split(", ");
@@ -196,9 +203,10 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
             .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
             .await
         {
-            Err(_) => {
-                Err(json!({"Errors":"a error occrued while trying to insert into the database"}))
-            }
+            Err(_) => Err((
+                Status::InternalServerError,
+                json!({"Errors":"a error occrued while trying to insert into the database"}),
+            )),
             Ok(_) => {
                 match db
                     .run(move |conn| {
@@ -209,9 +217,10 @@ pub async fn new_post(db: BlogDBConn, sess: Session, post: Json<NewPost>) -> Res
                     .await
                 {
                     Ok(_) => Ok(json!({ "slug": slug })),
-                    Err(_) => Err(
+                    Err(_) => Err((
+                        Status::InternalServerError,
                         json!({"Errors":"a error occrued while trying to insert into the database"}),
-                    ),
+                    )),
                 }
             }
         }
@@ -224,7 +233,7 @@ pub async fn update_post(
     sess: Session,
     post: Json<NewPost>,
     slug: String,
-) -> Result<Value, Value> {
+) -> Result<Value, (Status, Value)> {
     let slugval = slug.clone();
     let posts: Post = match db
         .run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
@@ -233,11 +242,14 @@ pub async fn update_post(
         Ok(post) => post,
         Err(e) => {
             eprintln!("{e}");
-            return Err(json!({"Errors":"missing post"}));
+            return Err((Status::NotFound, json!({"Errors":"missing post"})));
         }
     };
     if sess.user != posts.author || !sess.isadmin {
-        return Err(json!({"Errors":"you can not edit a post you didn't create"}));
+        return Err((
+            Status::Unauthorized,
+            json!({"Errors":"you can not edit a post you didn't create"}),
+        ));
     }
     let mut tags: Vec<Option<String>> = vec![];
     let mut tag_insert: Vec<Tag> = vec![];
@@ -265,9 +277,10 @@ pub async fn update_post(
     {
         Err(e) => {
             eprintln!("{e}");
-            Err(
+            Err((
+                Status::InternalServerError,
                 json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
-            )
+            ))
         }
         Ok(_) => {
             match db
@@ -284,9 +297,10 @@ pub async fn update_post(
                 Ok(_) => Ok(json!({"status":"sucess"})),
                 Err(e) => {
                     eprintln!("{e}");
-                    Err(
+                    Err((
+                        Status::InternalServerError,
                         json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
-                    )
+                    ))
                 }
             }
         }
