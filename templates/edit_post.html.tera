@@ -90,7 +90,6 @@
         console.log(json.draft);
         slug = sessionStorage.getItem("slug");
         json["slug"] = slug;
-        json["tags"] = json["tags"].split(", ");
         fetch(`/api/posts/${slug}/update`, {
             method: 'POST',
             mode: "same-origin",
