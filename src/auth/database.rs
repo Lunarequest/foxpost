@@ -48,16 +48,13 @@ impl NewUser {
                 eprintln!("{e}");
                 Err("unable to hash password")
             }
-            Ok(passwd) => {
-                let user = NewUser {
-                    username,
-                    email,
-                    isadmin: false,
-                    passwd: passwd.to_string(),
-                    confirmed: false,
-                };
-                Ok(user)
-            }
+            Ok(passwd) => Ok(NewUser {
+                username,
+                email,
+                isadmin: false,
+                passwd: passwd.to_string(),
+                confirmed: false,
+            }),
         }
     }
 }
