@@ -4,11 +4,11 @@ contents:
     - melange.rsa.pub
   repositories:
     - https://packages.wolfi.dev/os
-    - '@local /work/packages'
+    - '/work/packages'
   packages:
     - ca-certificates-bundle
     - wolfi-base
-    - Lunas-blog@local
+    - Lunas-blog
 accounts:
   groups:
     - groupname: nonroot
