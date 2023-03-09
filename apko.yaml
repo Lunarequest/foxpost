@@ -7,7 +7,7 @@ contents:
     - '/work/packages'
   packages:
     - ca-certificates-bundle
-    - wolfi-base
+    - wolfi-baselayout
     - Lunas-blog
 accounts:
   groups:
