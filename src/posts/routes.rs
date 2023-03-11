@@ -227,10 +227,13 @@ pub async fn new_post(
             .run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
             .await
         {
-            Err(_) => Err((
-                Status::InternalServerError,
-                json!({"Errors":"a error occrued while trying to insert into the database"}),
-            )),
+            Err(e) => {
+                eprintln!("{e}");
+                Err((
+                    Status::InternalServerError,
+                    json!({"Errors":"a error occrued while trying to insert into the database"}),
+                ))
+            }
             Ok(_) => {
                 match db
                     .run(move |conn| {
@@ -241,10 +244,13 @@ pub async fn new_post(
                     .await
                 {
                     Ok(_) => Ok(json!({ "slug": slug })),
-                    Err(_) => Err((
-                        Status::InternalServerError,
-                        json!({"Errors":"a error occrued while trying to insert into the database"}),
-                    )),
+                    Err(e) => {
+                        eprintln!("{e}");
+                        Err((
+                            Status::InternalServerError,
+                            json!({"Errors":"a error occrued while trying to insert into the database"}),
+                        ))
+                    }
                 }
             }
         }
@@ -284,6 +290,7 @@ pub async fn update_post(
             tag: tag.to_string(),
         }]);
     }
+    println!("{:#?}",tag_insert);
     //over write tags in posts and update tags db
     match db
         .run(move |conn| {
@@ -310,10 +317,8 @@ pub async fn update_post(
             match db
                 .run(move |conn| {
                     diesel::insert_into(Tags::table)
-                        .values(tag_insert)
-                        .on_conflict(Tags::tag)
-                        .do_update()
-                        .set(Tags::tag.eq(excluded(Tags::tag)))
+                        .values(&tag_insert)
+                        .on_conflict_do_nothing()
                         .execute(conn)
                 })
                 .await
