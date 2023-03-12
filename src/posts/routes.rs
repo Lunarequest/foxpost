@@ -6,7 +6,6 @@ use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
-use diesel::pg::upsert::excluded;
 use diesel::PgArrayExpressionMethods;
 use pulldown_cmark::{html, Options, Parser};
 use rocket::http::Status;
