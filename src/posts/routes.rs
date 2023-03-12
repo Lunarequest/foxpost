@@ -289,7 +289,7 @@ pub async fn update_post(
             tag: tag.to_string(),
         }]);
     }
-    println!("{:#?}",tag_insert);
+    println!("{:#?}", tag_insert);
     //over write tags in posts and update tags db
     match db
         .run(move |conn| {
