@@ -7,69 +7,30 @@
         <meta name="color-scheme" content="light dark">
         <meta name="generator" content="luna's blog">
         <meta name="rating" content="General">
-        <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
         <title>{% block title %}{{ title }}{% endblock title %}</title>
         {% block meta %}
         {% endblock meta %}
-        <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Kalam:wght@400;700&display=swap');
-
-                * {
-                        font-family: 'Kalam';
-                }
-
-                code {
-                        font-family: 'Inconsolata', monospace;
-                }
-
-                .dark-toggle {
-                        padding: 0;
-                        border: none;
-                        background: none;
-                }
-
-                .bottom {
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        left: 0;
-                        padding: 1rem;
-                        text-align: center;
-                }
-        </style>
+        <link href="/static/css/style.css" rel="stylesheet">
         <link href="/static/css/output.css" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
         {% include 'nav' %}
         {% block content %}
         {% endblock content %}
-        <div>
-        <div class="container bottom">
-                <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-                        <div class="col-md-4 d-flex align-items-center">
-                                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                                        <svg class="bi" width="30" height="24">
-                                                <use xlink:href="/"></use>
-                                        </svg>
-                                </a>
-                                <span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span>
-                        </div>
-
-                        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-                                                        <use xlink:href="#twitter"></use>
-                                                </svg></a></li>
-                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-                                                        <use xlink:href="#instagram"></use>
-                                                </svg></a></li>
-                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-                                                        <use xlink:href="#facebook"></use>
-                                                </svg></a></li>
-                        </ul>
-                </footer>
-        </div>
+        {% include 'footer' %}
         <script src="/static/js/theme.js"></script>
+        <script>
+                const button = document.querySelector('#menu-button');
+                const menu = document.querySelector('#menu');
+
+
+                button.addEventListener('click', () => {
+                        menu.classList.toggle('hidden');
+                });
+
+        </script>
 </body>
 
 </html>

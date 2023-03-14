@@ -34,20 +34,6 @@
 </div>
 <div id="disqus_thread"></div>
 <script>
-    /**var dark = darkmode.inDarkMode;
-    if (dark) {
-        document
-            .querySelector(`link[title="dark"]`)
-            .removeAttribute("disabled");
-        document.querySelector(`link[title="light"]`)
-            .setAttribute("disabled", "disabled");
-    }else{
-        document
-            .querySelector(`link[title="light"]`)
-            .removeAttribute("disabled");
-        document.querySelector(`link[title="dark"]`)
-            .setAttribute("disabled", "disabled");
-    }**/
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 
      *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR 

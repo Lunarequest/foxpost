@@ -1,21 +1,28 @@
-section {
-    display: grid;
-    place-items: center;
-    align-items: center;
-    margin-top: 5%;
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
+* {
+    font-family: 'Roboto';
 }
 
-.hidden {
-    opacity: 0;
-    transition: all 1s;
+code {
+    font-family: 'Inconsolata', monospace;
 }
 
-.show {
-    opacity: 1;
+.dark-toggle {
+    padding: 0;
+    border: none;
+    background: none;
+}
+.nav {
+    top: 0;
+    position: relative;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 10px;
+    text-align: right
 }
 
-@media(prefers-reduced-motion){
-    .hidden {
-        transition: none;
-    }
+.navbar {
+    min-height: 50px;
+    margin-bottom: 20px
 }

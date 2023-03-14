@@ -1,39 +1,34 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-            <a class="navbar-brand" href="/"><img src="/static/images/icon.png" width="60"
-                            alt="branding"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/about">About</a>
-                            </li>
-                            {% if sess %}
-                            <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page"
-                                            href="/posts/all">Drafts?</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="/posts/new">New
-                                            Post</a>
-                            </li>
-                            <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page"
-                                            href="/users/logout">Logout</a>
-                            </li>
-                            {% endif %}
-                    </ul>
-                    <a href="/search" id="Search"><em class="fas fa-search fa-lg"></em></a>
-                    &nbsp;
-                    <button class="dark-toggle" id="dark-mode-toggle"><em class="fas fa-sun"
-                                    id="dark-mode-toggle-icon" aria-label="Toggle Dark Mode"></em></button>
-            </div>
-    </div>
+<nav class="bg-grey border-black-200 px-2 sm:px-4 py-2.5 rounded dark:bg-black-900">
+        <div class="container flex flex-wrap items-center justify-between mx-auto">
+                <a href="/" class="flex items-center">
+                        <img src="/static/images/icon.png" class="h-6 mr-3 sm:h-9" alt="Luna's sona" />
+                        <span
+                                class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Nullrequest</span>
+                </a>
+                <button data-collapse-toggle="navbar-default" type="button"
+                        class="inline-flex items-center p-2 ml-3 text-sm text-white-500 rounded-lg md:hidden hover:bg-black-100 focus:outline-none focus:ring-2 focus:ring-black-200 dark:text-white-400 dark:hover:bg-black-700 dark:focus:ring-black-600"
+                        aria-controls="navbar-default" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                        clip-rule="evenodd"></path>
+                        </svg>
+                </button>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                        <ul
+                                class="flex flex-col p-4 mt-4 border border-black-100 rounded-lg bg-black-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black dark:bg-black-800 md:dark:bg-black-900 dark:border-black-700">
+                                <li>
+                                        <a href="/about"
+                                                class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+                                </li>
+                                <li>
+                                        <a href="/about"
+                                                class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent"><em
+                                                        class="fas fa-search fa-lg" aria-hidden="true"></em></a>
+                                </li>
+                        </ul>
+                </div>
+        </div>
 </nav>
