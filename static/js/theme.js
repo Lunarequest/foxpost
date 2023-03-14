@@ -22,9 +22,11 @@ window.onload = function () {
     function setTheme(mode) {
         localStorage.setItem('dark-mode-storage', mode);
         if (mode === 'dark') {
-            document.documentElement.classList.add('dark');
+            document.body.classList.remove("frappe");
+            document.body.classList.add("mocha");
         } else if (mode === 'light') {
-            document.documentElement.classList.add('light');
+            document.body.classList.remove("mocha");
+            document.body.classList.add("frappe");
             toggle.className = 'fas fa-moon'
         }
     }
