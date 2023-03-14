@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img src="/static/images/icon.png" width="60"
+                            alt="branding"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/about">About</a>
+                            </li>
+                            {% if sess %}
+                            <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                            href="/posts/all">Drafts?</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/posts/new">New
+                                            Post</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page"
+                                            href="/users/logout">Logout</a>
+                            </li>
+                            {% endif %}
+                    </ul>
+                    <a href="/search" id="Search"><em class="fas fa-search fa-lg"></em></a>
+                    &nbsp;
+                    <button class="dark-toggle" id="dark-mode-toggle"><em class="fas fa-sun"
+                                    id="dark-mode-toggle-icon" aria-label="Toggle Dark Mode"></em></button>
+            </div>
+    </div>
+</nav>

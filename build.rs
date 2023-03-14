@@ -17,23 +17,18 @@ fn is_program_in_path(program: &str) -> bool {
 fn main() {
     println!("cargo:rerun-if-changed=tailwind/tailwind.config.js");
     let path = PathBuf::from("static/css/output.css");
-    
     if !path.exists() {
         println!("cargo:rerun-if-changed=static/css/output.css");
     }
     
-    if !is_program_in_path("npx") {
-        eprintln!("npx is missing");
+    if !is_program_in_path("yarn") {
+        eprintln!("yarn is missing");
         exit(1);
     }
-
-    match Command::new("npx")
+    env::set_current_dir("tailwind").unwrap();
+    match Command::new("yarn")
         .args([
-            "tailwindcss",
-            "-i",
-            "./tailwind/input.css",
-            "-o",
-            "./static/css/output.css",
+            "compile"
         ])
         .spawn()
     {

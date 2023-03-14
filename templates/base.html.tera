@@ -37,49 +37,11 @@
                         text-align: center;
                 }
         </style>
-        <link href="/static/css/bootstrap-blackbox.min.css" rel="stylesheet">
+        <link href="/static/css/output.css" rel="stylesheet">
 </head>
 
 <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                        <a class="navbar-brand" href="/"><img src="/static/images/icon.png" width="60"
-                                        alt="branding"></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="/about">About</a>
-                                        </li>
-                                        {% if sess %}
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page"
-                                                        href="/posts/all">Drafts?</a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="/posts/new">New
-                                                        Post</a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page"
-                                                        href="/users/logout">Logout</a>
-                                        </li>
-                                        {% endif %}
-                                </ul>
-                                <a href="/search" id="Search"><em class="fas fa-search fa-lg"></em></a>
-                                &nbsp;
-                                <button class="dark-toggle" id="darkmode"><em class="fas fa-sun" id="dark-mode-toggle"
-                                                aria-label="Toggle Dark Mode"></em></button>
-                        </div>
-                </div>
-        </nav>
+        {% include 'nav' %}
         {% block content %}
         {% endblock content %}
         <div>
@@ -107,40 +69,7 @@
                         </ul>
                 </footer>
         </div>
-        <script src="/static/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossorigin="anonymous"></script>
-        <script src="/static/js/darkmode.min.js"></script>
-        <script>
-                window.onload = function (_e) {
-                        let copyright = document.getElementById("copyright");
-                        let year =  new Date().getFullYear();
-                        copyright.innerText=`${year} Luna Dragon`;
-                        let element = document.getElementById("dark-mode-toggle");
-                        if (darkmode.inDarkMode) {
-                                console.log("in darkness we live")
-                                element.classList.remove("fa-moon");
-                                element.classList.add("fa-sun");
-                        } else {
-                                console.log('let there be light')
-                                element.classList.remove("fa-sun")
-                                element.classList.add("fa-moon");
-                        }
-                }
-                document.querySelector("#darkmode").onclick = function (e) {
-                        darkmode.toggleDarkMode();
-                        let element = document.getElementById("dark-mode-toggle");
-                        if (darkmode.inDarkMode) {
-                                console.log('let there be light')
-                                element.classList.remove("fa-moon");
-                                element.classList.add("fa-sun");
-                        } else {
-                                console.log("in darkness we live")
-                                element.classList.remove("fa-sun")
-                                element.classList.add("fa-moon");
-                        }
-                }
-        </script>
+        <script src="/static/js/theme.js"></script>
 </body>
 
 </html>
