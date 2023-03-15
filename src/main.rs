@@ -59,7 +59,7 @@ fn tags_to_list(args: &HashMap<String, Value>) -> Result<Value, Error> {
 		Err(e) => return Err(format!("{e}").into()),
 	};
 	let tag_string = tags.join(", ");
-	match to_value(tag_string.to_string()) {
+	match to_value(tag_string) {
 		Ok(tags) => Ok(tags),
 		Err(e) => Err(format!("{e}").into()),
 	}
