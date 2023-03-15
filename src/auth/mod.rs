@@ -5,7 +5,7 @@ pub mod forms;
 mod routes;
 
 pub fn stage() -> AdHoc {
-    AdHoc::on_ignite("Users", |rocket| async {
-        rocket.mount("/users/", routes![login, logout, login_get])
-    })
+	AdHoc::on_ignite("Users", |rocket| async {
+		rocket.mount("/users/", routes![login, logout, login_get])
+	})
 }
