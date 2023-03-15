@@ -13,23 +13,27 @@
 {% block content %}
 <!--Trans rights-->
 <center>
-	<div class="h-100 p-5 margin-all border rounded-3">
+	<div class="h-full p-12 margin-all border rounded-3">
 		<form method="post" id="login" name="login">
 			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
-				<input type="text" id="username" name="username" class="form-control me-2"
+				<input type="text" id="username" name="username"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded me-2"
 					aria-describedby="usernameHelp">
 			</div>
 			<div class="mb-3">
 				<label for="passwd" class="form-label">Password</label>
-				<input type="password" id="passwd" name="passwd" class="form-control" aria-describedby="PasswordHelp">
+				<input type="password" id="passwd" name="passwd"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+					aria-describedby="PasswordHelp">
 			</div>
 			<div class="h-captcha" data-sitekey="{{site_key}}" data-theme="dark"></div>
-			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="submit"
+				class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-blue-600 text-white hover:bg-blue-600">Submit</button>
 		</form>
 		{% if flash %}
 		<div class="mb-3">
-			<p class="text-warning">{{flash.message}}</p>
+			<p class="text-red-500">{{flash.message}}</p>
 		</div>
 		{% endif %}
 	</div>

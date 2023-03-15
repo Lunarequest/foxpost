@@ -12,6 +12,7 @@
 	</div>
 	<div id="searchResults" class="searchResults" style="display: none;"></div>
 </div>
+<script src="/static/js/mark.min.js"></script>
 <script src="/static/js/search.js"></script>
 <script defer>
 	document.onload = init()

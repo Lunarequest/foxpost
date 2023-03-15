@@ -6,9 +6,9 @@ async fn not_found(_req: &Request<'_>) -> Template {
 	Template::render("404", context! {title: "this page doesn't exist"})
 }
 
-#[catch(505)]
+#[catch(500)]
 async fn internal_error(_: &Request<'_>) -> Template {
-	Template::render("505", context! {title: "Oops we made a mistake"})
+	Template::render("500", context! {title: "Oops we made a mistake"})
 }
 
 #[catch(403)]

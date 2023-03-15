@@ -21,35 +21,35 @@
 <script defer>hljs.highlightAll();</script>
 {% endblock meta %}
 {% block content %}
-<div class="container">
-	<div class="intro-header">
-		<div class="post-heading">
+<center>
+	<div class="container">
+		<div class="intro-header">
+			<div class="post-heading">
+				<h1>
+					{{post.title}}
+				</h1>
 
-			<h1>
-				{{post.title}}
-			</h1>
+				<span class="meta-post">
+					<em class="fa fa-calendar-alt" aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}
+
+				</span>
 
 
-			<span class="meta-post">
-				<em class="fa fa-calendar-alt" aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}
-
-			</span>
-
-
+			</div>
 		</div>
 	</div>
-</div>
-<div class="container" role="main">
-	<article class="article">
-		{{content|safe}}
-	</article>
-	<div>
-		{% for tag in post.tags %}
-		<a href="/posts/tag/{{tag}}">#{{tag}}</a>
-		{% endfor %}
+	<div class="container" role="main">
+		<article class="article">
+			{{content|safe}}
+		</article>
+		<div class="text-justify">
+			{% for tag in post.tags %}
+			<a href="/posts/tag/{{tag}}">#{{tag}}</a>
+			{% endfor %}
+		</div>
+		<div id="disqus_thread"></div>
 	</div>
-	<div id="disqus_thread"></div>
-</div>
+</center>
 <script>
 	/**
 	 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT

@@ -21,7 +21,10 @@
 <center>
 	<div class="container">
 		<div class="child">
-			<h1 class="text-xl text-white">Oh no looks like we had an issue on the backend :(</h1>
+			<h1 class="text-xl text-white">
+				So something broke on the backend and I need to fix it.<br>
+				Sorry for breaking stuff.
+			</h1>
 		</div>
 	</div>
 </center>

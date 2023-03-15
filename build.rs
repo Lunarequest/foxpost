@@ -26,7 +26,19 @@ fn main() {
 		exit(1);
 	}
 	env::set_current_dir("tailwind").unwrap();
+
+	//in development mode we compile without minification
+	#[cfg(debug_assertions)]
 	match Command::new("yarn").args(["compile"]).spawn() {
+		Ok(_) => (),
+		Err(e) => {
+			eprintln!("{e}");
+		}
+	}
+
+	//in release mode this compiles with minification
+	#[cfg(not(debug_assertions))]
+	match Command::new("yarn").args(["compile:prod"]).spawn() {
 		Ok(_) => (),
 		Err(e) => {
 			eprintln!("{e}");
