@@ -31,15 +31,20 @@ environment:
       - libpq-15
       - postgresql-15-dev
       - busybox
+      - nodejs-19
       - rust
 pipeline:
   - name: Build Luna's blog
     runs: |
+      npm install --global yarn
       EXEC_DIR="${{targets.destdir}}/usr/bin"
-      BLOG_HOME="${{targets.destdir}}/"      
+      BLOG_HOME="${{targets.destdir}}/"
       TARGETDIR="$(mktemp -d)"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
       cargo build --release --target-dir "${TARGETDIR}"
+      cd tailwind
+      yarn && yarn compile --minify
+      cd ..
       cp "${TARGETDIR}/release/blog" "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
