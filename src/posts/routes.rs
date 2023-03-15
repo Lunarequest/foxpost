@@ -30,7 +30,7 @@ fn convert(timestamp: i64) -> String {
 #[get("/tag/<tag>")]
 pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Status, String)> {
 	let tag_cloned = tag.clone();
-	let posts = match db
+	let mut posts: Vec<Post> = match db
 		.run(move |conn| {
 			Posts::table
 				.filter(Posts::tags.contains(vec![Some(tag_cloned)]))
@@ -41,6 +41,7 @@ pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Sta
 		Ok(posts) => posts,
 		Err(e) => return Err((Status::InternalServerError, format!("{e}"))),
 	};
+	posts.reverse();
 	Ok(Template::render(
 		"tags",
 		context! {

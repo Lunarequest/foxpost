@@ -1,9 +1,9 @@
 {% extends "base" %}
 {% block meta %}
 <style>
-    code {
-        text-align: left;
-    }
+	code {
+		text-align: left;
+	}
 </style>
 <meta name="twitter:card" content="{{post.title}}">
 <meta name="twitter:creator" content="@Lunarequest">
@@ -14,59 +14,76 @@
 <meta name="twitter:image:alt" content="">
 <meta name="description" content="{{post.description}}">
 <link rel="stylesheet" title="dark"
-    href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/solarized-dark.min.css">
+	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/solarized-dark.min.css">
 <!--<link rel="stylesheet" title="light"
     href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/solarized-light.min.css">-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
 <script defer>hljs.highlightAll();</script>
 {% endblock meta %}
 {% block content %}
-<div>
-    <center>
-        <div class="title">
-            <h1>{{post.title}}</h1>
-            <sub>published on {{convert(timestamp=post.published)}}<br>By {{post.author}}</sub>
-        </div>
-    </center>
-    <div class="content">
-        {{content|safe}}
-    </div>
+<div class="container">
+	<div class="intro-header">
+		<div class="post-heading">
+
+			<h1>
+				{{post.title}}
+			</h1>
+
+
+			<span class="meta-post">
+				<em class="fa fa-calendar-alt" aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}
+
+			</span>
+
+
+		</div>
+	</div>
 </div>
-<div id="disqus_thread"></div>
+<div class="container" role="main">
+	<article class="article">
+		{{content|safe}}
+	</article>
+	<div>
+		{% for tag in post.tags %}
+		<a href="/posts/tag/{{tag}}">#{{tag}}</a>
+		{% endfor %}
+	</div>
+	<div id="disqus_thread"></div>
+</div>
 <script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT 
-     *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR 
-     *  PLATFORM OR CMS.
-     *  
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: 
-     *  https://disqus.com/admin/universalcode/#configuration-variables
-     */
+	/**
+	 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT
+	 *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR
+	 *  PLATFORM OR CMS.
+	 *
+	 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT:
+	 *  https://disqus.com/admin/universalcode/#configuration-variables
+	 */
 
-    var disqus_config = function () {
-        this.page.url = "/posts/{{post.slug}}";
-        this.page.identifier = "{{post.slug}}";
-        this.page.title = "{{post.title}}";
-    };
+	var disqus_config = function () {
+		this.page.url = "/posts/{{post.slug}}";
+		this.page.identifier = "{{post.slug}}";
+		this.page.title = "{{post.title}}";
+	};
 
-    (function () {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
+	(function () {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+		var d = document, s = d.createElement('script');
 
-        // IMPORTANT: Replace EXAMPLE with your forum shortname!
-        if (window.location.href.includes("127.0.0.1")) {
-            s.src = 'http://null-s-blog.disqus.com/embed.js';
-        } else {
-            s.src = 'https://null-s-blog.disqus.com/embed.js';
-        }
+		// IMPORTANT: Replace EXAMPLE with your forum shortname!
+		if (window.location.href.includes("127.0.0.1")) {
+			s.src = 'http://null-s-blog.disqus.com/embed.js';
+		} else {
+			s.src = 'https://null-s-blog.disqus.com/embed.js';
+		}
 
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
 </script>
 <noscript>
-    Please enable JavaScript to view the
-    <a href="https://disqus.com/?ref_noscript" rel="nofollow">
-        comments powered by Disqus.
-    </a>
+	Please enable JavaScript to view the
+	<a href="https://disqus.com/?ref_noscript" rel="nofollow">
+		comments powered by Disqus.
+	</a>
 </noscript>
 {% endblock content %}

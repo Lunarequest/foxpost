@@ -4,38 +4,42 @@
 <link rel="alternate" type="application/rss+xml" href="https://nullrequest.com/index.xml" title="Null's blog">
 <script defer src="/static/js/app.js"></script>
 <style>
-    .my-custom-jumbotron {
-        margin-top: 5%;
-        width: 30%;
-    }
+	.my-custom-jumbotron {
+		margin-top: 5%;
+		width: 30%;
+	}
 </style>
 {% endblock meta %}
 {% block content %}
-<center>
-    <div class="posts">
-        {% if posts %}
-        {% for post in posts %}
-        <section class="hidden my-custom-jumbotron">
-            <div class="g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <a href="/posts/{{post.slug}}">
-                    <span>
-                        <h2>{{post.title}}</h2>
-                    </span>
-                </a>
-                <sub>published on {{convert(timestamp=post.published)}} by {{post.author}}</sub>
-                <p>
-                    {{post.description}}
-                </p>
-            </div>
-        </section>
-        {% endfor %}
-        {% else %}
-        <section>
-            <h2>
-                <p>There are no posts now, please come back later!</p>
-            </h2>
-        </section>
-        {% endif %}
-    </div>
-</center>
+<div class="container" role="main">
+	<div class="posts">
+		{% if posts %}
+		{% for post in posts %}
+		<article class="post-preview">
+			<a href="/posts/{{post.slug}}">
+				<h2 class="text-xl text-white">{{post.title}}</h2>
+			</a>
+			<div class="post-entry">
+				<p>
+					{{post.description}}
+				</p>
+			</div>
+			<div class="postmeta">
+				<a href="/posts/{{post.slug}}" class="post-read-more">Read More</a>
+				<span class="meta-post">
+					<em class="fa fa-calendar-alt" aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}
+				</span>
+			</div>
+
+		</article>
+		{% endfor %}
+		{% else %}
+		<section>
+			<h2>
+				<p>There are no posts now, please come back later!</p>
+			</h2>
+		</section>
+		{% endif %}
+	</div>
+</div>
 {% endblock content %}

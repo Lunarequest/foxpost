@@ -22,5 +22,5 @@
         {% include 'footer' %}
         <script src="/static/js/theme.js"></script>
 </body>
-
+<!--Trans rights-->
 </html>

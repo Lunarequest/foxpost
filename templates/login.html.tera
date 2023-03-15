@@ -19,17 +19,12 @@
                 <label for="username" class="form-label">Username</label>
                 <input type="text" id="username" name="username" class="form-control me-2"
                     aria-describedby="usernameHelp">
-                <div id="usernameHelp" class="form-text">Your user name between 1 & 100 characters</div>
             </div>
             <div class="mb-3">
                 <label for="passwd" class="form-label">Password</label>
                 <input type="password" id="passwd" name="passwd" class="form-control" aria-describedby="PasswordHelp">
-                <div id="PasswordHelp" class="form-text">
-                    your password must be between 8-20 charecters long contain letters and numbers, and must not contain
-                    spaces, special characters, or emoji.
-                </div>
             </div>
-            <div class="h-captcha" data-sitekey="{{site_key}}"></div>
+            <div class="h-captcha" data-sitekey="{{site_key}}" data-theme="dark"></div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
         {% if flash %}
