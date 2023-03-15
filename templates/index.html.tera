@@ -3,7 +3,7 @@
 <link rel="alternate" type="application/rss+xml" href="https://nullrequest.com/index.xml" title="Null's blog">
 {% endblock meta %}
 {% block content %}
-<div class="posts">
+<div class="border-black-200">
     {% if posts %}
     {% for post in posts %}
     <section class="">

@@ -21,16 +21,6 @@
         {% endblock content %}
         {% include 'footer' %}
         <script src="/static/js/theme.js"></script>
-        <script>
-                const button = document.querySelector('#menu-button');
-                const menu = document.querySelector('#menu');
-
-
-                button.addEventListener('click', () => {
-                        menu.classList.toggle('hidden');
-                });
-
-        </script>
 </body>
 
 </html>
