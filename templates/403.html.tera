@@ -1,11 +1,12 @@
 {% extends "base" %}
 {% block meta %}
 <style>
-	.container {
+	.parent {
 		margin: 25px;
-		height: 200px;
+		height: 650px;
 		/* Setup */
 		position: relative;
+		overflow: auto;
 	}
 
 	.child {
@@ -15,16 +16,22 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 	}
+
+	​.img {
+		float: right;
+		height: auto;
+
+	}
+
+	​
 </style>
 {% endblock meta %}
 {% block content %}
 <center>
-	<div class="container">
+	<div class="parent">
 		<div class="child">
-			<h1 class="text-xl text-white">
-				There was an error, since I was to lazy for write a page for it<br>
-				Here's the Error code {{error}}
-			</h1>
+			<h1 class="text-xl text-white">You've been a naughty baka</h1>
+			<img src="/static/images/mommy.png">
 		</div>
 	</div>
 </center>

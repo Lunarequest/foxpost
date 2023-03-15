@@ -1,28 +1,28 @@
 {% extends "base" %}
 {% block meta %}
 <style>
-    .container {
-        margin: 25px;
-        height: 200px;
-        /* Setup */
-        position: relative;
-      }
-      
-      .child {
-       /* Center vertically and horizontally */
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
+	.container {
+		margin: 25px;
+		height: 200px;
+		/* Setup */
+		position: relative;
+	}
+
+	.child {
+		/* Center vertically and horizontally */
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 </style>
 {% endblock meta %}
 {% block content %}
 <center>
-    <div class="container">
-        <div class="child">
-            <h1>Oh no looks like we had an issue on the backend :(</h1>
-        </div>
-    </div>
+	<div class="container">
+		<div class="child">
+			<h1 class="text-xl text-white">Oh no looks like we had an issue on the backend :(</h1>
+		</div>
+	</div>
 </center>
 {% endblock content%}

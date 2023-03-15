@@ -54,7 +54,7 @@ a.post-read-more::after {
 	content: '';
 	width: 100%;
 	height: 2px;
-	background: #333;
+	color: white;
 	transform: scale(0, 1);
 	transform-origin: center top;
 	transition: transform .3s

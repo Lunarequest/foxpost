@@ -2,36 +2,36 @@
 {% block meta %}
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <style>
-    .margin-all {
-        margin-top: 5%;
-        margin-bottom: 5%;
-        margin-left: 30%;
-        margin-right: 30%;
-    }
+	.margin-all {
+		margin-top: 5%;
+		margin-bottom: 5%;
+		margin-left: 30%;
+		margin-right: 30%;
+	}
 </style>
 {% endblock meta %}
 {% block content %}
 <!--Trans rights-->
 <center>
-    <div class="h-100 p-5 margin-all border rounded-3">
-        <form method="post" id="login" name="login">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control me-2"
-                    aria-describedby="usernameHelp">
-            </div>
-            <div class="mb-3">
-                <label for="passwd" class="form-label">Password</label>
-                <input type="password" id="passwd" name="passwd" class="form-control" aria-describedby="PasswordHelp">
-            </div>
-            <div class="h-captcha" data-sitekey="{{site_key}}" data-theme="dark"></div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-        {% if flash %}
-        <div class="mb-3">
-            <p class="text-warning">{{flash.message}}</p>
-        </div>
-        {% endif %}
-    </div>
+	<div class="h-100 p-5 margin-all border rounded-3">
+		<form method="post" id="login" name="login">
+			<div class="mb-3">
+				<label for="username" class="form-label">Username</label>
+				<input type="text" id="username" name="username" class="form-control me-2"
+					aria-describedby="usernameHelp">
+			</div>
+			<div class="mb-3">
+				<label for="passwd" class="form-label">Password</label>
+				<input type="password" id="passwd" name="passwd" class="form-control" aria-describedby="PasswordHelp">
+			</div>
+			<div class="h-captcha" data-sitekey="{{site_key}}" data-theme="dark"></div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		{% if flash %}
+		<div class="mb-3">
+			<p class="text-warning">{{flash.message}}</p>
+		</div>
+		{% endif %}
+	</div>
 </center>
 {% endblock content %}

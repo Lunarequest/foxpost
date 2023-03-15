@@ -4,10 +4,10 @@
 		<loc>{{host}}/</loc>
 		<lastmod>{{convert(timestamp=posts.0.published)}}</lastmod>
 	</url>
-    {% for post in posts %}
-        <url>
-            <loc>{{host}}/posts/{{post.slug}}</loc>
-            <lastmod>{{convert(timestamp=post.published)}}</lastmod>
-        </url>
-    {% endfor %}
+	{% for post in posts %}
+	<url>
+		<loc>{{host}}/posts/{{post.slug}}</loc>
+		<lastmod>{{convert(timestamp=post.published)}}</lastmod>
+	</url>
+	{% endfor %}
 </urlset>

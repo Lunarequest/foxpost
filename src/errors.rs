@@ -11,6 +11,11 @@ async fn internal_error(_: &Request<'_>) -> Template {
 	Template::render("505", context! {title: "Oops we made a mistake"})
 }
 
+#[catch(403)]
+async fn naught_baka(_: &Request<'_>) -> Template {
+	Template::render("403", context! {title: "You've been naughty baka"})
+}
+
 #[catch(default)]
 async fn default_catcher(status: Status, _req: &Request<'_>) -> Template {
 	Template::render(
@@ -24,6 +29,9 @@ async fn default_catcher(status: Status, _req: &Request<'_>) -> Template {
 
 pub fn stage() -> AdHoc {
 	AdHoc::on_ignite("catchers", |rocket| async {
-		rocket.register("/", catchers![not_found, default_catcher, internal_error])
+		rocket.register(
+			"/",
+			catchers![not_found, default_catcher, internal_error, naught_baka],
+		)
 	})
 }

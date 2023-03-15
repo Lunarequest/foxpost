@@ -1,25 +1,24 @@
 {% extends "base" %}
 {% block content %}
 <div class="container">
-    <div class="h-100 p-5 margin-all border rounded-3">
-        <form method="post" id="file" name="file" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="file" class="form-label">File Name</label>
-                <input type="text" id="file" name="file" class="form-control me-2"
-                    aria-describedby="usernameHelp">
-                <div id="usernameHelp" class="form-text">Choose a file name to call the image from</div>
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">Upload the image</label>
-                <input class="form-control" type="file" accept="image/*" id="image" name="image">
-            </div>
-            <button type="submit" class="btn btn-sucess">Submit</button>
-        </form>
-        {% if flash %}
-        <div class="mb-3">
-            <p class="text-success">{{flash.message}}</p>
-        </div>
-        {% endif %}
-    </div>
+	<div class="h-100 p-5 margin-all border rounded-3">
+		<form method="post" id="file" name="file" enctype="multipart/form-data">
+			<div class="mb-3">
+				<label for="file" class="form-label">File Name</label>
+				<input type="text" id="file" name="file" class="form-control me-2" aria-describedby="usernameHelp">
+				<div id="usernameHelp" class="form-text">Choose a file name to call the image from</div>
+			</div>
+			<div class="mb-3">
+				<label for="image" class="form-label">Upload the image</label>
+				<input class="form-control" type="file" accept="image/*" id="image" name="image">
+			</div>
+			<button type="submit" class="btn btn-sucess">Submit</button>
+		</form>
+		{% if flash %}
+		<div class="mb-3">
+			<p class="text-success">{{flash.message}}</p>
+		</div>
+		{% endif %}
+	</div>
 </div>
 {% endblock content %}
