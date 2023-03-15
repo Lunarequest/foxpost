@@ -5,14 +5,17 @@
 		text-align: left;
 	}
 </style>
-<meta name="twitter:card" content="{{post.title}}">
-<meta name="twitter:creator" content="@Lunarequest">
-<meta name="twitter:url" content="https://nullrequest.com/{{post.slug}}">
-<meta name="twitter:title" content="{{post.title}}">
-<meta name="twitter:description" content="{{post.description}}">
-<meta name="twitter:image" content="https://nullrequest.com/static/images/icon.png.jpg">
-<meta name="twitter:image:alt" content="">
-<meta name="description" content="{{post.description}}">
+
+<meta property="og:url" content="https://nullrequest.com/{{post.slug}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{post.title}}">
+<meta property="og:image" content="https://nullrequest.com/static/images/icon.png">
+<meta property="og:image:alt" content="A picture of my sona called null, they are a fox :D">
+<meta property="og:description" content="{{post.description}}">
+<meta property="og:site_name" content="Null's Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="nullrequest">
+
 <link rel="stylesheet" title="dark"
 	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/base16/solarized-dark.min.css">
 <!--<link rel="stylesheet" title="light"
