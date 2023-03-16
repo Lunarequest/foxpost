@@ -13,7 +13,7 @@ fn index() {
 #[test]
 fn static_ok() {
 	let client = Client::tracked(rocket()).expect("valid rocket instance");
-	let response = client.get("/static/js/app.js").dispatch();
+	let response = client.get("/static/js/search.js").dispatch();
 	assert_eq!(response.status(), Status::Ok);
 	assert_eq!(response.content_type().unwrap(), ContentType::JavaScript);
 }
