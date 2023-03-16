@@ -1,7 +1,6 @@
 /target
 db
 rocket.toml
-.cargo
 media
 *_key
 fly.toml

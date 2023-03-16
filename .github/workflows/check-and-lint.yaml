@@ -32,7 +32,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
       - run: sudo apt-get update
-      - run: sudo apt-get install --yes postgresql-client libpq-dev
+      - run: sudo apt-get install --yes postgresql-client libpq-dev clang mold
       - name: Increase max_connections and shared_buffers
         run: |
           docker exec -i my_postgres_container bash << EOF
@@ -50,6 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
+      - run: sudo apt install -y mold clang
       - run: cargo check
 
   fmt:
@@ -57,6 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: sudo apt install -y mold clang
       - uses:   dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
@@ -67,6 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: sudo apt install -y mold clang
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
