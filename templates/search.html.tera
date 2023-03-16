@@ -3,19 +3,18 @@
 <script src="https://cdn.jsdelivr.net/gh/nextapps-de/flexsearch@0.7.2/dist/flexsearch.bundle.js"></script>
 {% endblock meta %}
 {% block content %}
-<center>
-    <div>
-        <div class="mb-3">
-            <label for="searchBox" class="form-label">Search...</label>
-            <input type="text" id="searchBox" name="searchBox" class="form-control me-2"
-                aria-describedby="searchHelp">
-            <div id="searchHelp" class="form-text">Search</div>
-        </div>
-        <div id="searchResults" class="searchResults" style="display: none;"></div>
-    </div>
-</center>
+<div class="grid content-center px-9">
+	<div class="mb-3">
+		<label for="searchBox" class="form-label">Search...</label>
+		<input type="text" id="searchBox" name="searchBox"
+			class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded me-2"
+			aria-describedby="searchHelp">
+	</div>
+	<div id="searchResults" class="searchResults" style="display: none;"></div>
+</div>
+<script src="/static/js/mark.min.js"></script>
 <script src="/static/js/search.js"></script>
 <script defer>
-    document.onload = init()
+	document.onload = init()
 </script>
 {% endblock content %}

@@ -7,20 +7,18 @@ on:
 
 name: Check and Lint
 env:
-    ROCKET_DATABASES: "{blog={url=\"postgres://postgres:postgres@localhost:5432/postgres\"}}"
-    ROCKET_SECRET_KEY: test
+    DATABASE_URL: postgres://luna:luna@localhost/luna
+    ROCKET_SECRET_KEY: kPWBnGHiSlAUw8ov2X7tsyqccI8vYBST0WgD0Ya0cKM=
 
 jobs:
   tests:
     runs-on: ubuntu-latest
-    container: rust:latest
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: postgres        
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
+          POSTGRES_USER: luna
+          POSTGRES_PASSWORD: luna
         ports:
           - 5432:5432
         # Set health checks to wait until postgres has started
@@ -29,63 +27,47 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+          --name my_postgres_container
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          cache: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - run: sudo apt-get update
+      - run: sudo apt-get install --yes postgresql-client libpq-dev
+      - name: Increase max_connections and shared_buffers
+        run: |
+          docker exec -i my_postgres_container bash << EOF
+            sed -i -e 's/max_connections = 100/max_connections = 1000/' /var/lib/postgresql/data/postgresql.conf
+            sed -i -e 's/shared_buffers = 128MB/shared_buffers = 2GB/' /var/lib/postgresql/data/postgresql.conf
+          EOF
+      - run: docker restart --time 0 my_postgres_container
+      - name: install diesel and run migrations
+        run: cargo install diesel_cli --no-default-features --features "postgres" && diesel migration run
+      - run: cargo test
 
   check:
     name: Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          cache: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: check
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo check
 
   fmt:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v3
+      - uses:   dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          cache: true
-      - run: rustup component add rustfmt
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+          components: rustfmt
+      - run: cargo fmt --all -- --check
 
   clippy:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v3
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
           components: clippy
-          override: true
-          cache: true
-      - uses: actions-rs/clippy-check@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features
-          name: Clippy Output
+      - run: cargo clippy --all-features

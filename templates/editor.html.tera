@@ -7,108 +7,113 @@
 {% endblock meta %}
 {% block content %}
 <div>
-    <form id="editor_form">
-        <div class="row mb-3">
-            <label for="title" class="col-sm col-form-label">Title:</label>
-            <div class="col-sm-11">
-                <input type="text" id="title" name="title" class="form-control">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="description" class="col-sm col-form-label">Description:</label>
-            <div class="col-sm-11">
-                <input type="text" name="description" id="description" maxlength="200" class="form-control">
-            </div>
-            <label for="description" class="col-sm col-form-label">Tags:</label>
-            <div class="col-sm-11">
-                <input type="text" name="tags" id="tags" class="form-control">
-            </div> 
-        </div>
-        <div class="form-check form-switch">
-            <label class="form-check-label" for="draft">Publish?</label>
-            <input type="checkbox" value="not_draft" id="raft" name="draft" class="form-check-input">
-        </div>
-        <textarea id="editor" name="content"></textarea>
-        <button type="submit" id="submit" class="btn btn-success">Submit</button>
-    </form>
+	<form id="editor_form">
+		<div class="flex flex-wrap  mb-3">
+			<label for="title" class="relative sm:flex-grow sm:flex-1 pt-2 pb-2 mb-0 leading-normal">Title:</label>
+			<div class="sm:w-5/6 pr-4 pl-4">
+				<input type="text" id="title" name="title"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+			</div>
+		</div>
+		<div class="flex flex-wrap  mb-3">
+			<label for="description"
+				class="relative sm:flex-grow sm:flex-1 pt-2 pb-2 mb-0 leading-normal">Description:</label>
+			<div class="sm:w-5/6 pr-4 pl-4">
+				<input type="text" name="description" id="description" maxlength="200"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+			</div>
+			<label for="description" class="relative sm:flex-grow sm:flex-1 pt-2 pb-2 mb-0 leading-normal">Tags:</label>
+			<div class="sm:w-5/6 pr-4 pl-4">
+				<input type="text" name="tags" id="tags"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+			</div>
+		</div>
+		<div class="relative block mb-2 form-switch">
+			<label class="text-gray-700 pl-6 mb-0" for="draft">Publish?</label>
+			<input type="checkbox" value="not_draft" id="raft" name="draft" class="absolute mt-1 -ml-6">
+		</div>
+		<textarea id="editor" name="content"></textarea>
+		<button type="submit" id="submit"
+			class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-green-500 text-white hover:green-600">Submit</button>
+	</form>
 </div>
 <script>
-    const easyMDE = new EasyMDE({
-        element: document.getElementById("editor"),
-        autosave: {
-            enabled: true,
-            delay: 1000,
-            uniqueId: 'blog-post',
-        },
-        indentWithTabs: true,
-        renderingConfig: {
-            codeSyntaxHighlighting: true,
-        },
-        tabSize: 4,
-    })
-    const editor = document.getElementById("editor_form");
-    editor.addEventListener('submit', function (e) {
-        update_or_new_post(e);
-    });
-    async function update_or_new_post(e) {
-        e.preventDefault();
-        const btn_submit = document.getElementById("submit");
-        btn_submit.disabled = true;
-        setTimeout(() => btn_submit.disabled = false, 2000);
-        console.log(document.getElementById("editor_form"));
-        slug = localStorage.getItem("slug");
-        form = new FormData(editor);
-        json = Object.fromEntries(form);
-        if (json.draft == "not_draft") {
-            json.draft = false;
-        } else {
-            json.draft = true;
-        }
-        console.log(json.draft);
-        if (sessionStorage.getItem("slug")) {
-            slug = sessionStorage.getItem("slug");
-            json["slug"] = slug;
-            json["tags"] = json["tags"].split(", ");
-            fetch(`/api/posts/${slug}/update`, {
-                method: 'POST',
-                mode: "same-origin",
-                cache: "no-cache",
-                credentials: "same-origin",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(json)
-            }).then(function (response) {
-                return response.json();
-            }).then(function (resp) {
-                if ('Errors' in resp) {
-                    alert(resp.Errors);
-                } else {
-                    alert("post has been successfully updated")
-                }
-            })
-        } else {
-            console.log(JSON.stringify(json))
-            fetch("/api/posts/new", {
-                method: 'POST',
-                mode: "same-origin",
-                cache: "no-cache",
-                credentials: "same-origin",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(json)
-            }).then(function (response) {
-                return response.json();
-            }).then(function (resp) {
-                if ('slug' in resp) {
-                    sessionStorage.setItem('slug', resp.slug);
-                    alert("post has been created")
-                } else {
-                    alert(resp.Errors)
-                }
-            })
-        }
-    }
+	const easyMDE = new EasyMDE({
+		element: document.getElementById("editor"),
+		autosave: {
+			enabled: true,
+			delay: 1000,
+			uniqueId: 'blog-post',
+		},
+		indentWithTabs: true,
+		renderingConfig: {
+			codeSyntaxHighlighting: true,
+		},
+		tabSize: 4,
+	})
+	const editor = document.getElementById("editor_form");
+	editor.addEventListener('submit', function (e) {
+		update_or_new_post(e);
+	});
+	async function update_or_new_post(e) {
+		e.preventDefault();
+		const btn_submit = document.getElementById("submit");
+		btn_submit.disabled = true;
+		setTimeout(() => btn_submit.disabled = false, 2000);
+		console.log(document.getElementById("editor_form"));
+		slug = localStorage.getItem("slug");
+		form = new FormData(editor);
+		json = Object.fromEntries(form);
+		if (json.draft == "not_draft") {
+			json.draft = false;
+		} else {
+			json.draft = true;
+		}
+		console.log(json.draft);
+		if (sessionStorage.getItem("slug")) {
+			slug = sessionStorage.getItem("slug");
+			json["slug"] = slug;
+			json["tags"] = json["tags"].split(", ");
+			fetch(`/api/posts/${slug}/update`, {
+				method: 'POST',
+				mode: "same-origin",
+				cache: "no-cache",
+				credentials: "same-origin",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(json)
+			}).then(function (response) {
+				return response.json();
+			}).then(function (resp) {
+				if ('Errors' in resp) {
+					alert(resp.Errors);
+				} else {
+					alert("post has been successfully updated")
+				}
+			})
+		} else {
+			console.log(JSON.stringify(json))
+			fetch("/api/posts/new", {
+				method: 'POST',
+				mode: "same-origin",
+				cache: "no-cache",
+				credentials: "same-origin",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(json)
+			}).then(function (response) {
+				return response.json();
+			}).then(function (resp) {
+				if ('slug' in resp) {
+					sessionStorage.setItem('slug', resp.slug);
+					alert("post has been created")
+				} else {
+					alert(resp.Errors)
+				}
+			})
+		}
+	}
 </script>
 {% endblock content %}

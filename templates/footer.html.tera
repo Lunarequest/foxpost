@@ -1,0 +1,35 @@
+<center>
+	<footer class="bg-black-200 text-white dark:bg-black-600">
+		<div class="container pt-9">
+			<div class="mb-9 flex justify-center">
+				<div class="social-icons">
+					<a rel="me" href="https://www.instagram.com/nullrequest_/" name="instagram"
+						aria-label="A link to my instagram account">
+						<em class="fab fa-instagram fa-2x" aria-hidden="true"></em>
+					</a>
+					&nbsp;&nbsp;
+					<a rel="me" href="https://hachyderm.io/@lunarequest" name="mastodon"
+						aria-label="My mastodon where i'm most active">
+						<em class="fa-brands fa-mastodon fa-2x"></em>
+					</a>
+					&nbsp;&nbsp;
+					<a rel="me" href="mailto:luna.dragon@suse.com" name="mail"
+						aria-label="Email my if you like the old school stuff">
+						<em class="fas fa-envelope-open-text fa-2x" aria-hidden="true"></em>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="bg-black-300 p-4 text-center text-black-700 dark:bg-black-700 dark:text-black-200">
+			<a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+				<svg class="bi" width="30" height="24">
+					<use xlink:href="/"></use>
+				</svg>
+			</a>
+			<span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span>
+		</div>
+
+
+	</footer>
+</center>

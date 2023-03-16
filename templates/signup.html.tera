@@ -3,66 +3,66 @@
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
-    .margin-all {
-        margin-top: 5%;
-        margin-bottom: 5%;
-        margin-left: 30%;
-        margin-right: 30%;
-    }
+	.margin-all {
+		margin-top: 5%;
+		margin-bottom: 5%;
+		margin-left: 30%;
+		margin-right: 30%;
+	}
 </style>
 {% endblock meta %}
 
 {% block content %}
 <center>
-    <div class="h-100 p-5 margin-all border rounded-3">
-        <form method="post" id="reg" name="reg">
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control me-2"
-                    aria-describedby="usernameHelp">
-                <div id="usernameHelp" class="form-text">Your user name between 1 & 100 characters</div>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" name="email" class="form-control" aria-describedby="EmailHelp">
-                <div id="EmailHelp" class="form-text">We'll never share your email</div>
-            </div>
-            <div class="mb-3">
-                <label for="passwd1" class="form-label">Password</label>
-                <input type="password" id="passwd1" name="passwd1" class="form-control" aria-describedby="PasswordHelp">
-                <div id="PasswordHelp" class="form-text">
-                    your password must be between 8-20 charecters long contain letters and numbers, and must not contain
-                    spaces, special characters, or emoji.
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="passwd2" class="form-label">Confirm Password</label>
-                <input type="password" id="passwd2" name="passwd2" class="form-control"
-                    aria-describedby="ConfirmPasswordHelp">
-                <div id="ConfirmPasswordHelp" class="form-text">Confirm your password</div>
-            </div>
-            <div class="h-captcha" data-sitekey="{{site_key}}"></div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+	<div class="h-100 p-5 margin-all border rounded-3">
+		<form method="post" id="reg" name="reg">
+			<div class="mb-3">
+				<label for="username" class="form-label">Username</label>
+				<input type="text" id="username" name="username" class="form-control me-2"
+					aria-describedby="usernameHelp">
+				<div id="usernameHelp" class="form-text">Your user name between 1 & 100 characters</div>
+			</div>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" id="email" name="email" class="form-control" aria-describedby="EmailHelp">
+				<div id="EmailHelp" class="form-text">We'll never share your email</div>
+			</div>
+			<div class="mb-3">
+				<label for="passwd1" class="form-label">Password</label>
+				<input type="password" id="passwd1" name="passwd1" class="form-control" aria-describedby="PasswordHelp">
+				<div id="PasswordHelp" class="form-text">
+					your password must be between 8-20 charecters long contain letters and numbers, and must not contain
+					spaces, special characters, or emoji.
+				</div>
+			</div>
+			<div class="mb-3">
+				<label for="passwd2" class="form-label">Confirm Password</label>
+				<input type="password" id="passwd2" name="passwd2" class="form-control"
+					aria-describedby="ConfirmPasswordHelp">
+				<div id="ConfirmPasswordHelp" class="form-text">Confirm your password</div>
+			</div>
+			<div class="h-captcha" data-sitekey="{{site_key}}"></div>
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+	</div>
 </center>
 <script>
-    //TODO: write js to authenticate forms
-    $("#reg").on('submit',async function (e) {
-        e.preventDefault();
-        form = new FormData(document.getElementById("reg"));
-        json = Object.fromEntries(form.entries())
-        let resp = fetch("/users/signup/",{
-            method: 'POST',
-            mode: 'same-origin',
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(json),
-        }).await;
-        alert(resp);
-    })
+	//TODO: write js to authenticate forms
+	$("#reg").on('submit', async function (e) {
+		e.preventDefault();
+		form = new FormData(document.getElementById("reg"));
+		json = Object.fromEntries(form.entries())
+		let resp = fetch("/users/signup/", {
+			method: 'POST',
+			mode: 'same-origin',
+			cache: "no-cache",
+			credentials: "same-origin",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(json),
+		}).await;
+		alert(resp);
+	})
 </script>
 {% endblock content %}

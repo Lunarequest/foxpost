@@ -1,33 +1,30 @@
 {% extends "base" %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <b>Title</b>
-        </div>
-        <div class="col">
-            <b>Draft</b>
-        </div>
-        <div class="col">
-            <b>Edit</b>
-        </div>
-    </div>
-    {% for post in posts %}
-    <div class="row">
-        <div class="col">
-            <b>{{post.title}}</b>
-        </div>
-        <div class="col">
-            <p>{% if post.draft %}
-                ✅
-                {% else %}
-                ❌
-                {% endif %}</p>
-        </div>
-        <div class="col">
-            <a href="/posts/edit/{{post.slug}}">Edit</a>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+<center>
+	<table class="table-auto">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Draft</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for post in posts %}
+			<tr>
+				<td>{{post.title}}</td>
+				<td>{% if post.draft %}
+					❌
+					{% else %}
+					✅
+					{% endif %}</td>
+				<td>
+					<a href="/posts/edit/{{post.slug}}">Edit</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+		</tbody>
+	</table>
+</center>
 {% endblock content %}

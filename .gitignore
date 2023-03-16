@@ -11,3 +11,4 @@ work
 packages
 *.tar*
 sbom*
+output.css

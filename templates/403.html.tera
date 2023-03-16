@@ -1,0 +1,38 @@
+{% extends "base" %}
+{% block meta %}
+<style>
+	.parent {
+		margin: 25px;
+		height: 650px;
+		/* Setup */
+		position: relative;
+		overflow: auto;
+	}
+
+	.child {
+		/* Center vertically and horizontally */
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	​.img {
+		float: right;
+		height: auto;
+
+	}
+
+	​
+</style>
+{% endblock meta %}
+{% block content %}
+<center>
+	<div class="parent">
+		<div class="child">
+			<h1 class="text-xl text-white">You've been a naughty baka</h1>
+			<img src="/static/images/mommy.png">
+		</div>
+	</div>
+</center>
+{% endblock content%}

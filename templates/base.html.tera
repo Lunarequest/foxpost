@@ -2,145 +2,26 @@
 <html lang="en" data-bs-color-scheme>
 
 <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="color-scheme" content="light dark">
-        <meta name="generator" content="luna's blog">
-        <meta name="rating" content="General">
-        <script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
-        <title>{% block title %}{{ title }}{% endblock title %}</title>
-        {% block meta %}
-        {% endblock meta %}
-        <style>
-                @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&family=Kalam:wght@400;700&display=swap');
-
-                * {
-                        font-family: 'Kalam';
-                }
-
-                code {
-                        font-family: 'Inconsolata', monospace;
-                }
-
-                .dark-toggle {
-                        padding: 0;
-                        border: none;
-                        background: none;
-                }
-
-                .bottom {
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        left: 0;
-                        padding: 1rem;
-                        text-align: center;
-                }
-        </style>
-        <link href="/static/css/bootstrap-blackbox.min.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="color-scheme" content="light dark">
+	<meta name="generator" content="luna's blog">
+	<meta name="rating" content="General">
+	<title>{% block title %}{{ title }}{% endblock title %}</title>
+	{% block meta %}
+	{% endblock meta %}
+	<link href="/static/css/style.css" rel="stylesheet">
+	<link href="/static/css/output.css" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                        <a class="navbar-brand" href="/"><img src="/static/images/icon.png" width="60"
-                                        alt="branding"></a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="/">Home</a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="/about">About</a>
-                                        </li>
-                                        {% if sess %}
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page"
-                                                        href="/posts/all">Drafts?</a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page" href="/posts/new">New
-                                                        Post</a>
-                                        </li>
-                                        <li class="nav-item">
-                                                <a class="nav-link active" aria-current="page"
-                                                        href="/users/logout">Logout</a>
-                                        </li>
-                                        {% endif %}
-                                </ul>
-                                <a href="/search" id="Search"><em class="fas fa-search fa-lg"></em></a>
-                                &nbsp;
-                                <button class="dark-toggle" id="darkmode"><em class="fas fa-sun" id="dark-mode-toggle"
-                                                aria-label="Toggle Dark Mode"></em></button>
-                        </div>
-                </div>
-        </nav>
-        {% block content %}
-        {% endblock content %}
-        <div>
-        <div class="container bottom">
-                <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-                        <div class="col-md-4 d-flex align-items-center">
-                                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                                        <svg class="bi" width="30" height="24">
-                                                <use xlink:href="/"></use>
-                                        </svg>
-                                </a>
-                                <span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span>
-                        </div>
-
-                        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-                                                        <use xlink:href="#twitter"></use>
-                                                </svg></a></li>
-                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-                                                        <use xlink:href="#instagram"></use>
-                                                </svg></a></li>
-                                <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24">
-                                                        <use xlink:href="#facebook"></use>
-                                                </svg></a></li>
-                        </ul>
-                </footer>
-        </div>
-        <script src="/static/js/bootstrap.bundle.min.js"
-                integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-                crossorigin="anonymous"></script>
-        <script src="/static/js/darkmode.min.js"></script>
-        <script>
-                window.onload = function (_e) {
-                        let copyright = document.getElementById("copyright");
-                        let year =  new Date().getFullYear();
-                        copyright.innerText=`${year} Luna Dragon`;
-                        let element = document.getElementById("dark-mode-toggle");
-                        if (darkmode.inDarkMode) {
-                                console.log("in darkness we live")
-                                element.classList.remove("fa-moon");
-                                element.classList.add("fa-sun");
-                        } else {
-                                console.log('let there be light')
-                                element.classList.remove("fa-sun")
-                                element.classList.add("fa-moon");
-                        }
-                }
-                document.querySelector("#darkmode").onclick = function (e) {
-                        darkmode.toggleDarkMode();
-                        let element = document.getElementById("dark-mode-toggle");
-                        if (darkmode.inDarkMode) {
-                                console.log('let there be light')
-                                element.classList.remove("fa-moon");
-                                element.classList.add("fa-sun");
-                        } else {
-                                console.log("in darkness we live")
-                                element.classList.remove("fa-sun")
-                                element.classList.add("fa-moon");
-                        }
-                }
-        </script>
+	{% include 'nav' %}
+	{% block content %}
+	{% endblock content %}
+	{% include 'footer' %}
+	<script src="/static/js/theme.js"></script>
 </body>
+<!--Trans rights-->
 
 </html>
