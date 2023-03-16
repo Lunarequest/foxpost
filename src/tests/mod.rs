@@ -25,3 +25,10 @@ fn static_missing() {
 	assert_eq!(response.status(), Status::NotFound);
 	assert_eq!(response.content_type().unwrap(), ContentType::HTML);
 }
+
+#[test]
+fn check_403() {
+	let client = Client::tracked(rocket()).expect("valid rocket instance");
+	let response = client.get("/posts/new").dispatch();
+	assert_eq!(response.status(), Status::Forbidden);
+}
