@@ -39,7 +39,7 @@ pipeline:
       npm install --global yarn
       EXEC_DIR="${{targets.destdir}}/usr/bin"
       BLOG_HOME="${{targets.destdir}}/"
-      TARGETDIR="$(mktemp -d)"
+      TARGETDIR="/var/cache/melange/blog"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
       cargo build --release --target-dir "${TARGETDIR}"
       cd tailwind
