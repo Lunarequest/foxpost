@@ -1,5 +1,14 @@
 {% extends "base" %}
 {% block meta %}
+<meta property="og:url" content="https://new.nullrequest.com/posts/{{post.slug}}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{post.title}}">
+<meta property="og:image" content="https://new.nullrequest.com/static/images/icon.png">
+<meta property="og:image:alt" content="A picture of my sona, they are a fox :D">
+<meta property="og:description" content="A place where null posts about shenangins releated to their various project">
+<meta property="og:site_name" content="Null's Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="nullrequest">
 <link rel="alternate" type="application/rss+xml" href="/index.xml" title="Null's blog">
 {% endblock meta %}
 {% block content %}
