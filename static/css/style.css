@@ -251,7 +251,6 @@ p+p {
 
 .post-preview a {
 	text-decoration: none;
-	color: #222
 }
 
 .post-preview:last-child {
@@ -264,9 +263,8 @@ p+p {
 
 .blog-tags {
 	font-family: roboto, Helvetica, sans-serif;
-	color: #999;
 	font-size: 15px;
-	margin: 30px 0
+	margin: 30px 0;
 }
 
 .blog-tags a {
@@ -499,4 +497,20 @@ mark {
 	.pager.blog-pager {
 		margin-top: 40px
 	}
+}
+
+.article a:link {
+	color: blue;
+}
+
+.article a:visited {
+	color: green;
+}
+
+.post-read-more a:link {
+	color: red;
+}
+
+.post-read-more a:visited {
+	color: green;
 }
