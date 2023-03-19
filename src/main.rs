@@ -75,7 +75,8 @@ fn rocket() -> _ {
 				routes::static_files,
 				routes::search,
 				routes::about,
-				routes::favicon
+				routes::favicon,
+				routes::robots,
 			],
 		)
 		.attach(Template::custom(|engines: &mut Engines| {

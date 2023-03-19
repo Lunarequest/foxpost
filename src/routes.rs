@@ -5,6 +5,11 @@ use rocket::{fs::NamedFile, request::FlashMessage};
 use rocket_dyn_templates::{context, Template};
 use std::path::{Path, PathBuf};
 
+#[get("/robots.txt")]
+pub async fn robots() -> Template {
+	Template::render("robots.txt", context! {})
+}
+
 #[get("/search")]
 pub async fn search() -> Template {
 	Template::render("search", context! {title:"search"})
