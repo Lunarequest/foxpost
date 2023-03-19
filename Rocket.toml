@@ -1,2 +1,4 @@
+[default]
+domain = "https://example.tld"
 [default.databases.blog]
-url="postgres://luna:luna@localhost/luna"
+url = "postgres://luna:luna@localhost/luna"

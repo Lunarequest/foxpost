@@ -1,10 +1,10 @@
-use crate::{db::BlogDBConn, posts::database::Post, schema::posts as Posts};
+use crate::{config::Config, db::BlogDBConn, posts::database::Post, schema::posts as Posts};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
-use rocket::fairing::AdHoc;
+use rocket::{fairing::AdHoc, State};
 use rocket_dyn_templates::{context, Template};
 
 #[get("/sitemap.xml")]
-async fn sitemap(db: BlogDBConn) -> Template {
+async fn sitemap(db: BlogDBConn, config: &State<Config>) -> Template {
 	let posts = match db
 		.run(move |conn| {
 			Posts::table
@@ -32,14 +32,14 @@ async fn sitemap(db: BlogDBConn) -> Template {
 	Template::render(
 		"sitemap",
 		context! {
-			host:"https://nullrequest.com",
+			host: &config.domain,
 			posts:posts
 		},
 	)
 }
 
 #[get("/index.xml")]
-async fn rss(db: BlogDBConn) -> Template {
+async fn rss(db: BlogDBConn, config: &State<Config>) -> Template {
 	let posts = match db
 		.run(move |conn| {
 			Posts::table
@@ -67,7 +67,7 @@ async fn rss(db: BlogDBConn) -> Template {
 	Template::render(
 		"rss",
 		context! {
-			host:"https://nullrequest.com",
+			host: &config.domain,
 			posts:posts
 		},
 	)

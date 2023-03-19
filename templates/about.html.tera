@@ -1,5 +1,15 @@
 {% extends "base" %}
 {% block meta %}
+<meta name="description" content="A little about null, or so I'm told">
+<meta property="og:url" content="{{domain}}/about">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About Null">
+<meta property="og:image" content="{{domain}}/static/images/icon.png">
+<meta property="og:image:alt" content="A picture of my sona, they are a fox :D">
+<meta property="og:description" content="A little about null, or so I'm told">
+<meta property="og:site_name" content="Null's Blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="nullrequest">
 <style>
 	.center {
 		display: block;

@@ -1,13 +1,18 @@
 use super::db::BlogDBConn;
-use super::{auth::forms::Session, posts::database::Post, schema::posts as Posts};
+use super::{auth::forms::Session, config::Config, posts::database::Post, schema::posts as Posts};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
-use rocket::{fs::NamedFile, request::FlashMessage};
+use rocket::{fs::NamedFile, request::FlashMessage, State};
 use rocket_dyn_templates::{context, Template};
 use std::path::{Path, PathBuf};
 
 #[get("/robots.txt")]
-pub async fn robots() -> Template {
-	Template::render("robots.txt", context! {})
+pub async fn robots(config: &State<Config>) -> Template {
+	Template::render(
+		"robots",
+		context! {
+			domain: &config.domain
+		},
+	)
 }
 
 #[get("/search")]
@@ -21,8 +26,8 @@ pub async fn favicon() -> Option<NamedFile> {
 }
 
 #[get("/about")]
-pub async fn about() -> Template {
-	Template::render("about", context! { title: "about"})
+pub async fn about(config: &State<Config>) -> Template {
+	Template::render("about", context! { title: "about",domain: &config.domain})
 }
 
 #[get("/static/<type>/<asset>")]
@@ -58,6 +63,7 @@ pub async fn index(
 	db: BlogDBConn,
 	flash: Option<FlashMessage<'_>>,
 	sess: Option<Session>,
+	config: &State<Config>,
 ) -> Template {
 	let posts = match db
 		.run(move |conn| {
@@ -90,6 +96,7 @@ pub async fn index(
 			posts:posts,
 			flash:flash,
 			sess:sess,
+			domain: &config.domain
 		},
 	)
 }

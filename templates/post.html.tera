@@ -5,11 +5,11 @@
 		text-align: left;
 	}
 </style>
-
-<meta property="og:url" content="https://new.nullrequest.com/posts/{{post.slug}}">
+<meta name="description" content="{{post.description}}">
+<meta property="og:url" content="{{domain}}/posts/{{post.slug}}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{post.title}}">
-<meta property="og:image" content="https://new.nullrequest.com/static/images/icon.png">
+<meta property="og:image" content="{{domain}}/static/images/icon.png">
 <meta property="og:image:alt" content="A picture of my sona called null, they are a fox :D">
 <meta property="og:description" content="{{post.description}}">
 <meta property="og:site_name" content="Null's Blog">
@@ -57,7 +57,7 @@
 	*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    *
 	**/
 	var disqus_config = function () {
-		//this.page.url = 'https://new.nullrequest.com/posts/{{post.slug}}';  // Replace PAGE_URL with your page's canonical URL variable
+		this.page.url = '{{domain}}/posts/{{post.slug}}';  // Replace PAGE_URL with your page's canonical URL variable
 		this.page.identifier = '{{post.slug}}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	};
 	(function () { // DON'T EDIT BELOW THIS LINE

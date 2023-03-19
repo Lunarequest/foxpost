@@ -3,12 +3,14 @@ extern crate rocket;
 #[macro_use]
 extern crate diesel;
 use chrono::{DateTime, NaiveDateTime, Utc};
+use config::Config;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use rocket::{fairing::AdHoc, Build, Rocket};
 use rocket_dyn_templates::tera::{from_value, to_value, Error, Value};
 use rocket_dyn_templates::{Engines, Template};
 use std::collections::HashMap;
 mod auth;
+mod config;
 mod db;
 mod errors;
 mod image;
@@ -85,6 +87,7 @@ fn rocket() -> _ {
 		}))
 		.attach(errors::stage())
 		.attach(db::BlogDBConn::fairing())
+		.attach(AdHoc::config::<Config>())
 		.attach(AdHoc::on_ignite(
 			"Diesel Migrations",
 			run_migrations_fairing,

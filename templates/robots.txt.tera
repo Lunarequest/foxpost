@@ -5,4 +5,4 @@ User-agent: *
 Disallow:
 Disallow: /users/
 Disallow: /media/
-Sitemap: https://new.nullrequest.com/sitemap.xml
+Sitemap: {{domain}}/sitemap.xml

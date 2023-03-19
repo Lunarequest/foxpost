@@ -4,8 +4,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="color-scheme" content="light dark">
-	<meta name="generator" content="luna's blog">
+	<meta name="color-scheme" content="dark">
+	<meta name="generator" content="foxpost">
 	<meta name="rating" content="General">
 	<title>{% block title %}{{ title }}{% endblock title %}</title>
 	{% block meta %}
