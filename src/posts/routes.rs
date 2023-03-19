@@ -1,6 +1,7 @@
 use super::database::{NewPost, Post, Tag};
 use super::json::JsonEntry;
 use crate::auth::forms::Session;
+use crate::config::Config;
 use crate::db::BlogDBConn;
 use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
@@ -8,8 +9,11 @@ use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
 use diesel::PgArrayExpressionMethods;
 use pulldown_cmark::{html, Options, Parser};
-use rocket::http::Status;
-use rocket::serde::json::{json, Json, Value};
+use rocket::{
+	http::Status,
+	serde::json::{json, Json, Value},
+	State,
+};
 use rocket_dyn_templates::{context, Template};
 
 fn render_to_html(markdown: String) -> String {
@@ -126,7 +130,7 @@ pub async fn get_content(db: BlogDBConn, slug: String) -> String {
 }
 
 #[get("/<slug>")]
-pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
+pub async fn render_post(db: BlogDBConn, slug: String, config: &State<Config>) -> Option<Template> {
 	let post: Post = match db
 		.run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
 		.await
@@ -146,7 +150,8 @@ pub async fn render_post(db: BlogDBConn, slug: String) -> Option<Template> {
 		context! {
 			title: post.title.clone(),
 			content:content,
-			post: post
+			post: post,
+			domain: &config.domain
 		},
 	))
 }
