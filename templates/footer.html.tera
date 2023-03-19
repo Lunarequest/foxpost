@@ -27,7 +27,9 @@
 					<use xlink:href="/"></use>
 				</svg>
 			</a>
-			<span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span>
+			<span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span><br>
+			<span class="text-muted">Like this blog? visit this <a
+					href="https://github.com/Lunarequest/blog-backend/">repo for the source code</a></span>
 		</div>
 
 
