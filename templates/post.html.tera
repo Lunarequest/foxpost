@@ -6,10 +6,10 @@
 	}
 </style>
 
-<meta property="og:url" content="https://nullrequest.com/{{post.slug}}">
+<meta property="og:url" content="https://new.nullrequest.com/posts/{{post.slug}}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="{{post.title}}">
-<meta property="og:image" content="https://nullrequest.com/static/images/icon.png">
+<meta property="og:image" content="https://new.nullrequest.com/static/images/icon.png">
 <meta property="og:image:alt" content="A picture of my sona called null, they are a fox :D">
 <meta property="og:description" content="{{post.description}}">
 <meta property="og:site_name" content="Null's Blog">
@@ -55,38 +55,20 @@
 </center>
 <script>
 	/**
-	 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT
-	 *  THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR
-	 *  PLATFORM OR CMS.
-	 *
-	 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT:
-	 *  https://disqus.com/admin/universalcode/#configuration-variables
-	 */
-
+	*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    *
+	**/
 	var disqus_config = function () {
-		this.page.url = "/posts/{{post.slug}}";
-		this.page.identifier = "{{post.slug}}";
-		this.page.title = "{{post.title}}";
+		//this.page.url = 'https://new.nullrequest.com/posts/{{post.slug}}';  // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = '{{post.slug}}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	};
-
-	(function () {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
+	(function () { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-
-		// IMPORTANT: Replace EXAMPLE with your forum shortname!
-		if (window.location.href.includes("127.0.0.1")) {
-			s.src = 'http://null-s-blog.disqus.com/embed.js';
-		} else {
-			s.src = 'https://null-s-blog.disqus.com/embed.js';
-		}
-
+		s.src = 'https://null-s-blog.disqus.com/embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	})();
 </script>
-<noscript>
-	Please enable JavaScript to view the
-	<a href="https://disqus.com/?ref_noscript" rel="nofollow">
-		comments powered by Disqus.
-	</a>
-</noscript>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a></noscript>
 {% endblock content %}

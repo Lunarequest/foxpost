@@ -13,8 +13,8 @@ rocket_dyn_templates = { git="https://github.com/SergioBenitez/Rocket.git", feat
 diesel = {version="2",features = ["postgres"]}
 diesel_migrations = { version = "2", features = ["postgres"] }
 argon2 = "0.5.0"
-serde = { version = "1.0.154", features = ["derive"] }
-chrono = { version = "0.4.23", default-features = false, features = ["clock"] }
+serde = { version = "1.0.157", features = ["derive"] }
+chrono = { version = "0.4.24", default-features = false, features = ["clock"] }
 serde_json = "1.0.94"
 slug = "0.1.4"
 hcaptcha = {version="2.2.1", default-features=false, features=["ext","rustls-backend"]}
