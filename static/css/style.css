@@ -504,3 +504,7 @@ mark {
 .post-read-more a:visited {
 	color: green;
 }
+
+.masto-share {
+	margin-bottom: 2%;
+}

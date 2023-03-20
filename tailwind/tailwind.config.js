@@ -9,5 +9,7 @@ module.exports = {
   },
   plugins: [require('@catppuccin/tailwindcss')({
     defaultFlavor: 'mocha'
-  })],
+  }),
+  require('@tailwindcss/forms')
+  ],
 }
