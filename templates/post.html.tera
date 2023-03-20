@@ -15,7 +15,6 @@
 <meta property="og:site_name" content="Null's Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="nullrequest">
-
 <link rel="stylesheet" title="dark"
 	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
@@ -26,13 +25,14 @@
 	<div class="container">
 		<div class="intro-header">
 			<div class="post-heading">
-				<h1>
+				<h1 class="p-name">
 					{{post.title}}
 				</h1>
 
 				<span class="meta-post">
-					<em class="fa fa-calendar-alt" aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}
-
+					<em class="fa fa-calendar-alt"
+						aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}<br>
+					<a>By <a class="p-author">{{post.author}}</a></a>
 				</span>
 
 
@@ -40,13 +40,18 @@
 		</div>
 	</div>
 	<div class="container" role="main">
-		<article class="article">
+		<article class="article e-content">
 			{{content|safe}}
 		</article>
 		<div class="text-center blog-tags">
 			{% for tag in post.tags %}
 			<a href="/posts/tag/{{tag}}">{{tag}}</a>
 			{% endfor %}
+		</div>
+		<div>
+			<button id="sharemastodon" style="display: none;" onclick="MastodonShare(this)"
+				data-src="My site&amp;url={{domain}}/posts/{{post.slug}}">Share on
+				Mastodon <em class="fa-brands fa-mastodon fa-2x"></em></button>
 		</div>
 		<div id="disqus_thread"></div>
 	</div>
