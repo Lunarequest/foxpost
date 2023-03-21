@@ -12,6 +12,8 @@
 	<link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />-->
 	{% block meta %}
 	{% endblock meta %}
+	<link rel="preload" as="font"
+		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap">
 	<link href="/static/css/style.css" rel="stylesheet">
 	<link href="/static/css/output.css" rel="stylesheet">
 </head>
