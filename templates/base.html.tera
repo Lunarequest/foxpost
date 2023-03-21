@@ -14,7 +14,6 @@
 	{% endblock meta %}
 	<link href="/static/css/style.css" rel="stylesheet">
 	<link href="/static/css/output.css" rel="stylesheet">
-	<script src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -23,6 +22,7 @@
 	{% endblock content %}
 	{% include 'footer' %}
 	<script src="/static/js/theme.js"></script>
+	<script defer src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
 </body>
 <!--Trans rights-->
 

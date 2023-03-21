@@ -120,20 +120,6 @@ a {
 	margin-bottom: 20px
 }
 
-.nav-logo {
-	float: left;
-	transition: transform 300ms ease-out
-}
-
-.nav-logo:hover {
-	transform: scale(1.1)
-}
-
-.nav-logo img {
-	display: block;
-	width: auto
-}
-
 .nav-links {
 	margin: 0;
 	padding: 0;
@@ -202,22 +188,6 @@ h6 {
 
 .article {
 	text-align: justify
-}
-
-#TableOfContents {
-	font-size: 14px;
-	border: 2px dotted #ccc;
-	margin: 1em 0;
-	padding: .5em 0;
-	background-color: #f0f0f0
-}
-
-#TableOfContents ul {
-	list-style-type: none
-}
-
-#TableOfContents ul ul {
-	list-style-type: disc
 }
 
 p {
@@ -361,100 +331,10 @@ table tr td :last-child {
 	padding: 0 .4em
 }
 
-#backtotopButton {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	z-index: 99;
-	border: none;
-	outline: none;
-	background-color: #eef;
-	cursor: pointer;
-	padding: 15px;
-	border-radius: 10px;
-	font-size: 16px;
-	text-align: center;
-	transition: .5s;
-	opacity: 0;
-	display: none
-}
-
-#backtotopButton:hover {
-	background-color: #aaa
-}
-
 mark {
 	background-color: #ef0
 }
 
-.bottomnav {
-	list-style: none;
-	text-align: center;
-	padding-left: 0
-}
-
-.bottomnav ul {
-	display: block
-}
-
-.bottomnav li {
-	display: inline
-}
-
-.bottomnav .previous>a {
-	float: left;
-	display: block
-}
-
-.bottomnav .next>a {
-	float: right;
-	display: block
-}
-
-.pager {
-	list-style: none;
-	text-align: center;
-	margin: 20px 0 0;
-	padding-left: 0
-}
-
-.pager ul {
-	display: block
-}
-
-.pager li {
-	display: inline
-}
-
-.pager li a {
-	box-sizing: border-box;
-	font-family: roboto, Helvetica, sans-serif;
-	text-transform: uppercase;
-	text-align: center;
-	font-size: 14px;
-	font-weight: 800;
-	letter-spacing: 1px;
-	padding: 10px 5px;
-	background: #fff;
-	border-radius: 0;
-	border: 1px solid #ddd;
-	display: inline-block;
-	text-decoration: none
-}
-
-.pager a:hover:not(.active) {
-	background-color: #ddd
-}
-
-.pager .previous>a {
-	float: left;
-	display: block
-}
-
-.pager .next>a {
-	float: right;
-	display: block
-}
 
 
 @media(min-width: 600px) {
@@ -478,14 +358,6 @@ mark {
 
 	.blog-tags {
 		margin: 20px 0
-	}
-
-	.pager li a {
-		padding: 10px 20px
-	}
-
-	.pager.blog-pager {
-		margin-top: 40px
 	}
 }
 

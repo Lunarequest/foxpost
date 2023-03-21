@@ -32,7 +32,6 @@
 				<span class="meta-post">
 					<em class="fa fa-calendar-alt"
 						aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}<br>
-					<a>By <a class="p-author">{{post.author}}</a></a>
 				</span>
 
 
