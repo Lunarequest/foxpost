@@ -1,6 +1,6 @@
 package:
   name: Lunas-blog
-  version: 1.0.1
+  version: 1.0.2
   description: Luna's blog
   target-architecture:
     - amd64

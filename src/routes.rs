@@ -54,6 +54,13 @@ pub async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
 			}
 			NamedFile::open(path).await.ok()
 		}
+		"fonts" => {
+			let path = Path::new("./static/fonts").join(asset);
+			if path.is_dir() {
+				return None;
+			}
+			NamedFile::open(path).await.ok()
+		}
 		_ => None,
 	}
 }
