@@ -17,7 +17,7 @@
 <meta property="article:author" content="nullrequest">
 <link rel="stylesheet" title="dark"
 	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script src="/static/js/highlight.min.js"></script>
 <script defer>hljs.highlightAll();</script>
 {% endblock meta %}
 {% block content %}
