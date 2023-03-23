@@ -13,6 +13,9 @@
 						<em class="fa-brands fa-mastodon fa-2x"></em>
 					</a>
 					&nbsp;&nbsp;
+					<a href="https://github.com/lunarequest" rel="me authn"><em
+							class="fa-brands fa-github fa-2x"></em></a>
+					&nbsp;&nbsp;
 					<a rel="me" href="mailto:luna.dragon@suse.com" name="mail"
 						aria-label="Email my if you like the old school stuff">
 						<em class="fas fa-envelope-open-text fa-2x" aria-hidden="true"></em>
