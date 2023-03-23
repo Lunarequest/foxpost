@@ -93,7 +93,6 @@ body {
 	padding: 0;
 	font-family: noto sans jp, sans-serif;
 	font-size: 16px;
-	background: 0 0;
 	flex-flow: column;
 	text-rendering: optimizeLegibility
 }
@@ -226,7 +225,7 @@ p+p {
 }
 
 .blog-tags a {
-	color: #00b;
+	color: #26f7fd;
 	text-decoration: none;
 	padding: 0 5px
 }
@@ -360,21 +359,9 @@ mark {
 }
 
 .article a:link {
-	color: blue;
+	color: #26f7fd;
 }
 
 .article a:visited {
-	color: green;
-}
-
-.post-read-more a:link {
-	color: red;
-}
-
-.post-read-more a:visited {
-	color: green;
-}
-
-.masto-share {
-	margin-bottom: 2%;
+	color: #66FF00;
 }

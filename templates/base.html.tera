@@ -17,13 +17,13 @@
 	<link href="/static/css/output.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="mocha">
 	{% include 'nav' %}
 	{% block content %}
 	{% endblock content %}
 	{% include 'footer' %}
 	<script src="/static/js/theme.js"></script>
-	<script defer src="https://kit.fontawesome.com/f0a57a28d4.js" crossorigin="anonymous"></script>
+	<script defer async src="https://kit.fontawesome.com/beafef2608.js" crossorigin="anonymous"></script>
 </body>
 <!--Trans rights-->
 
