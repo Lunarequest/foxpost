@@ -80,7 +80,6 @@
 			</noscript>
 		</div>
 	</div>
-	</div>
 </center>
-<script src="/static/js/webmention.min.js" async></script>
+<script async data-page-url="{{domain}}/posts/{{post.slug}}" src="/static/js/webmention.min.js"></script>
 {% endblock content %}
