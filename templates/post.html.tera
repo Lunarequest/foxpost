@@ -15,6 +15,8 @@
 <meta property="og:site_name" content="Null's Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="nullrequest">
+<link rel="webmention" href="https://webmention.io/nullrequest.com/webmention" />
+<link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
 <script src="/static/js/highlight.min.js"></script>
 <script defer>hljs.highlightAll();</script>
@@ -40,31 +42,45 @@
 			{{content|safe}}
 		</article>
 		<div class="text-center blog-tags">
+			{% if posts.tags %}
 			{% for tag in post.tags %}
 			<a href="/posts/tag/{{tag}}">{{tag}}</a>
 			{% endfor %}
+			{% endif %}
 		</div>
-	</div>
-	<div id="mastodon_share_div" class="masto-share">
-		<div>
-			<details>
-				<summary>Share on Mastodon</summary><span>Instance URL (https://mastodon.example)</span>
-				<br>
-				<input type="url" id="instance_url" class="form-input bg-slate-800 shadow appearance-none border rounded w-1/2 py-8 px-3
+		<div id="mastodon_share_div" class="masto-share">
+			<div>
+				<details>
+					<summary>Share on Mastodon</summary><span>Instance URL (https://mastodon.example)</span>
+					<br>
+					<input type="url" id="instance_url" class="form-input bg-slate-800 shadow appearance-none border rounded w-1/2 py-8 px-3
 			text-white leading-tight focus:outline-none focus:shadow-outline" placeholder="https://hachyderm.io">
-				<br><br>
-				<textarea id="content" rows="6" cols="40" class="form-input bg-slate-800 shadow appearance-none border rounded w-1/2	 py-8 px-3
+					<br><br>
+					<textarea id="content" rows="6" cols="40" class="form-input bg-slate-800 shadow appearance-none border rounded w-1/2	 py-8 px-3
 				text-white leading-tight focus:outline-none focus:shadow-outline">{{post.title}}
 
 {{domain}}/posts/{{post.slug}}
 {% for tag in post.tags %}#{{tag}} {% endfor %} @lunarequest@hachyderm.io
 			</textarea>
-				<br><br>
-				<button id="mastodon_share_button"
-					class="flex flex-col p-4 mt-4 border border-black-100 rounded-lg bg-slate-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black dark:bg-black-800 md:dark:bg-black-900 dark:border-black-700"
-					onclick="share_on_mastodon(this);">Share</button>
-			</details>
+					<br><br>
+					<button id="mastodon_share_button"
+						class="flex flex-col p-4 mt-4 border border-black-100 rounded-lg bg-slate-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black dark:bg-black-800 md:dark:bg-black-900 dark:border-black-700"
+						onclick="share_on_mastodon(this);">Share</button>
+				</details>
+			</div>
+		</div>
+		<div id="webmentions" class="webmentions">
+			<p id="#webmtion_link">This post was not <a href="https://www.w3.org/TR/webmention/">WebMentioned</a> yet.
+				You
+				could be the
+				first!
+			</p>
+			<noscript>
+				<p>If you do not have javascript enabled you will not see these posts</p>
+			</noscript>
 		</div>
 	</div>
+	</div>
 </center>
+<script src="/static/js/webmention.min.js" async></script>
 {% endblock content %}

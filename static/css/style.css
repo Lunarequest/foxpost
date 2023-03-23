@@ -365,3 +365,20 @@ mark {
 .article a:visited {
 	color: #66FF00;
 }
+
+.webmentions a:link {
+	color: #26f7fd;
+}
+
+.webmentions a:visited {
+	color: #66FF00;
+}
+
+.masto-share {
+	margin-bottom: 3%;
+}
+
+#webmentions img {
+	max-height: 1.2em;
+	margin-right: -1ex;
+}
