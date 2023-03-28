@@ -47,7 +47,7 @@ fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
 	};
 	let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
 	let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
-	match to_value(datetime.to_string()) {
+	match to_value(datetime.format("%Y-%m-%d").to_string()) {
 		Ok(time) => Ok(time),
 		Err(e) => Err(format!("{e}").into()),
 	}
