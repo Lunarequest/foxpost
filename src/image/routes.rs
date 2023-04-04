@@ -89,7 +89,7 @@ pub async fn image_form(
 #[get("/<asset>")]
 pub async fn media(asset: PathBuf) -> Option<NamedFile> {
 	let path = PathBuf::from("./assets").join(asset);
-	if path.is_dir() || path.is_relative() {
+	if path.is_dir() {
 		return None;
 	}
 	NamedFile::open(path).await.ok()

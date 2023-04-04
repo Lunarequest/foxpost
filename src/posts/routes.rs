@@ -28,7 +28,7 @@ fn render_to_html(markdown: String) -> String {
 fn convert(timestamp: i64) -> String {
 	let naive = NaiveDateTime::from_timestamp_opt(timestamp, 0).unwrap_or_default();
 	let datetime: DateTime<Utc> = DateTime::from_utc(naive, Utc);
-	datetime.to_string()
+	datetime.format("%Y-%m-%d").to_string()
 }
 
 #[get("/tag/<tag>")]

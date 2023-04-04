@@ -21,9 +21,7 @@ environment:
     keyring:
       - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     packages:
-      - clang-15
       - gcc
-      - mold
       - glibc-dev
       - wolfi-baselayout
       - ca-certificates-bundle
@@ -41,6 +39,7 @@ pipeline:
       TARGETDIR="/var/cache/melange/blog"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
       npm install --global yarn
+      rm -rf .cargo
       cargo build --release --target-dir "${TARGETDIR}"
       cd tailwind
       yarn && yarn compile --minify
@@ -49,3 +48,4 @@ pipeline:
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
       mkdir "${{targets.destdir}}/assets"
+      chmod -R +r "${{targets.destdir}}/assets"

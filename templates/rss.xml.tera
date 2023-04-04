@@ -1,6 +1,6 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 	<channel>
-		<title>Null's blog on Null's blog</title>
+		<title>Null's blog</title>
 		<link>{{host}}</link>
 		<description>Recent content in Null's blog </description>
 		<generator>foxblog</generator>
