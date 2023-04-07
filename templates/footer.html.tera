@@ -26,8 +26,8 @@
 
 		<div class="bg-black-300 p-4 text-center text-black-700 dark:bg-black-700 dark:text-black-200">
 			<span class="text-muted">© <i id="copyright">2023 Luna Dragon</i></span><br>
-			<span class="text-muted">Like this blog? visit this <a
-					href="https://github.com/Lunarequest/blog-backend/">repo for the source code</a></span>
+			<span class="text-muted">Like this blog? visit this <a href="https://github.com/Lunarequest/foxpost">repo
+					for the source code</a></span>
 		</div>
 
 

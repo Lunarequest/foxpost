@@ -399,7 +399,8 @@ mark {
 }
 
 #webmentions .reacts img {
-	margin: 3px -1ex 1px 0;
+	display: inline-block;
+	margin: 2%;
 }
 
 #webmentions ul {

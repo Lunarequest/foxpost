@@ -1,5 +1,5 @@
 package:
-  name: Lunas-blog
+  name: foxpost
   version: 1.0.2
   description: Luna's blog
   target-architecture:
@@ -44,7 +44,7 @@ pipeline:
       cd tailwind
       yarn && yarn compile --minify
       cd ..
-      cp "${TARGETDIR}/release/blog" "${EXEC_DIR}"
+      cp "${TARGETDIR}/release/foxpost" "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"
       cp -rv templates "${{targets.destdir}}/templates"
       mkdir "${{targets.destdir}}/assets"
