@@ -11,5 +11,6 @@ CREATE TABLE completed_requests (
 	target	TEXT UNIQUE NOT NULL,
 	content TEXT NOT NULL,
 	author	TEXT NOT NULL,
-	pfp		TEXT NOT NULL
+	author_url TEXT NOT NULL,
+	url		TEXT NOT NULL
 );

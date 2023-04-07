@@ -5,8 +5,6 @@ module.exports = {
     '../templates/*.html.tera',
     '../static/**/*.js'
   ],
-  theme: {
-  },
   plugins: [
     require('@tailwindcss/forms')
   ],

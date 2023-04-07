@@ -7,7 +7,8 @@ diesel::table! {
         target -> Text,
         content -> Text,
         author -> Text,
-        pfp -> Text,
+        author_url -> Text,
+        url -> Text,
     }
 }
 

@@ -1,13 +1,13 @@
-use crate::schema::completed_requests;
 use diesel::Queryable;
+use serde::Serialize;
 
 #[derive(Debug, Queryable)]
-#[diesel(table_name=completed_requests)]
 pub struct CompletedRequest {
-	pub id: u64,
+	pub id: i32,
 	pub source: String,
 	pub target: String,
 	pub content: String,
 	pub author: String,
-	pub pfp: String,
+	pub author_url: String,
+	pub url: String,
 }
