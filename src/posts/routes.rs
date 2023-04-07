@@ -17,7 +17,7 @@ use rocket::{
 use rocket_dyn_templates::{context, Template};
 
 fn render_to_html(markdown: String) -> String {
-	let mut options = Options::empty();
+	let mut options = Options::all();
 	options.insert(Options::all());
 	let parser = Parser::new_ext(&markdown, options);
 	let mut html_output = String::new();
