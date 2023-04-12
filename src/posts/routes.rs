@@ -236,7 +236,9 @@ pub async fn new_post(
 				eprintln!("{e}");
 				Err((
 					Status::InternalServerError,
-					json!({"Errors":"a error occrued while trying to insert into the database"}),
+					json!({"Errors":"a error occrued while trying to insert into the database",
+								"Debug": format!("{e}")
+					}),
 				))
 			}
 			Ok(_) => {
@@ -244,6 +246,7 @@ pub async fn new_post(
 					.run(move |conn| {
 						diesel::insert_into(Tags::table)
 							.values(&tag_insert)
+							.on_conflict_do_nothing()
 							.execute(conn)
 					})
 					.await

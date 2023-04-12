@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="relative block mb-2 form-switch">
-			<label class="text-gray-700 pl-6 mb-0" for="draft">Publish?</label>
+			<label for="draft" class="text-white-700 pl-6 mb-0" style="margin-right: 3%;" for="draft">Publish?</label>
 			{% if post.draft %}
 			<input type="checkbox" value="not_draft" id="draft" name="draft" class="absolute mt-1 -ml-6">
 			{% else %}
@@ -55,62 +55,6 @@
 		sessionStorage.setItem('slug', "{{post.slug}}")
 	}
 	window.onload = setslug();
-	const easyMDE = new EasyMDE({
-		element: document.getElementById("editor"),
-		autosave: {
-			enabled: true,
-			delay: 1000,
-			uniqueId: 'blog-post',
-		},
-		indentWithTabs: true,
-		renderingConfig: {
-			codeSyntaxHighlighting: true,
-		},
-		tabSize: 4,
-	});
-	getData("/api/posts/{{post.slug}}").then(data => {
-		let content = data;
-		easyMDE.value(content);
-	});
-	const editor = document.getElementById("editor_form");
-	editor.addEventListener('submit', function (e) {
-		update_or_new_post(e);
-	});
-	async function update_or_new_post(e) {
-		e.preventDefault();
-		const btn_submit = document.getElementById("submit");
-		btn_submit.disabled = true;
-		setTimeout(() => btn_submit.disabled = false, 2000);
-		console.log(document.getElementById("editor_form"));
-		slug = localStorage.getItem("slug");
-		form = new FormData(editor);
-		json = Object.fromEntries(form);
-		if (json.draft == "not_draft") {
-			json.draft = false;
-		} else {
-			json.draft = true;
-		}
-		console.log(json.draft);
-		slug = sessionStorage.getItem("slug");
-		json["slug"] = slug;
-		fetch(`/api/posts/${slug}/update`, {
-			method: 'POST',
-			mode: "same-origin",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(json)
-		}).then(function (response) {
-			return response.json();
-		}).then(function (resp) {
-			if ('Errors' in resp) {
-				alert(resp.Errors);
-			} else {
-				alert("post has been successfully updated")
-			}
-		})
-	}
 </script>
+<script async defer src="/static/js/editor.js"></script>
 {% endblock content %}
