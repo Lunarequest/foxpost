@@ -7,9 +7,7 @@ module.exports = {
   ],
   theme: {
   },
-  plugins: [require('@catppuccin/tailwindcss')({
-    defaultFlavor: 'mocha'
-  }),
-  require('@tailwindcss/forms')
+  plugins: [
+    require('@tailwindcss/forms')
   ],
 }
