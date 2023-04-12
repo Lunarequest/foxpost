@@ -12,6 +12,10 @@
 	<link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />
 	{% block meta %}
 	{% endblock meta %}
+	<link rel="preload" href="/static/fonts/ibm-plex-mono-v15-latin-regular.woff2" as="font" type="font/woff2"
+		crossorigin>
+	<link rel="preload" href="/static/fonts/roboto-v30-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="/static/fonts/roboto-v30-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
 	<link href="/static/css/font.css" rel="stylesheet">
 	<link href="/static/css/style.css" rel="stylesheet">
 	<link href="/static/css/output.css" rel="stylesheet">

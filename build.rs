@@ -36,7 +36,7 @@ fn main() {
 		}
 	}
 
-	//in release mode this compiles with minification
+	//in release mode this compiles tailwind minified and then uses teser and post css to minify everything else
 	#[cfg(not(debug_assertions))]
 	match Command::new("yarn").args(["compile:prod"]).spawn() {
 		Ok(_) => (),
