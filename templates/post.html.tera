@@ -17,9 +17,9 @@
 <meta property="article:author" content="nullrequest">
 <link rel="webmention" href="https://webmention.io/nullrequest.com/webmention" />
 <link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
+<link id="railscasts" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
+<link disabled id="tomorrow" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
 <script src="/static/js/highlight.min.js"></script>
-<script defer>hljs.highlightAll();</script>
 {% endblock meta %}
 {% block content %}
 <center>
@@ -88,5 +88,6 @@
 		startOnLoad: true,
 		theme: 'dark'
 	});
+	hljs.highlightAll();
 </script>
 {% endblock content %}

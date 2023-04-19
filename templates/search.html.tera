@@ -1,13 +1,13 @@
 {% extends "base" %}
 {% block meta %}
-<script src="https://cdn.jsdelivr.net/gh/nextapps-de/flexsearch@0.7.2/dist/flexsearch.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/nextapps-de/flexsearch@0.7.31/dist/flexsearch.bundle.js"></script>
 {% endblock meta %}
 {% block content %}
 <div class="grid content-center px-9 text-black dark:text-white">
 	<div class="mb-3">
 		<label for="searchBox" class="form-label">Search...</label>
-		<input type="text" id="searchBox" name="searchBox"
-			class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-slate-50 dark:bg-white border border-gray-200 rounded me-2"
+		<input type="search" id="searchBox" name="searchBox" placeholder="Search..."
+			class="block appearance-none text-black w-full py-1 px-2 mb-1 text-base leading-normal bg-slate-50 dark:bg-white border border-gray-200 rounded me-2"
 			aria-describedby="searchHelp">
 	</div>
 	<div id="searchResults" class="searchResults" style="display: none;"></div>

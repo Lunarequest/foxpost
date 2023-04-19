@@ -20,26 +20,35 @@ if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matc
 	icon.className = "fa-solid fa-sun";
 }
 
+const theme_railscasts = document.getElementById("railscasts");
+const theme_tomrrow = document.getElementById("tomorrow");
 const toggle = document.getElementById("dark-mode-toggle");
 
 function setTheme(mode) {
 	if (mode === "dark") {
 		document.documentElement.classList.add('dark');
-		icon.classList.add('fa-sun');
-		icon.classList.remove('fa-moon');
+		toggle.innerHTML = '<i id="darkmode_icon" class="fa-solid fa-sun" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
+		if (theme_railscasts && theme_tomrrow) {
+			theme_railscasts.removeAttribute('disabled');
+			theme_tomrrow.setAttribute('disabled', 'disabled');
+		}
 	} else if (mode === "light") {
 		document.documentElement.classList.remove('dark');
-		icon.classList.add('fa-moon');
-		icon.classList.remove('fa-sun');
+		toggle.innerHTML = '<i id="darkmode_icon" class="fa-solid fa-moon" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
+		if (theme_railscasts && theme_tomrrow) {
+			theme_tomrrow.removeAttribute('disabled');
+			theme_railscasts.setAttribute('disabled', 'disabled');
+		}
 	}
 	localStorage.setItem('theme', mode)
 }
 
 toggle.addEventListener('click', () => {
 	console.log('click');
-	if (icon.classList.contains('fa-moon')) {
+	let icon = document.getElementById('darkmode_icon');
+	if (icon.classList.contains('fa-moon') || localStorage.getItem('theme') == 'light') {
 		setTheme("dark");
-	} else if (icon.classList.contains('fa-sun')) {
+	} else if (icon.classList.contains('fa-sun') || localStorage.getItem('theme') == 'dark') {
 		setTheme("light");
 	}
 });

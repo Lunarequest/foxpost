@@ -1,4 +1,5 @@
-<nav class="border-white-200 dark:border-black-200 bg-white dark:bg-black text-black dark:text-white px-2 sm:px-4 py-2.5 rounded">
+<nav
+	class="border-white-200 dark:border-black-200 bg-white dark:bg-black text-black dark:text-white px-2 sm:px-4 py-2.5 rounded">
 	<div class="container flex flex-wrap items-center justify-between mx-auto">
 		<a href="/" class="flex items-center">
 			<img src="/static/images/iconx50.avif" height="50%" width="50%"
@@ -29,20 +30,21 @@
 				</li>
 				<li>
 					<a href="/search" aria-label="Search all blog posts for specific keywords"
-						class="block py-2 pl-3 pr-4 md:border-0 md:p-0"><em
-							class="fas fa-search fa-lg" aria-hidden="true"></em></a>
+						class="block py-2 pl-3 pr-4 md:border-0 md:p-0"><em class="fas fa-search fa-lg"
+							aria-hidden="true"></em></a>
 				</li>
 				<li>
-					<a id="dark-mode-toggle"><i id="darkmode_icon" class="fa-solid fa-sun"></i></a>
+					<a id="dark-mode-toggle">
+						<i id="darkmode_icon" class="fa-solid fa-sun" aria-label="Switch between dark and light mode"
+							aria-hidden="true"></i>
+					</a>
 				</li>
 				{% if sess %}
 				<li>
-					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0"
-						aria-current="page" href="/posts/all">Drafts?</a>
+					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0" aria-current="page" href="/posts/all">Drafts?</a>
 				</li>
 				<li>
-					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0"
-						aria-current="page" href="/posts/new">New
+					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0" aria-current="page" href="/posts/new">New
 						Post</a>
 				</li>
 				<li>

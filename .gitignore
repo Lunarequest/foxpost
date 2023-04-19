@@ -11,3 +11,5 @@ packages
 *.tar*
 sbom*
 output.css
+static/images/arch.png
+static/images/nixos.png
