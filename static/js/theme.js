@@ -11,18 +11,17 @@ button.addEventListener('click', () => {
 	menu.classList.toggle('hidden');
 });
 
-const icon = document.getElementById("darkmode_icon");
-if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-	document.documentElement.classList.remove('dark');
-	icon.className = "fa-solid fa-moon";
-} else {
-	document.documentElement.classList.add('dark');
-	icon.className = "fa-solid fa-sun";
-}
-
 const theme_railscasts = document.getElementById("railscasts");
 const theme_tomrrow = document.getElementById("tomorrow");
 const toggle = document.getElementById("dark-mode-toggle");
+
+if (localStorage.theme === 'light' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+	document.documentElement.classList.remove('dark');
+	toggle.innerHTML = '<i id="darkmode_icon" class="fa-solid fa-moon" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
+} else {
+	document.documentElement.classList.add('dark');
+	toggle.innerHTML = '<i id="darkmode_icon" class="fa-solid fa-sun" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
+}
 
 function setTheme(mode) {
 	if (mode === "dark") {
