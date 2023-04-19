@@ -33,7 +33,7 @@
 							class="fas fa-search fa-lg" aria-hidden="true"></em></a>
 				</li>
 				<li>
-					<a id="dark-mode-toggle"><i class="fa-solid fa-sun"></i></a>
+					<a id="dark-mode-toggle"><i id="darkmode_icon" class="fa-solid fa-sun"></i></a>
 				</li>
 				{% if sess %}
 				<li>
