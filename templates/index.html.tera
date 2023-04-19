@@ -20,18 +20,18 @@
 	{% for post in posts %}
 	<article class="post-preview">
 		<a href="/posts/{{post.slug}}">
-			<h2 class="text-xl text-white">{{post.title}}</h2>
+			<h2 class="text-xl text-black dark:text-white">{{post.title}}</h2>
 		</a>
-		<div class="post-entry">
+		<div class="post-entry text-black dark:text-white">
 			<p>
 				{{post.description}}
 			</p>
 		</div>
 		<div class="postmeta">
 			<a href="/posts/{{post.slug}}" aria-label="Read more about {{post.title}}"
-				class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600 post-read-more">Read
+				class="post-read-more text-black dark:text-white">Read
 				More</a>
-			<span class="meta-post">
+			<span class="meta-post text-black dark:text-white">
 				<em class="fa fa-calendar-alt" aria-hidden="true"></em>&nbsp;{{convert(timestamp=post.published)}}
 			</span>
 		</div>

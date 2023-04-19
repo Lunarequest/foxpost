@@ -1,5 +1,5 @@
 <center>
-	<footer class="bg-black-200 text-white dark:bg-black-600">
+	<footer class="bg-white-200 text-black dark:text-white dark:bg-black-600">
 		<div class="container pt-9">
 			<div class="mb-9 flex justify-center">
 				<div class="social-icons">

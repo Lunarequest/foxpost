@@ -13,18 +13,18 @@
 {% block content %}
 <!--Trans rights-->
 <center>
-	<div class="h-full p-12 margin-all border rounded-3">
+	<div class="h-full p-12 margin-all border rounded-3 text-black dark:text-white">
 		<form method="post" id="login" name="login">
 			<div class="mb-3">
 				<label for="username" class="form-label">Username</label>
 				<input type="text" id="username" name="username"
-					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded me-2"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white dark:bg-black  border border-gray-200 rounded me-2"
 					aria-describedby="usernameHelp">
 			</div>
 			<div class="mb-3">
 				<label for="passwd" class="form-label">Password</label>
 				<input type="password" id="passwd" name="passwd"
-					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white dark:bg-black border border-gray-200 rounded"
 					aria-describedby="PasswordHelp">
 			</div>
 			<div class="h-captcha" data-sitekey="{{site_key}}" data-theme="dark"></div>

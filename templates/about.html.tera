@@ -20,7 +20,7 @@
 </style>
 {% endblock meta %}
 {% block content %}
-<article class="article">
+<article class="article text-black dark:text-white">
 	<p><img src="/static/images/icon.png" width="15%" class="center" alt="a picture of a huamnoid fox"></p>
 	<center style="margin-left: 10%;margin-right:10%;">
 		<p>Most people know me as null. I am an 19 year old programer in love with linux. Over the past few years I

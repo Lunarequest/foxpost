@@ -1,13 +1,14 @@
-<nav class="bg-grey border-black-200 px-2 sm:px-4 py-2.5 rounded dark:bg-black-900">
+<nav class="border-white-200 dark:border-black-200 bg-white dark:bg-black text-black dark:text-white px-2 sm:px-4 py-2.5 rounded">
 	<div class="container flex flex-wrap items-center justify-between mx-auto">
 		<a href="/" class="flex items-center">
 			<img src="/static/images/iconx50.avif" height="50%" width="50%"
 				srcset="/static/images/icon36.avif 36w,/static/images/icon46.avif 46w,/static/images/icon100.avif 100w"
 				sizes="50vw" class="h-6 mr-3 sm:h-9" alt="Luna's sona" />
-			<span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Nullrequest</span>
+			<span
+				class="self-center text-xl font-semibold whitespace-nowrap text-black dark:text-white">Nullrequest</span>
 		</a>
 		<button data-collapse-toggle="navbar-default" type="button" id="menu-button"
-			class="inline-flex items-center p-2 ml-3 text-sm text-white-500 rounded-lg md:hidden hover:bg-black-100 focus:outline-none focus:ring-2 focus:ring-black-200 dark:text-white-400 dark:hover:bg-black-700 dark:focus:ring-black-600"
+			class="inline-flex items-center p-2 ml-3 text-sm text-black:500 dark:text-white-500 rounded-lg md:hidden hover:bg-black-100 focus:outline-none focus:ring-2 focus:ring-black-200 dark:text-white-400 dark:hover:bg-black-700 dark:focus:ring-black-600"
 			aria-controls="navbar-default" aria-expanded="false">
 			<span class="sr-only">Open main menu</span>
 			<svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
@@ -19,29 +20,33 @@
 		</button>
 		<div class="hidden w-full md:block md:w-auto" id="menu">
 			<ul
-				class="flex flex-col p-4 mt-4 border border-black-100 rounded-lg bg-black-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black dark:bg-black-800 md:dark:bg-black-900 dark:border-black-700">
+				class="flex flex-col p-4 mt-4
+				bg-white-50 dark:bg-black-50
+				md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:md:bg-black dark:bg-black-800 md:dark:bg-black-900 dark:border-black-700">
 				<li>
 					<a href="/about"
-						class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+						class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:border-0 md:p-0">About</a>
 				</li>
 				<li>
 					<a href="/search" aria-label="Search all blog posts for specific keywords"
-						class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent"><em
+						class="block py-2 pl-3 pr-4 md:border-0 md:p-0"><em
 							class="fas fa-search fa-lg" aria-hidden="true"></em></a>
+				</li>
+				<li>
+					<a id="dark-mode-toggle"><i class="fa-solid fa-sun"></i></a>
 				</li>
 				{% if sess %}
 				<li>
-					<a class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent"
+					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0"
 						aria-current="page" href="/posts/all">Drafts?</a>
 				</li>
 				<li>
-					<a class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent"
+					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0"
 						aria-current="page" href="/posts/new">New
 						Post</a>
 				</li>
 				<li>
-					<a class="block py-2 pl-3 pr-4 text-white-700 rounded hover:bg-black-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white-400 md:dark:hover:text-white dark:hover:bg-black-700 dark:hover:text-white md:dark:hover:bg-transparent"
-						aria-current="page" href="/users/logout">Logout</a>
+					<a class="block py-2 pl-3 pr-4 md:border-0 md:p-0"></a>
 				</li>
 				{% endif %}
 			</ul>

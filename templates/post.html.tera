@@ -23,7 +23,7 @@
 {% endblock meta %}
 {% block content %}
 <center>
-	<div class="container" role="main">
+	<div class="container text-black dark:text-white" role="main">
 		<div class="intro-header">
 			<div class="post-heading">
 				<h1 class="p-name">
@@ -42,7 +42,7 @@
 			{{content|safe}}
 		</article>
 		<div class="text-center blog-tags">
-			{% if posts.tags %}
+			{% if post.tags %}
 			{% for tag in post.tags %}
 			<a href="/posts/tag/{{tag}}">{{tag}}</a>
 			{% endfor %}
@@ -60,7 +60,7 @@
 				text-white leading-tight focus:outline-none focus:shadow-outline">{{post.title}}
 
 {{domain}}/posts/{{post.slug}}
-{% for tag in post.tags %}#{{tag}} {% endfor %} @lunarequest@hachyderm.io
+{% if post.tag %}{% for tag in post.tags %}#{{tag}} {% endfor %}{% endif %} @lunarequest@hachyderm.io
 			</textarea>
 					<br><br>
 					<button id="mastodon_share_button"

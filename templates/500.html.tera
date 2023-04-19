@@ -21,7 +21,7 @@
 <center>
 	<div class="container">
 		<div class="child">
-			<h1 class="text-xl text-white">
+			<h1 class="text-xl text-black dark:text-white">
 				So something broke on the backend and I need to fix it.<br>
 				Sorry for breaking stuff.
 			</h1>

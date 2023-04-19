@@ -1,6 +1,6 @@
 {% extends "base" %}
 {% block content %}
-<div class="container">
+<div class="container text-black dark:text-white">
 	<div class="h-100 p-5 margin-all border rounded-3">
 		<form method="post" id="file" name="file" enctype="multipart/form-data">
 			<div class="mb-3">

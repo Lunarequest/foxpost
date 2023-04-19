@@ -1,3 +1,14 @@
+function getData(url) {
+	return new Promise((resolve, reject) => {
+		fetch(url)
+			.then(response => {
+				return response.text();
+			}).then(data => {
+				resolve(data);
+			})
+	})
+}
+
 const easyMDE = new EasyMDE({
 	element: document.getElementById("editor"),
 	autosave: {
@@ -10,11 +21,18 @@ const easyMDE = new EasyMDE({
 		codeSyntaxHighlighting: true,
 	},
 	tabSize: 4,
-})
+});
+
+getData(`/api/posts/${sessionStorage.getItem("slug")}`).then(data => {
+	let content = data;
+	easyMDE.value(content);
+});
+
 const editor = document.getElementById("editor_form");
 editor.addEventListener('submit', function (e) {
 	update_or_new_post(e);
 });
+
 async function update_or_new_post(e) {
 	e.preventDefault();
 	const btn_submit = document.getElementById("submit");

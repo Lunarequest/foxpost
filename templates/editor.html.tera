@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
 {% endblock meta %}
 {% block content %}
-<div>
+<div class="text-black dark:text-white">
 	<form id="editor_form">
 		<div class="flex flex-wrap  mb-3">
 			<label for="title" class="relative sm:flex-grow sm:flex-1 pt-2 pb-2 mb-0 leading-normal">Title:</label>

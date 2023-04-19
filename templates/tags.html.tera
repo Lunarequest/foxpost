@@ -10,13 +10,13 @@
 </style>
 {% endblock meta %}
 {% block content %}
-<div class="container" role="main">
+<div class="container text-black dark:text-white" role="main">
 	<div class="posts">
 		{% if posts %}
 		{% for post in posts %}
 		<article class="post-preview">
 			<a href="/posts/{{post.slug}}">
-				<h2 class="text-xl text-white">{{post.title}}</h2>
+				<h2 class="text-xl">{{post.title}}</h2>
 			</a>
 			<div class="post-entry">
 				<p>

@@ -30,7 +30,7 @@
 <center>
 	<div class="parent">
 		<div class="child">
-			<h1 class="text-xl text-white">You've been a naughty baka</h1>
+			<h1 class="text-xl text-black dark:text-white">You've been a naughty baka</h1>
 			<img src="/static/images/mommy.png">
 		</div>
 	</div>
