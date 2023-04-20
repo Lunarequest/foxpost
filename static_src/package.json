@@ -3,7 +3,7 @@
   "packageManager": "yarn@3.4.1",
   "scripts": {
     "compile": "tailwindcss -i input.css -o ./static/css/output.css --minify && gulp",
-    "compile:prod": "yarn compile && scripts/minify.js"
+    "compile:prod": "yarn compile && node scripts/minify.js"
   },
   "browserslist": [
     "last 1 version"
@@ -17,6 +17,7 @@
     "gulp-postcss": "^9.0.1",
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.1"
+    "tailwindcss": "^3.3.1",
+    "terser": "^5.17.1"
   }
 }

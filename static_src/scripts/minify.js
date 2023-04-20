@@ -1,8 +1,5 @@
 const { minify } = require('terser');
 const { opendir, readFile, writeFile } = require('fs/promises');
-const postcss = require('postcss');
-const cssnano = require('cssnano');
-const autoprefixer = require('autoprefixer');
 
 async function jsminify() {
   const dir = await opendir("../static/js");
