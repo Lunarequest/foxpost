@@ -2,7 +2,7 @@
   "name": "tailwind",
   "packageManager": "yarn@3.4.1",
   "scripts": {
-    "compile": "tailwindcss -i input.css -o --minify ./static/css/output.css && gulp"
+    "compile": "tailwindcss -i input.css -o ./static/css/output.css --minify && gulp"
   },
   "browserslist": [
     "last 1 version"
