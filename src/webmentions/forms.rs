@@ -11,7 +11,7 @@ pub struct WebMetion {
 }
 
 impl WebMetion {
-	pub fn verify(self: Self) -> bool {
+	pub fn verify(self) -> bool {
 		match Url::parse(&self.source) {
 			Err(e) => {
 				eprintln!("{e}");
