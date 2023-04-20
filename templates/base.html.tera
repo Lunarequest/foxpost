@@ -15,9 +15,7 @@
 		crossorigin>
 	<link rel="preload" href="/static/fonts/roboto-v30-latin-italic.woff2" as="font" type="font/woff2" crossorigin>
 	<link rel="preload" href="/static/fonts/roboto-v30-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-	<link href="/static/css/font.css" rel="stylesheet">
-	<link href="/static/css/style.css" rel="stylesheet">
-	<link href="/static/css/output.css" rel="stylesheet">
+	<link href="/static/css/bundle.css" rel="stylesheet">
 </head>
 
 <body class="bg-white dark:bg-black">

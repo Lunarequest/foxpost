@@ -1,6 +1,5 @@
 {% extends "base" %}
 {% block meta %}
-<link rel="stylesheet" href="/static/css/style.css">
 <script defer src="/static/js/app.js"></script>
 <style>
 	.my-custom-jumbotron {

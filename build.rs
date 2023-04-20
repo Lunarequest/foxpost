@@ -25,20 +25,9 @@ fn main() {
 		eprintln!("yarn is missing");
 		exit(1);
 	}
-	env::set_current_dir("tailwind").unwrap();
+	env::set_current_dir("static_src").unwrap();
 
-	//in development mode we compile without minification
-	#[cfg(debug_assertions)]
 	match Command::new("yarn").args(["compile"]).spawn() {
-		Ok(_) => (),
-		Err(e) => {
-			eprintln!("{e}");
-		}
-	}
-
-	//in release mode this compiles tailwind minified and then uses teser and post css to minify everything else
-	#[cfg(not(debug_assertions))]
-	match Command::new("yarn").args(["compile:prod"]).spawn() {
 		Ok(_) => (),
 		Err(e) => {
 			eprintln!("{e}");
