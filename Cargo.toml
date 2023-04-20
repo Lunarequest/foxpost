@@ -23,7 +23,7 @@ hcaptcha = { version = "2.2.2", default-features = false, features = [
 "ext",
 "rustls-backend",
 ] }
-pulldown-cmark = "0.9.2"
+pulldown-cmark = { version = "0.9.2", default-features = false, features = ["simd"] }
 lazy_static = "1.4.0"
 url = "2.3.1"
 

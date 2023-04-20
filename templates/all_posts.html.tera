@@ -7,6 +7,7 @@
 				<th>Title</th>
 				<th>Draft</th>
 				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -21,10 +22,19 @@
 				<td>
 					<a href="/posts/edit/{{post.slug}}">Edit</a>
 				</td>
+				<td>
+					<a onclick="delete_entry('{{post.slug}}', '{{post.title}}')">Delete</a>
+				</td>
 			</tr>
 
 			{% endfor %}
 		</tbody>
 	</table>
 </center>
+<script>
+	function delete_entry(slug, title) {
+		confirm(`Do you want to delete: ${title}`);
+		window.location.assign(`/posts/delete/${slug}`);
+	}
+</script>
 {% endblock content %}

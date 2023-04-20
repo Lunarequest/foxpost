@@ -1,6 +1,7 @@
 use rocket::fairing::AdHoc;
 use routes::{
-	drafts, edit, editor, get_content, new_post, posts, render_post, search_by_tag, update_post,
+	delete_entry, drafts, edit, editor, get_content, new_post, posts, render_post, search_by_tag,
+	update_post,
 };
 pub mod database;
 mod json;
@@ -15,7 +16,14 @@ pub fn stage() -> AdHoc {
 			)
 			.mount(
 				"/posts",
-				routes![editor, render_post, drafts, edit, search_by_tag],
+				routes![
+					editor,
+					render_post,
+					drafts,
+					edit,
+					search_by_tag,
+					delete_entry
+				],
 			)
 	})
 }

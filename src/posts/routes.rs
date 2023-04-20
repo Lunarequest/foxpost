@@ -3,12 +3,12 @@ use super::json::JsonEntry;
 use crate::auth::forms::Session;
 use crate::config::Config;
 use crate::db::BlogDBConn;
-use crate::diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
+use crate::diesel::{delete, ExpressionMethods, PgArrayExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
 use crate::schema::tags as Tags;
 use chrono::{DateTime, NaiveDateTime, Utc};
-use diesel::PgArrayExpressionMethods;
 use pulldown_cmark::{html, Options, Parser};
+use rocket::response::Redirect;
 use rocket::{
 	http::Status,
 	serde::json::{json, Json, Value},
@@ -103,6 +103,28 @@ pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, 
 				posts:posts
 			},
 		))
+	} else {
+		Err((
+			Status::Unauthorized,
+			String::from("you are not authorised to view this page"),
+		))
+	}
+}
+
+#[get("/delete/<slug>")]
+pub async fn delete_entry(
+	db: BlogDBConn,
+	sess: Session,
+	slug: String,
+) -> Result<Redirect, (Status, String)> {
+	if sess.isadmin {
+		match db
+			.run(move |conn| delete(Posts::table.filter(Posts::slug.eq(slug))).execute(conn))
+			.await
+		{
+			Ok(_) => Ok(Redirect::to(uri!("/posts/all"))),
+			Err(e) => Err((Status::InternalServerError, format!("{e}"))),
+		}
 	} else {
 		Err((
 			Status::Unauthorized,
