@@ -57,7 +57,6 @@ if (toggle) {
 	} else {
 		document.documentElement.classList.add('dark');
 		toggle.innerHTML = '<i id="darkmode_icon" class="fa-solid fa-sun" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
-		console.log(theme_railscasts, theme_tomrrow);
 		if (theme_railscasts && theme_tomrrow) {
 			theme_railscasts.removeAttribute('disabled');
 			theme_tomrrow.setAttribute('disabled', 'disabled');
