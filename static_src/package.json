@@ -6,7 +6,7 @@
     "compile:prod": "yarn compile && node scripts/minify.js"
   },
   "browserslist": [
-    "last 1 version"
+    "defaults"
   ],
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

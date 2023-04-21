@@ -14,4 +14,5 @@ output.css
 static/images/arch.png
 static/images/nixos.png
 static/css/
-static/js/theme.js
+theme.js
+search.js

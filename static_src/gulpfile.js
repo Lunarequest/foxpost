@@ -8,7 +8,7 @@ const terser = require('terser');
 const gulpTerser = require('gulp-terser');
 
 gulp.task('bundle-css', () => {
-  var plugins = [
+  const plugins = [
     autoprefixer(),
     cssnano()
   ];
@@ -20,7 +20,14 @@ gulp.task('bundle-css', () => {
 
 gulp.task('transpile-ts', () => {
   return gulp.src('src/js/*.ts')
-    .pipe(ts())
+    .pipe(ts({
+      target: 'ES6',
+      lib: [
+        "ES6",
+        "dom"
+      ],
+      module: "commonjs",
+    }))
     .pipe(gulpTerser({},terser.minify))
     .pipe(gulp.dest('../static/js'))
 })
