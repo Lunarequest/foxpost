@@ -17,9 +17,9 @@
 <meta property="article:author" content="nullrequest">
 <link rel="webmention" href="https://webmention.io/nullrequest.com/webmention" />
 <link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />
-<link id="railscasts" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
-<link disabled id="tomorrow" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
-<script src="/static/js/highlight.min.js"></script>
+<link async defer id="railscasts" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
+<link async defer disabled id="tomorrow" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+<script async defer src="/static/js/highlight.min.js"></script>
 {% endblock meta %}
 {% block content %}
 <center>
@@ -81,8 +81,8 @@
 		</div>
 	</div>
 </center>
-<script async data-page-url="{{domain}}/posts/{{post.slug}}" src="/static/js/webmention.min.js"></script>
-<script type="module">
+<script async defer data-page-url="{{domain}}/posts/{{post.slug}}" src="/static/js/webmention.min.js"></script>
+<script async defre type="module">
 	import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.0.2/+esm'
 	mermaid.initialize({
 		startOnLoad: true,
