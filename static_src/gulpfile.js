@@ -1,9 +1,11 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var cssnano = require('cssnano');
-const swc = require('gulp-swc');
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const ts = require('gulp-typescript');
+const terser = require('terser');
+const gulpTerser = require('gulp-terser');
 
 gulp.task('bundle-css', () => {
   var plugins = [
@@ -18,8 +20,9 @@ gulp.task('bundle-css', () => {
 
 gulp.task('transpile-ts', () => {
   return gulp.src('src/js/*.ts')
-        .pipe(swc())
-        .pipe(gulp.dest('../static/js'))
+    .pipe(ts())
+    .pipe(gulpTerser({},terser.minify))
+    .pipe(gulp.dest('../static/js'))
 })
 
-gulp.task('default', gulp.parallel('bundle-css','transpile-ts'));
+gulp.task('default', gulp.parallel('bundle-css', 'transpile-ts'));

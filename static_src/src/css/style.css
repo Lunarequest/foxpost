@@ -88,6 +88,10 @@ pre code {
 	border-radius: 0
 }
 
+code {
+	background-color: lightgray;
+}
+
 .dark code {
 	background-color: #333;
 }
