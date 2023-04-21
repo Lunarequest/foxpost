@@ -3,9 +3,10 @@ const concat = require('gulp-concat');
 const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
-const ts = require('gulp-typescript');
 const terser = require('terser');
 const gulpTerser = require('gulp-terser');
+const gulpEsbuild = require('gulp-esbuild')
+
 
 gulp.task('bundle-css', () => {
   const plugins = [
@@ -20,13 +21,9 @@ gulp.task('bundle-css', () => {
 
 gulp.task('transpile-ts', () => {
   return gulp.src('src/js/*.ts')
-    .pipe(ts({
-      target: 'ES6',
-      lib: [
-        "ES6",
-        "dom"
-      ],
-      module: "commonjs",
+    .pipe(gulpEsbuild({
+        bundle: true,
+        minify: true
     }))
     .pipe(gulpTerser({},terser.minify))
     .pipe(gulp.dest('../static/js'))

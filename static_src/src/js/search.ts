@@ -14,6 +14,7 @@ declare global {
 }
 
 function init() {
+	console.log("init");
 	const searchBox = document.querySelector('#searchBox')
 	if (searchBox === null) {
 		return
@@ -104,4 +105,6 @@ function renderResults(results: EnrichedDocumentSearchResultSetUnit<Posts>[]) {
 	})
 }
 
-init();
+window.onload = function() {
+	init();
+};
