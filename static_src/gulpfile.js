@@ -5,11 +5,12 @@ const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const terser = require('terser');
 const gulpTerser = require('gulp-terser');
-const gulpEsbuild = require('gulp-esbuild')
-
+const gulpEsbuild = require('gulp-esbuild');
+const tailwindcss = require('tailwindcss');
 
 gulp.task('bundle-css', () => {
   const plugins = [
+    tailwindcss(),
     autoprefixer(),
     cssnano()
   ];
