@@ -159,12 +159,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/mark.js@npm:^8.11.8":
+"@types/mark.js@npm:8.11.8":
   version: 8.11.8
   resolution: "@types/mark.js@npm:8.11.8"
   dependencies:
     "@types/jquery": "*"
   checksum: 4add42120aaf06b394e49492035b1a265102a9a82670f08b171bc0cf4412580e3b2cf8345369599f48ea049a46cd4aef555a9301ca2665b49df2e6c9f1ced00d
+  languageName: node
+  linkType: hard
+
+"@types/mark.js@patch:@types/mark.js@npm%3A8.11.8#./.yarn/patches/@types-mark.js-npm-8.11.8-18b973913e.patch::locator=tailwind%40workspace%3A.":
+  version: 8.11.8
+  resolution: "@types/mark.js@patch:@types/mark.js@npm%3A8.11.8#./.yarn/patches/@types-mark.js-npm-8.11.8-18b973913e.patch::version=8.11.8&hash=c0d544&locator=tailwind%40workspace%3A."
+  dependencies:
+    "@types/jquery": "*"
+  checksum: 865722cbf90bace174cb8029ed9e7b260999c671ba4677b9300b8612e7ea167ee693fab3c0b14bbb86448e63efc043d7a204ff0051de38e4fc2ebdf3b7d3d403
   languageName: node
   linkType: hard
 
@@ -1603,10 +1612,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flexsearch@npm:^0.7.31":
+"flexsearch@npm:0.7.31":
   version: 0.7.31
   resolution: "flexsearch@npm:0.7.31"
   checksum: 9817d8909a0d07d98e2c31f8a39cbc91be7a900cc3f86d74214ee49d00b6f3b133b883a3a19154de1d2064519494002dcfb1a30fbc65c8ef44259c3655fa8f39
+  languageName: node
+  linkType: hard
+
+"flexsearch@patch:flexsearch@npm%3A0.7.31#./.yarn/patches/flexsearch-npm-0.7.31-f26cb98f08.patch::locator=tailwind%40workspace%3A.":
+  version: 0.7.31
+  resolution: "flexsearch@patch:flexsearch@npm%3A0.7.31#./.yarn/patches/flexsearch-npm-0.7.31-f26cb98f08.patch::version=0.7.31&hash=482985&locator=tailwind%40workspace%3A."
+  checksum: 23d5eb0c719cd59ee3ff7f083b56efe87efc3a2ff2a886dd7d4f0d32312eb02547b442a2e68d6d3144d25d142d71ea1ae738ba4186f9e15cf8a89e9a73ed3484
   languageName: node
   linkType: hard
 

@@ -28,5 +28,9 @@
   "dependencies": {
     "flexsearch": "^0.7.31",
     "mark.js": "^8.11.1"
+  },
+  "resolutions": {
+    "flexsearch@^0.7.31": "patch:flexsearch@npm%3A0.7.31#./.yarn/patches/flexsearch-npm-0.7.31-f26cb98f08.patch",
+    "@types/mark.js@^8.11.8": "patch:@types/mark.js@npm%3A8.11.8#./.yarn/patches/@types-mark.js-npm-8.11.8-18b973913e.patch"
   }
 }

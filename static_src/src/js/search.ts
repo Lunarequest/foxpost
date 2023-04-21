@@ -1,6 +1,6 @@
 const searchDataURL = '/api/posts/json'
 import Mark from 'mark.js'
-import { Document, EnrichedDocumentSearchResultSetUnitResultUnit } from 'flexsearch'
+import { Document, EnrichedDocumentSearchResultSetUnit } from 'flexsearch' 
 
 declare global {
 	//take from src/posts/json.rs
@@ -18,10 +18,10 @@ function init() {
 	if (searchBox === null) {
 		return
 	}
-	let index = new Document({
+	let index = new Document<Posts, ['title', 'href', 'body']>({
 		tokenize: 'reverse',
 		document: {
-			id: 'doc',
+			id: "id",
 			index: ['title', 'body'],
 			store: ['title', 'href', 'body']
 		}
@@ -53,11 +53,7 @@ function init() {
 	})
 }
 
-/**
- * Rendering search results
- * @param {Object[]} results Array of search results ( fields[] => { field, result[] => { document }} )
- */
-function renderResults(results: EnrichedDocumentSearchResultSetUnitResultUnit<Posts>) {
+function renderResults(results: EnrichedDocumentSearchResultSetUnit<Posts>[]) {
 	const searchResults = document.querySelector('#searchResults')!;
 	const querybox = document.getElementById('searchBox')! as HTMLInputElement;
 	const query = querybox.value;
@@ -81,11 +77,11 @@ function renderResults(results: EnrichedDocumentSearchResultSetUnitResultUnit<Po
 		arr.concat(results[1].result)
 	}
 
-	arr.filter((element: any, index: number, self: any) =>
+	arr.filter((element, index, self) =>
 		self.findIndex(e => e.id === element.id) === index)
 
 	let instance = new Mark(document.getElementById('searchResults')!)
-	arr.forEach((result: any[]) => {
+	arr.forEach((result) => {
 		let resultPage = document.createElement('div')
 		resultPage.className = 'searchResultPage'
 
@@ -97,9 +93,9 @@ function renderResults(results: EnrichedDocumentSearchResultSetUnitResultUnit<Po
 
 		let resultBody = document.createElement('div')
 		resultBody.className = 'searchResultBody'
-		let matchPos = result.doc.body.indexOf(query)
+		let matchPos = result.doc.body?.indexOf(query) ?? -1
 		let bodyStartPos = matchPos - BODY_LENGTH / 2 > 0 ? matchPos - BODY_LENGTH / 2 : 0
-		resultBody.innerHTML = result.doc.body.substr(bodyStartPos, BODY_LENGTH)
+		resultBody.innerHTML = result.doc.body?.substr(bodyStartPos, BODY_LENGTH) ?? ''
 		resultPage.append(resultBody)
 		if (searchResults) {
 			searchResults.append(resultPage)
