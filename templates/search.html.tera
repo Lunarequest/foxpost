@@ -1,7 +1,4 @@
 {% extends "base" %}
-{% block meta %}
-<script src="https://cdn.jsdelivr.net/gh/nextapps-de/flexsearch@0.7.31/dist/flexsearch.bundle.js"></script>
-{% endblock meta %}
 {% block content %}
 <div class="grid content-center px-9 text-black dark:text-white">
 	<div class="mb-3">
@@ -12,9 +9,5 @@
 	</div>
 	<div id="searchResults" class="searchResults" style="display: none;"></div>
 </div>
-<script src="/static/js/mark.min.js"></script>
-<script src="/static/js/search.js"></script>
-<script defer>
-	document.onload = init()
-</script>
+<script async src="/static/js/search.js"></script>
 {% endblock content %}

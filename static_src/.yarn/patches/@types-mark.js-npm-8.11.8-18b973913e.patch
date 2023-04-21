@@ -1,0 +1,13 @@
+diff --git a/index.d.ts b/index.d.ts
+index 03eadbc1283c56804ff73b9613c6e540db37e903..a0b0bd826bd551ff1dd1a8b30ca37f1718249266 100755
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -152,7 +152,7 @@ declare class Mark {
+     unmark(options?: Mark.MarkOptions): void;
+ }
+ 
+-export = Mark;
++export default Mark;
+ 
+ /* augment JQuery */
+ declare global {

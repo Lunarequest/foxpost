@@ -16,16 +16,16 @@ fn is_program_in_path(program: &str) -> bool {
 
 fn main() {
 	println!("cargo:rerun-if-changed=tailwind/tailwind.config.js");
-	let path = PathBuf::from("static/css/output.css");
+	let path = PathBuf::from("static/css/bundle.css");
 	if !path.exists() {
-		println!("cargo:rerun-if-changed=static/css/output.css");
+		println!("cargo:rerun-if-changed=static/css/bundle.css");
 	}
 
 	if !is_program_in_path("yarn") {
 		eprintln!("yarn is missing");
 		exit(1);
 	}
-	env::set_current_dir("tailwind").unwrap();
+	env::set_current_dir("static_src").unwrap();
 
 	//in development mode we compile without minification
 	#[cfg(debug_assertions)]

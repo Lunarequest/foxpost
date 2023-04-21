@@ -13,3 +13,7 @@ sbom*
 output.css
 static/images/arch.png
 static/images/nixos.png
+static/css/
+theme.js
+search.js
+bundle.css

@@ -32,7 +32,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
       - run: sudo apt-get update
-      - run: sudo apt-get install --yes postgresql-client libpq-dev clang mold
+      - run: sudo apt-get install --yes postgresql-client libpq-dev clang mold curl
+      - name: install nodejs-19
+        run: curl -fsSL https://deb.nodesource.com/setup_19.x | sudo -E bash -
+      - run: sudo apt install -y nodejs
+      - name: install yarn
+        run: corepack enable && corepack prepare yarn@stable --activate
       - name: Increase max_connections and shared_buffers
         run: |
           docker exec -i my_postgres_container bash << EOF
@@ -42,6 +47,8 @@ jobs:
       - run: docker restart --time 0 my_postgres_container
       - name: install diesel and run migrations
         run: cargo install diesel_cli --no-default-features --features "postgres" && diesel migration run
+      - name: install and build deps in static_src
+        run: cd static_src && yarn && yarn compile
       - run: cargo test
 
   check:
