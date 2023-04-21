@@ -41,7 +41,7 @@ pipeline:
       npm install --global yarn
       rm -rf .cargo
       cargo build --release --target-dir "${TARGETDIR}"
-      cd tailwind
+      cd static_src
       yarn && yarn compile --minify
       cd ..
       cp "${TARGETDIR}/release/foxpost" "${EXEC_DIR}"
