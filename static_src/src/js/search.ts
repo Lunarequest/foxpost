@@ -3,14 +3,13 @@ import Mark from 'mark.js'
 import { Document, EnrichedDocumentSearchResultSetUnitResultUnit } from 'flexsearch'
 
 declare global {
-	interface x {
-		result: {
-			doc: {
-				href: string,
-				title: string,
-				body: string
-			}
-		}
+	//take from src/posts/json.rs
+	interface Posts {
+		id: number,
+		href: string,
+		title: string,
+		date: string,
+		body: string | null,
 	}
 }
 
@@ -30,7 +29,7 @@ function init() {
 
 	fetch(searchDataURL)
 		.then(pages => pages.json())
-		.then(pages => {
+		.then((pages: Posts[]) => {
 			for (let i = 0; i < pages.length; i++) {
 				index.add(i, pages[i]);
 			}
@@ -58,7 +57,7 @@ function init() {
  * Rendering search results
  * @param {Object[]} results Array of search results ( fields[] => { field, result[] => { document }} )
  */
-function renderResults(results: EnrichedDocumentSearchResultSetUnitResultUnit<any>[]) {
+function renderResults(results: EnrichedDocumentSearchResultSetUnitResultUnit<Posts>) {
 	const searchResults = document.querySelector('#searchResults')!;
 	const querybox = document.getElementById('searchBox')! as HTMLInputElement;
 	const query = querybox.value;
