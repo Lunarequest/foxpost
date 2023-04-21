@@ -5,7 +5,6 @@ const init = () => {
 	if (searchBox === null) {
 		return
 	}
-
 	let index = new FlexSearch.Document({
 		tokenize: 'reverse',
 		document: {
