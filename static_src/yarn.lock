@@ -143,6 +143,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/flexsearch@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "@types/flexsearch@npm:0.7.3"
+  checksum: fac365e6d6f7f251c49b22530635a7042523b00a45dcb5591372782125f5e5e97b0508c71e08c8d1b3fbef0e01c504027271df5d60698b1e26caf7d067cc2ef0
+  languageName: node
+  linkType: hard
+
+"@types/jquery@npm:*":
+  version: 3.5.16
+  resolution: "@types/jquery@npm:3.5.16"
+  dependencies:
+    "@types/sizzle": "*"
+  checksum: 13c995f15d1c2f1d322103dc1cb0a22b95eecc3e7546f00279b8731aea21d7ec04550af40e609ee48e755d4e11bf61c25b4aa9f53df3bcbec4b8fe8e81471732
+  languageName: node
+  linkType: hard
+
+"@types/mark.js@npm:^8.11.8":
+  version: 8.11.8
+  resolution: "@types/mark.js@npm:8.11.8"
+  dependencies:
+    "@types/jquery": "*"
+  checksum: 4add42120aaf06b394e49492035b1a265102a9a82670f08b171bc0cf4412580e3b2cf8345369599f48ea049a46cd4aef555a9301ca2665b49df2e6c9f1ced00d
+  languageName: node
+  linkType: hard
+
+"@types/sizzle@npm:*":
+  version: 2.3.3
+  resolution: "@types/sizzle@npm:2.3.3"
+  checksum: 586a9fb1f6ff3e325e0f2cc1596a460615f0bc8a28f6e276ac9b509401039dd242fa8b34496d3a30c52f5b495873922d09a9e76c50c2ab2bcc70ba3fb9c4e160
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:^1.0.0":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
@@ -2740,6 +2772,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mark.js@npm:^8.11.1":
+  version: 8.11.1
+  resolution: "mark.js@npm:8.11.1"
+  checksum: aa6b9ae1c67245348d5b7abd253ef2acd6bb05c6be358d7d192416d964e42665fc10e0e865591c6f93ab9b57e8da1f23c23216e8ebddb580905ea7a0c0df15d4
+  languageName: node
+  linkType: hard
+
 "matchdep@npm:^2.0.0":
   version: 2.0.0
   resolution: "matchdep@npm:2.0.0"
@@ -4608,6 +4647,8 @@ __metadata:
   resolution: "tailwind@workspace:."
   dependencies:
     "@tailwindcss/forms": ^0.5.3
+    "@types/flexsearch": ^0.7.3
+    "@types/mark.js": ^8.11.8
     autoprefixer: ^10.4.14
     cssnano: ^6.0.0
     flexsearch: ^0.7.31
@@ -4617,6 +4658,7 @@ __metadata:
     gulp-terser: ^2.1.0
     gulp-typescript: ^6.0.0-alpha.1
     gulp-uglify: ^3.0.2
+    mark.js: ^8.11.1
     postcss: ^8.4.23
     tailwindcss: ^3.3.1
     terser: ^5.17.1

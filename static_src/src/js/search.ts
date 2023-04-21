@@ -1,17 +1,32 @@
 const searchDataURL = '/api/posts/json'
+import Mark from 'mark.js'
+import { Document, EnrichedDocumentSearchResultSetUnitResultUnit } from 'flexsearch'
 
-const init = () => {
+declare global {
+	interface x {
+		result: {
+			doc: {
+				href: string,
+				title: string,
+				body: string
+			}
+		}
+	}
+}
+
+function init() {
 	const searchBox = document.querySelector('#searchBox')
 	if (searchBox === null) {
 		return
 	}
-	let index = new FlexSearch.Document({
+	let index = new Document({
 		tokenize: 'reverse',
 		document: {
-			field: ['title', 'body'],
+			id: 'doc',
+			index: ['title', 'body'],
 			store: ['title', 'href', 'body']
-		},
-	})
+		}
+	});
 
 	fetch(searchDataURL)
 		.then(pages => pages.json())
@@ -22,8 +37,9 @@ const init = () => {
 		})
 
 	searchBox.addEventListener('keyup', function (event) {
-		let searchResultsArea = document.querySelector('#searchResults')
-		let query = event.currentTarget.value
+		let eventtarget = event.currentTarget as HTMLInputElement;
+		let searchResultsArea = document.getElementById('searchResults')!;
+		let query = eventtarget.value;
 
 		// Only trigger a search when 2 chars. at least have been provided
 		if (query.length < 2) {
@@ -32,7 +48,8 @@ const init = () => {
 		}
 
 		// Display search results
-		renderResults(index.search(query, 10, { enrich: true }));
+		let results = index.search(query, 10, { enrich: true });
+		renderResults(results);
 		searchResultsArea.style.display = 'block'
 	})
 }
@@ -41,9 +58,10 @@ const init = () => {
  * Rendering search results
  * @param {Object[]} results Array of search results ( fields[] => { field, result[] => { document }} )
  */
-const renderResults = (results) => {
-	const searchResults = document.querySelector('#searchResults')
-	const query = document.querySelector('#searchBox').value
+function renderResults(results: EnrichedDocumentSearchResultSetUnitResultUnit<any>[]) {
+	const searchResults = document.querySelector('#searchResults')!;
+	const querybox = document.getElementById('searchBox')! as HTMLInputElement;
+	const query = querybox.value;
 	const BODY_LENGTH = 100
 
 	// Clear search result
@@ -59,15 +77,16 @@ const renderResults = (results) => {
 		return
 	}
 
-	let arr = results[0].result
+	let arr = results[0].result;
 	if (results.length > 1) {
 		arr.concat(results[1].result)
 	}
-	arr.filter((element, index, self) =>
+
+	arr.filter((element: any, index: number, self: any) =>
 		self.findIndex(e => e.id === element.id) === index)
 
-	let instance = new Mark(document.querySelector('#searchResults'))
-	arr.forEach((result) => {
+	let instance = new Mark(document.getElementById('searchResults')!)
+	arr.forEach((result: any[]) => {
 		let resultPage = document.createElement('div')
 		resultPage.className = 'searchResultPage'
 
@@ -83,8 +102,9 @@ const renderResults = (results) => {
 		let bodyStartPos = matchPos - BODY_LENGTH / 2 > 0 ? matchPos - BODY_LENGTH / 2 : 0
 		resultBody.innerHTML = result.doc.body.substr(bodyStartPos, BODY_LENGTH)
 		resultPage.append(resultBody)
-		searchResults.append(resultPage)
-
+		if (searchResults) {
+			searchResults.append(resultPage)
+		}
 		instance.mark(query)
 	})
 }
