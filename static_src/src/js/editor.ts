@@ -2,11 +2,12 @@ import EasyMDE from 'easymde'
 
 declare global {
 	type PostForm = {
+    slug: string,
 	  title: string
 	  description: string | null
 	  content: string | null
 	  tags: string
-	  draft: boolean
+	  draft: boolean | string |null
 	}
 }
 
@@ -54,7 +55,13 @@ async function update_or_new_post (e: Event) {
   btn_submit.disabled = true
   setTimeout(() => btn_submit.disabled = false, 2000)
   const form = new FormData(editor)
-  const json = Object.fromEntries(form)
+  let json = {
+    title: form.get("title"),
+    description: form.get("description"),
+    tags: form.get('tags'),
+    draft: form.get('daft'),
+    content: form.get('content')
+  } as PostForm;
   if (json.draft === 'not_draft') {
     json.draft = false
   } else {

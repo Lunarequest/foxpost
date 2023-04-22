@@ -82,7 +82,7 @@
 	</div>
 </center>
 <script async defer data-page-url="{{domain}}/posts/{{post.slug}}" src="/static/js/webmention.min.js"></script>
-<script async defre type="module">
+<script async defer type="module">
 	import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.0.2/+esm'
 	mermaid.initialize({
 		startOnLoad: true,
