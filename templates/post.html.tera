@@ -70,7 +70,7 @@
 			</div>
 		</div>
 		<div id="webmentions" class="webmentions">
-			<p id="#webmtion_link">This post was not <a href="https://www.w3.org/TR/webmention/">WebMentioned</a> yet.
+			<p id="webmention_link">This post was not <a href="https://www.w3.org/TR/webmention/">WebMentioned</a> yet.
 				You
 				could be the
 				first!

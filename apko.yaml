@@ -6,8 +6,6 @@ contents:
     - https://packages.wolfi.dev/os
     - "/work/packages"
   packages:
-    - ca-certificates-bundle
-    - wolfi-baselayout
     - foxpost
 accounts:
   groups:
