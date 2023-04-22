@@ -1,6 +1,26 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
+	completed_requests (id) {
+		id -> Int4,
+		source -> Text,
+		target -> Text,
+		content -> Text,
+		author -> Text,
+		author_url -> Text,
+		url -> Text,
+	}
+}
+
+diesel::table! {
+	pending_requests (id) {
+		id -> Int4,
+		source -> Text,
+		target -> Text,
+	}
+}
+
+diesel::table! {
 	posts (slug) {
 		slug -> Varchar,
 		title -> Varchar,
@@ -30,4 +50,10 @@ diesel::table! {
 	}
 }
 
-diesel::allow_tables_to_appear_in_same_query!(posts, tags, users,);
+diesel::allow_tables_to_appear_in_same_query!(
+	completed_requests,
+	pending_requests,
+	posts,
+	tags,
+	users,
+);

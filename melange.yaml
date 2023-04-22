@@ -38,6 +38,7 @@ pipeline:
       BLOG_HOME="${{targets.destdir}}/"
       TARGETDIR="/var/cache/melange/blog"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
+      rm static/css/output.css
       npm install --global yarn
       rm -rf .cargo
       cargo build --release --target-dir "${TARGETDIR}"

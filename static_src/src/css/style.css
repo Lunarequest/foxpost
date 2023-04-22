@@ -445,7 +445,6 @@ mark {
 }
 
 #webmentions .comments li .text {
-	color: #555;
 	font-style: italic;
 	text-decoration: none;
 }

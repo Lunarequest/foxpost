@@ -16,4 +16,6 @@ static/images/nixos.png
 static/css/
 theme.js
 search.js
+editor.js
+post.js
 bundle.css
