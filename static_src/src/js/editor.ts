@@ -50,13 +50,12 @@ async function update_or_new_post(e: Event) {
 	const btn_submit = document.getElementById("submit") as HTMLButtonElement;
 	btn_submit.disabled = true;
 	setTimeout(() => btn_submit.disabled = false, 2000);
-	let slug = localStorage.getItem("slug");
 	let form = new FormData(editor);
 	let json = Object.fromEntries(form);
 	if (json.draft == "not_draft") {
-		json.draft = JSON.stringify(false);
+		json.draft = false;
 	} else {
-		json.draft = JSON.stringify(true);
+		json.draft = true;
 	}
 	if (sessionStorage.getItem("slug")) {
 		let slug = sessionStorage.getItem("slug");
