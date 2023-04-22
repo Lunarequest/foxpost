@@ -65,7 +65,7 @@
 					<br><br>
 					<button id="mastodon_share_button"
 						class="flex flex-col p-4 mt-4 border border-black-100 rounded-lg bg-slate-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-black dark:bg-black-800 md:dark:bg-black-900 dark:border-black-700"
-						onclick="share_on_mastodon(this);">Share</button>
+					>Share</button>
 				</details>
 			</div>
 		</div>
