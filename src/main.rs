@@ -19,7 +19,7 @@ mod routes;
 mod schema;
 #[cfg(test)]
 mod tests;
-mod webmentions;
+//mod webmentions;
 mod xml;
 
 async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
@@ -97,5 +97,5 @@ fn rocket() -> _ {
 		.attach(auth::stage())
 		.attach(image::stage())
 		.attach(xml::stage())
-		.attach(webmentions::stage())
+		//.attach(webmentions::stage())
 }
