@@ -28,7 +28,9 @@
   "dependencies": {
     "easymde": "^2.18.0",
     "flexsearch": "^0.7.31",
-    "mark.js": "^8.11.1"
+    "highlight.js": "^11.7.0",
+    "mark.js": "^8.11.1",
+    "mermaid": "^10.1.0"
   },
   "resolutions": {
     "flexsearch@^0.7.31": "patch:flexsearch@npm%3A0.7.31#./.yarn/patches/flexsearch-npm-0.7.31-f26cb98f08.patch",
