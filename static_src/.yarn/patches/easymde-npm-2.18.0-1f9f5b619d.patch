@@ -1,0 +1,10 @@
+diff --git a/types/easymde.d.ts b/types/easymde.d.ts
+index c8ca5783d961459390979722804b2b9353611a51..d0ba2f616f49bf7f011758247502cbe9f8695d97 100644
+--- a/types/easymde.d.ts
++++ b/types/easymde.d.ts
+@@ -287,4 +287,4 @@ declare class EasyMDE {
+ }
+ 
+ export as namespace EasyMDE;
+-export = EasyMDE;
++export default EasyMDE;
