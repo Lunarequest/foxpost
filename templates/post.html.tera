@@ -81,6 +81,6 @@
 		</div>
 	</div>
 </center>
-<script async defer data-page-url="{{domain}}/posts/{{post.slug}}" src="/static/js/webmention.min.js"></script>
+<script async defer data-page-url="{{domain}}/posts/{{post.slug}}" data-id="webmentions" src="/static/js/webmention.min.js"></script>
 <script async defer src="/static/js/post.js"></script>
 {% endblock content %}

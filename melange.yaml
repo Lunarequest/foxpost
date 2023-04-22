@@ -12,7 +12,6 @@ package:
   dependencies:
     runtime:
       - libpq-15
-      - ca-certificates-bundle
 
 environment:
   contents:
