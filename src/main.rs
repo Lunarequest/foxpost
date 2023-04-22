@@ -97,5 +97,5 @@ fn rocket() -> _ {
 		.attach(auth::stage())
 		.attach(image::stage())
 		.attach(xml::stage())
-		//.attach(webmentions::stage())
+	//.attach(webmentions::stage())
 }
