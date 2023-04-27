@@ -38,11 +38,12 @@ pipeline:
       TARGETDIR="/var/cache/melange/blog"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
       rm static/css/output.css
-      npm install --global yarn
+      corepack enable
+      corepack prepare yarn@latest --activate
       rm -rf .cargo
       cargo build --release --target-dir "${TARGETDIR}"
       cd static_src
-      yarn && yarn compile --minify
+      yarn && yarn compile:prod
       cd ..
       cp "${TARGETDIR}/release/foxpost" "${EXEC_DIR}"
       cp -rv static    "${{targets.destdir}}/static"

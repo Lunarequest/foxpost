@@ -7,6 +7,8 @@ const terser = require('terser')
 const gulpTerser = require('gulp-terser')
 const gulpEsbuild = require('gulp-esbuild')
 
+const production = process.env.NODE_ENV === "production";
+
 gulp.task('bundle-css', () => {
   const plugins = [
     autoprefixer(),
@@ -22,7 +24,7 @@ gulp.task('transpile-ts', () => {
   return gulp.src('src/js/*.ts')
     .pipe(gulpEsbuild({
       bundle: true,
-      minify: true
+      minify: production
     }))
     .pipe(gulpTerser({}, terser.minify))
     .pipe(gulp.dest('../static/js'))
