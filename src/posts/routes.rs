@@ -37,6 +37,7 @@ pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Sta
 	let mut posts: Vec<Post> = match db
 		.run(move |conn| {
 			Posts::table
+				.filter(Posts::draft.eq(false))
 				.filter(Posts::tags.contains(vec![Some(tag_cloned)]))
 				.load::<Post>(conn)
 		})
@@ -134,27 +135,31 @@ pub async fn delete_entry(
 }
 
 #[get("/<slug>")]
-pub async fn get_content(db: BlogDBConn, slug: String) -> String {
-	let post: Post = match db
-		.run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
-		.await
-	{
-		Ok(post) => post,
-		Err(e) => {
-			eprintln!("{e}");
-			return String::new();
+pub async fn get_content(db: BlogDBConn, slug: String, sess: Session) -> String {
+	if sess.isadmin {
+		let post: Post = match db
+			.run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+			.await
+		{
+			Ok(post) => post,
+			Err(e) => {
+				eprintln!("{e}");
+				return String::new();
+			}
+		};
+		match post.content {
+			Some(content) => content,
+			None => String::new(),
 		}
-	};
-	match post.content {
-		Some(content) => content,
-		None => String::new(),
+	} else {
+		slug
 	}
 }
 
 #[get("/<slug>")]
 pub async fn render_post(db: BlogDBConn, slug: String, config: &State<Config>) -> Option<Template> {
 	let post: Post = match db
-		.run(move |conn| Posts::table.filter(Posts::slug.eq(slug)).first(conn))
+		.run(move |conn| Posts::table.filter(Posts::draft.eq(false)).filter(Posts::slug.eq(slug)).first(conn))
 		.await
 	{
 		Ok(post) => post,

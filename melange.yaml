@@ -29,6 +29,7 @@ environment:
       - postgresql-15-dev
       - busybox
       - nodejs-19
+      - yarn
       - rust
 pipeline:
   - name: Build Luna's blog
@@ -37,9 +38,6 @@ pipeline:
       BLOG_HOME="${{targets.destdir}}/"
       TARGETDIR="/var/cache/melange/blog"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
-      rm static/css/output.css
-      corepack enable
-      corepack prepare yarn@latest --activate
       rm -rf .cargo
       cargo build --release --target-dir "${TARGETDIR}"
       cd static_src
