@@ -3,7 +3,9 @@
   "packageManager": "yarn@3.4.1",
   "scripts": {
     "compile": "tailwindcss -i input.css -o ./src/css/output.css --minify && gulp",
-    "compile:prod": "yarn compile && node scripts/minify.js"
+    "compile:prod": "yarn compile && node scripts/minify.js",
+    "lint": "rome check .",
+    "format": "rome format . --write"
   },
   "browserslist": [
     "defaults"
@@ -21,6 +23,7 @@
     "gulp-terser": "^2.1.0",
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.4.23",
+    "rome": "^12.0.0",
     "tailwindcss": "^3.3.2",
     "terser": "^5.17.1",
     "typescript": "^5.0.4"
