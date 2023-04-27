@@ -159,7 +159,12 @@ pub async fn get_content(db: BlogDBConn, slug: String, sess: Session) -> String 
 #[get("/<slug>")]
 pub async fn render_post(db: BlogDBConn, slug: String, config: &State<Config>) -> Option<Template> {
 	let post: Post = match db
-		.run(move |conn| Posts::table.filter(Posts::draft.eq(false)).filter(Posts::slug.eq(slug)).first(conn))
+		.run(move |conn| {
+			Posts::table
+				.filter(Posts::draft.eq(false))
+				.filter(Posts::slug.eq(slug))
+				.first(conn)
+		})
 		.await
 	{
 		Ok(post) => post,

@@ -7,7 +7,9 @@
 		"lint": "rome check .",
 		"format": "rome format . --write"
 	},
-	"browserslist": ["defaults"],
+	"browserslist": [
+		"defaults"
+	],
 	"devDependencies": {
 		"@tailwindcss/forms": "^0.5.3",
 		"@types/flexsearch": "^0.7.3",
