@@ -30,7 +30,7 @@
 		</div>
 		<div class="relative block mb-2 form-switch">
 			<label class="text-white-700 pl-6 mb-0" style="margin-right: 3%;" for="draft">Publish?</label>
-			<input type="checkbox" value="not_draft" id="raft" name="draft" class="absolute mt-1 -ml-6">
+			<input type="checkbox" value="not_draft" id="draft" name="draft" class="absolute mt-1 -ml-6">
 		</div>
 		<textarea id="editor" name="content"></textarea>
 		<button type="submit" id="submit"
