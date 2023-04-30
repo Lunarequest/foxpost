@@ -15,6 +15,11 @@ window.onload = function () {
 	}
 };
 
+function delete_entry(slug: string, title: string) {
+	confirm(`Do you want to delete: ${title}`);
+	window.location.assign(`/posts/delete/${slug}`);
+}
+
 function ShareOnMastodon(): void {
 	const contentelm = document.getElementById(
 		"content",

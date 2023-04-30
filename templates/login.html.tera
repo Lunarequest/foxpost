@@ -1,6 +1,6 @@
 {% extends "base" %}
 {% block meta %}
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script nonce="odUpcNj0m++VNDqcCIiF7A==" src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <style>
 	.margin-all {
 		margin-top: 5%;
