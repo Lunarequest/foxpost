@@ -101,7 +101,8 @@ pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, 
 			"all_posts",
 			context! {
 				title: "All",
-				posts:posts
+				posts:posts,
+				sess: sess,
 			},
 		))
 	} else {

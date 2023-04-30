@@ -15,6 +15,7 @@ window.onload = function () {
 	}
 };
 
+
 function ShareOnMastodon(): void {
 	const contentelm = document.getElementById(
 		"content",

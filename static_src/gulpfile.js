@@ -13,14 +13,12 @@ const production = process.env.NODE_ENV === "production";
 const plugins = [autoprefixer(), cssnano()];
 
 gulp.task("build-tailwind", () => {
-  plugins.unshift(tailwindcss("./tailwind.config.js"));
-  return gulp
-    .src("src/css/*.scss")
-    .pipe(sass().on("error", sass.logError))
-    .pipe(
-      postcss(plugins),
-    )
-    .pipe(gulp.dest("src/css/"));
+	plugins.unshift(tailwindcss("./tailwind.config.js"));
+	return gulp
+		.src("src/css/*.scss")
+		.pipe(sass().on("error", sass.logError))
+		.pipe(postcss(plugins))
+		.pipe(gulp.dest("src/css/"));
 });
 
 gulp.task("bundle-css", () => {
