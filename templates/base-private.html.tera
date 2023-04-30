@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="foxpost">
+	<meta name="rating" content="General">
+	<meta http-equiv="Content-Security-Policy"
+		content="object-src 'none'; base-uri nullrequest.com">
+	<title>{% block title %}{{ title }}{% endblock title %}</title>
+	<link rel="webmention" href="https://webmention.io/nullrequest.com/webmention" />
+	<link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />
+	{% block meta %}
+	{% endblock meta %}
+	<link async defer rel="preload" href="/static/fonts/ibm-plex-mono-v15-latin-regular.woff2" as="font"
+		type="font/woff2" crossorigin>
+	<link async defer rel="preload" href="/static/fonts/roboto-v30-latin-italic.woff2" as="font" type="font/woff2"
+		crossorigin>
+	<link async defer rel="preload" href="/static/fonts/roboto-v30-latin-regular.woff2" as="font" type="font/woff2"
+		crossorigin>
+	<link async defer href="/static/css/bundle.css" rel="stylesheet">
+</head>
+
+<body class="bg-white dark:bg-black">
+	{% include 'nav' %}
+	{% block content %}
+	{% endblock content %}
+	{% include 'footer' %}
+	<script nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/theme.js"></script>
+	<script nonce="odUpcNj0m++VNDqcCIiF7A==" src="https://kit.fontawesome.com/beafef2608.js"
+		crossorigin="anonymous"></script>
+</body>
+<!--Trans rights-->
+
+</html>
