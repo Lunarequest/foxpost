@@ -18,9 +18,9 @@
 <link rel="webmention" href="https://webmention.io/nullrequest.com/webmention" />
 <link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />
 <link async defer id="railscasts" rel="stylesheet"
-	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/railscasts.min.css">
+	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/railscasts.min.css">
 <link async defer disabled id="tomorrow" rel="stylesheet"
-	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+	href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/base16/tomorrow.min.css">
 {% endblock meta %}
 {% block content %}
 <center>

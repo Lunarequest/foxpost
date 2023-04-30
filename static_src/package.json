@@ -34,7 +34,7 @@
   "dependencies": {
     "easymde": "^2.18.0",
     "flexsearch": "^0.7.31",
-    "highlight.js": "^11.7.0",
+    "highlight.js": "^11.8.0",
     "mark.js": "^8.11.1",
     "mermaid": "^10.1.0"
   },

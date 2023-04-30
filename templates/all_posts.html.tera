@@ -23,7 +23,7 @@
 					<a href="/posts/edit/{{post.slug}}">Edit</a>
 				</td>
 				<td>
-					<a onclick="delete_entry('{{post.slug}}', '{{post.title}}')">Delete</a>
+					<a href="javascript:delete_entry('{{post.slug}}', '{{post.title}}')">Delete</a>
 				</td>
 			</tr>
 
@@ -33,8 +33,9 @@
 </center>
 <script>
 	function delete_entry(slug, title) {
-		confirm(`Do you want to delete: ${title}`);
-		window.location.assign(`/posts/delete/${slug}`);
+		if (confirm(`Do you want to delete: ${title}`)) {
+			window.location.assign(`/posts/delete/${slug}`);
+		}
 	}
 </script>
 {% endblock content %}

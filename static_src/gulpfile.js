@@ -14,37 +14,37 @@ const plugins = [autoprefixer(), cssnano()];
 
 gulp.task("build-tailwind", () => {
   plugins.unshift(tailwindcss("./tailwind.config.js"));
-	return gulp
-		.src("src/css/*.scss")
-		.pipe(sass().on("error", sass.logError))
-		.pipe(
-			postcss(plugins),
-		)
-		.pipe(gulp.dest("src/css/"));
+  return gulp
+    .src("src/css/*.scss")
+    .pipe(sass().on("error", sass.logError))
+    .pipe(
+      postcss(plugins),
+    )
+    .pipe(gulp.dest("src/css/"));
 });
 
 gulp.task("bundle-css", () => {
-	return gulp
-		.src("src/css/*.css")
-		.pipe(concat("bundle.css"))
-		.pipe(postcss(plugins))
-		.pipe(gulp.dest("../static/css"));
+  return gulp
+    .src("src/css/*.css")
+    .pipe(concat("bundle.css"))
+    .pipe(postcss(plugins))
+    .pipe(gulp.dest("../static/css"));
 });
 
 gulp.task("transpile-ts", () => {
-	return gulp
-		.src("src/js/*.ts")
-		.pipe(
-			gulpEsbuild({
-				bundle: true,
-				minify: production,
-			}),
-		)
-		.pipe(gulpTerser({}, terser.minify))
-		.pipe(gulp.dest("../static/js"));
+  return gulp
+    .src("src/js/*.ts")
+    .pipe(
+      gulpEsbuild({
+        bundle: true,
+        minify: production,
+      }),
+    )
+    .pipe(gulpTerser({}, terser.minify))
+    .pipe(gulp.dest("../static/js"));
 });
 
 gulp.task(
-	"default",
-	gulp.parallel("bundle-css", gulp.series("build-tailwind", "transpile-ts")),
+  "default",
+  gulp.parallel("transpile-ts", gulp.series("build-tailwind", "bundle-css")),
 );
