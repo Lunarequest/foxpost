@@ -48,7 +48,7 @@
 </div>
 
 {% if flash %}
-<script defer nonce="odUpcNj0m++VNDqcCIiF7A==">
+<script defer>
 	alert("{{flash.message}}");
 </script>
 {% endif %}

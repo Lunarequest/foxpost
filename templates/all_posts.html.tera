@@ -1,4 +1,4 @@
-{% extends "base-private" %}
+{% extends "base" %}
 {% block content %}
 <center class="text-black dark:text-white">
 	<table class="table-auto">
@@ -23,8 +23,7 @@
 					<a href="/posts/edit/{{post.slug}}">Edit</a>
 				</td>
 				<td>
-					<a nonce="odUpcNj0m++VNDqcCIiF7A=="
-						href="javascript:delete_entry('{{post.slug}}', '{{post.title}}')">Delete</a>
+					<a href="javascript:delete_entry('{{post.slug}}', '{{post.title}}')">Delete</a>
 				</td>
 			</tr>
 

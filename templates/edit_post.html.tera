@@ -1,12 +1,12 @@
 {% extends "base" %}
 {% block meta %}
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-<script nonce="odUpcNj0m++VNDqcCIiF7A==" src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
-<script nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/post.js"></script>
-<link rel="stylesheet" href="/static/css/railscasts.min.css">
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script src="https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css">
 {% endblock meta %}
 {% block content %}
-<div class="text-black dark:text-white">
+<div class="text-black dark:text-white" >
 	<form id="editor_form">
 		<div class="flex flex-wrap  mb-3">
 			<label for="title" class="relative sm:flex-grow sm:flex-1 pt-2 pb-2 mb-0 leading-normal">Title:</label>
@@ -40,11 +40,11 @@
 			class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-1 px-3 leading-normal no-underline bg-green-500 text-white hover:green-600">Submit</button>
 	</form>
 </div>
-<script nonce="odUpcNj0m++VNDqcCIiF7A==">
+<script>
 	function setslug() {
 		sessionStorage.setItem('slug', "{{post.slug}}")
 	}
 	window.onload = setslug();
 </script>
-<script nonce="odUpcNj0m++VNDqcCIiF7A==" async defer src="/static/js/editor.js"></script>
+<script async defer src="/static/js/editor.js"></script>
 {% endblock content %}

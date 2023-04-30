@@ -9,5 +9,5 @@
 	</div>
 	<div id="searchResults" class="searchResults" style="display: none;"></div>
 </div>
-<script async nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/search.js"></script>
+<script async src="/static/js/search.js"></script>
 {% endblock content %}
