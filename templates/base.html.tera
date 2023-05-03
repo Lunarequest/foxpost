@@ -7,7 +7,7 @@
 	<meta name="generator" content="foxpost">
 	<meta name="rating" content="General">
 	<meta http-equiv="Content-Security-Policy"
-		content="script-src 'strict-dynamic' 'self' 'nonce-odUpcNj0m++VNDqcCIiF7A==' 'unsafe-inline' data: 'self' https://*.fontawesome.com; object-src 'none'; base-uri nullrequest.com">
+		content="script-src static.cloudflareinsights.com static.cloudflareinsights.com 'self' 'nonce-odUpcNj0m++VNDqcCIiF7A==' 'unsafe-inline' 'unsafe-eval' ajax.cloudflare.com data: 'self' ajax.cloudflare.com https://*.fontawesome.com; object-src 'none'; base-uri nullrequest.com">
 	<title>{% block title %}{{ title }}{% endblock title %}</title>
 	<link rel="webmention" href="https://webmention.io/nullrequest.com/webmention" />
 	<link rel="pingback" href="https://webmention.io/nullrequest.com/xmlrpc" />

@@ -67,7 +67,7 @@
 				</details>
 			</div>
 		</div>
-		<div id="webmentions" class="webmentions">
+		<div id="webmentions" data-page-url="{{domain}}/posts/{{post.slug}}" class="webmentions">
 			<p id="webmention_link">This post was not <a href="https://www.w3.org/TR/webmention/">WebMentioned</a> yet.
 				You
 				could be the
@@ -79,7 +79,5 @@
 		</div>
 	</div>
 </center>
-<script async defer nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/post.js"></script>
-<script defer nonce="odUpcNj0m++VNDqcCIiF7A==" data-page-url="{{domain}}/posts/{{post.slug}}" data-id="webmentions"
-	src="/static/js/webmention.min.js"></script>
+<script async defer type="module" nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/post.js"></script>
 {% endblock content %}
