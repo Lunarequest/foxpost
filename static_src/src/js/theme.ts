@@ -1,5 +1,3 @@
-"use strict";
-
 const ThemeRailcasts = document.getElementById("railscasts");
 const ThemeTomorrow = document.getElementById("tomorrow");
 const toggle = document.getElementById("dark-mode-toggle");
