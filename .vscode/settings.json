@@ -1,0 +1,8 @@
+{
+  "search.exclude": {
+    "static_src/**/.yarn": true,
+    "static_src/**/.pnp.*": true
+  },
+  "typescript.tsdk": "static_src/.yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}
