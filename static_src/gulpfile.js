@@ -1,48 +1,41 @@
 const gulp = require("gulp");
-const concat = require("gulp-concat");
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
-const terser = require("terser");
-const gulpTerser = require("gulp-terser");
 const gulpEsbuild = require("gulp-esbuild");
 const tailwindcss = require("tailwindcss");
 const sass = require("gulp-sass")(require("sass"));
+const { wasmLoader } = require("esbuild-plugin-wasm");
+
 const production = process.env.NODE_ENV === "production";
 
-const plugins = [autoprefixer(), cssnano()];
+const plugins = [
+	tailwindcss("./tailwind.config.js"),
+	autoprefixer(),
+	cssnano(),
+];
 
-gulp.task("build-tailwind", () => {
-	plugins.unshift(tailwindcss("./tailwind.config.js"));
+gulp.task("build-css", () => {
 	return gulp
-		.src("src/css/*.scss")
+		.src("src/css/bundle.scss")
 		.pipe(sass().on("error", sass.logError))
 		.pipe(postcss(plugins))
-		.pipe(gulp.dest("src/css/"));
-});
-
-gulp.task("bundle-css", () => {
-  return gulp
-    .src("src/css/*.css")
-    .pipe(concat("bundle.css"))
-    .pipe(postcss(plugins))
-    .pipe(gulp.dest("../static/css"));
+		.pipe(gulp.dest("../static/css/"));
 });
 
 gulp.task("transpile-ts", () => {
-  return gulp
-    .src("src/js/*.ts")
-    .pipe(
-      gulpEsbuild({
-        bundle: true,
-        minify: production,
-      }),
-    )
-    .pipe(gulpTerser({}, terser.minify))
-    .pipe(gulp.dest("../static/js"));
+	return gulp
+		.src("src/js/*.ts")
+		.pipe(
+			gulpEsbuild({
+				target: "esnext",
+				format: "esm",
+				bundle: true,
+				minify: production,
+				plugins: [wasmLoader({ mode: "embedded" })],
+			}),
+		)
+		.pipe(gulp.dest("../static/js"));
 });
 
-gulp.task(
-  "default",
-  gulp.parallel("transpile-ts", gulp.series("build-tailwind", "bundle-css")),
-);
+gulp.task("default", gulp.parallel("transpile-ts", "build-css"));

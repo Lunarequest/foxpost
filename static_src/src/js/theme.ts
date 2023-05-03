@@ -7,14 +7,13 @@ const button = document.querySelector("#menu-button");
 const menu = document.querySelector("#menu");
 const MastodonShareButton = document.getElementById("mastodon_share_button");
 
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", () => {
 	const copyright = document.getElementById("copyright");
 	if (copyright != null) {
 		const year = new Date().getFullYear();
 		copyright.innerText = `${year} Luna Dragon`;
 	}
-};
-
+});
 
 function ShareOnMastodon(): void {
 	const contentelm = document.getElementById(

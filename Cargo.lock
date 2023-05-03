@@ -555,7 +555,7 @@ dependencies = [
 
 [[package]]
 name = "foxpost"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "argon2",
  "chrono",

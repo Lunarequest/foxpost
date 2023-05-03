@@ -1,6 +1,6 @@
 [package]
 name = "foxpost"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
 license = "GPL-2.0-or-later"
 
