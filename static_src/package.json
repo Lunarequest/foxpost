@@ -8,8 +8,7 @@
     "format": "rome format . --write"
   },
   "browserslist": [
-    "defaults",
-    "> 0.2% and not dead"
+    "supports wasm, not dead, >2%"
   ],
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

@@ -14,13 +14,22 @@ const production = process.env.NODE_ENV === "production";
 
 const sass = gulpSass(dartSass);
 
-const plugins = [
-	tailwindcss("./tailwind.config.ts"),
-	autoprefixer(),
-	cssnano({
-		preset: ["advanced"],
-	}),
-];
+const plugins = [tailwindcss("./tailwind.config.ts"), autoprefixer()];
+
+if (production) {
+	plugins.push(
+		cssnano({
+			preset: [
+				"advanced",
+				{
+					discardComments: {
+						removeAll: true,
+					},
+				},
+			],
+		}),
+	);
+}
 
 task("build-css", () => {
 	return src("src/css/bundle.scss")
@@ -37,7 +46,9 @@ task("transpile-ts", () => {
 				format: "esm",
 				bundle: true,
 				minify: production,
+				treeShaking: true,
 				plugins: [wasmLoader({ mode: "deferred" })],
+				sourcemap: "external",
 			}),
 		)
 		.pipe(dest("../static/js"));

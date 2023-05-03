@@ -1178,7 +1178,7 @@ const RAW_RUNTIME_STATE =
           ["autoprefixer", "virtual:b7c8c2746d7d90b689617da78a19466e4d526568cb46887bcae6b07d46b42c7e48a7f790fdfc335a88c8750f9c5e533604f2e83a0d01fa3ef256974a7232d807#npm:10.4.14"],\
           ["@types/postcss", null],\
           ["browserslist", "npm:4.21.5"],\
-          ["caniuse-lite", "npm:1.0.30001480"],\
+          ["caniuse-lite", "npm:1.0.30001482"],\
           ["fraction.js", "npm:4.2.0"],\
           ["normalize-range", "npm:0.1.2"],\
           ["picocolors", "npm:1.0.0"],\
@@ -1321,7 +1321,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/browserslist-npm-4.21.5-e3b9e9d029-9.zip/node_modules/browserslist/",\
         "packageDependencies": [\
           ["browserslist", "npm:4.21.5"],\
-          ["caniuse-lite", "npm:1.0.30001480"],\
+          ["caniuse-lite", "npm:1.0.30001482"],\
           ["electron-to-chromium", "npm:1.4.368"],\
           ["node-releases", "npm:2.0.10"],\
           ["update-browserslist-db", "virtual:e3b9e9d029ed690d72cbb29196ba0a23f15b398eeb926347678187be937db870a04cbf984eecc8e0ec9c290158a9cd8607d12f0188665abe039fa4a9051a22ac#npm:1.0.11"]\
@@ -1427,7 +1427,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["caniuse-api", "npm:3.0.0"],\
           ["browserslist", "npm:4.21.5"],\
-          ["caniuse-lite", "npm:1.0.30001480"],\
+          ["caniuse-lite", "npm:1.0.30001482"],\
           ["lodash.memoize", "npm:4.1.2"],\
           ["lodash.uniq", "npm:4.5.0"]\
         ],\
@@ -1435,10 +1435,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["caniuse-lite", [\
-      ["npm:1.0.30001480", {\
-        "packageLocation": "../../.yarn/berry/cache/caniuse-lite-npm-1.0.30001480-8cebfb863f-9.zip/node_modules/caniuse-lite/",\
+      ["npm:1.0.30001482", {\
+        "packageLocation": "../../.yarn/berry/cache/caniuse-lite-npm-1.0.30001482-266bfb6271-9.zip/node_modules/caniuse-lite/",\
         "packageDependencies": [\
-          ["caniuse-lite", "npm:1.0.30001480"]\
+          ["caniuse-lite", "npm:1.0.30001482"]\
         ],\
         "linkType": "HARD"\
       }]\
