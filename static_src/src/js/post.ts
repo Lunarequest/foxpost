@@ -2,17 +2,6 @@ import hljs from "highlight.js";
 import mermaid from "mermaid";
 import { render_webmentions } from "webmention-io";
 
-mermaid.initialize({
-	startOnLoad: true,
-	theme: "dark",
-});
-
-hljs.highlightAll();
-
-window.onload = function () {
-	init();
-};
-
 function init() {
 	const webmentions_div = document.getElementById("webmentions");
 	console.log("loading webmetions");
@@ -31,3 +20,12 @@ function init() {
 		}
 	}
 }
+
+// run functions on loading of js
+mermaid.initialize({
+	startOnLoad: true,
+	theme: "dark",
+});
+
+hljs.highlightAll();
+init();

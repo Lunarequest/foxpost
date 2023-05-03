@@ -17,3 +17,4 @@ search.js
 editor.js
 post.js
 bundle.css
+*.wasm

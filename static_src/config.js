@@ -1,3 +1,0 @@
-const plugins = {
-	forms: true,
-};
