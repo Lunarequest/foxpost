@@ -2,8 +2,9 @@
   "name": "tailwind",
   "packageManager": "yarn@4.0.0-rc.43",
   "scripts": {
-    "compile": "gulp",
+    "compile": "rimraf ../static/js/* && gulp",
     "compile:prod": "NODE_ENV=production yarn compile",
+    "check": "tsc --noemit",
     "lint": "rome check .",
     "format": "rome format . --write"
   },
@@ -21,13 +22,14 @@
     "autoprefixer": "^10.4.14",
     "cssnano": "^6.0.1",
     "cssnano-preset-advanced": "^6.0.1",
-    "esbuild-plugin-wasm": "^1.0.1",
+    "esbuild-plugin-wasm": "^1.1.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-esbuild": "^0.11.1",
     "gulp-postcss": "^9.0.1",
     "gulp-sass": "^5.1.0",
     "postcss": "^8.4.23",
+    "rimraf": "^5.0.0",
     "rome": "^12.0.0",
     "sass": "^1.62.1",
     "tailwindcss": "^3.3.2",
@@ -40,7 +42,7 @@
     "highlight.js": "^11.8.0",
     "mark.js": "^8.11.1",
     "mermaid": "^10.1.0",
-    "webmention-io": "^0.1.0"
+    "webmention-io": "^0.1.2"
   },
   "resolutions": {
     "flexsearch@^0.7.31": "patch:flexsearch@npm%3A0.7.31#./.yarn/patches/flexsearch-npm-0.7.31-f26cb98f08.patch",

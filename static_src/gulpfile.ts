@@ -14,7 +14,10 @@ const production = process.env.NODE_ENV === "production";
 
 const sass = gulpSass(dartSass);
 
-const plugins = [tailwindcss("./tailwind.config.ts"), autoprefixer()];
+const plugins = [
+	tailwindcss("./tailwind.config.ts"),
+	autoprefixer({ cascade: true }),
+];
 
 if (production) {
 	plugins.push(
@@ -25,6 +28,9 @@ if (production) {
 					discardComments: {
 						removeAll: true,
 					},
+					discardEmpty: true,
+					normalizeUrl: true,
+					autoprefixer: true,
 				},
 			],
 		}),

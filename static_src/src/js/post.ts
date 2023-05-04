@@ -1,6 +1,6 @@
 import hljs from "highlight.js";
 import mermaid from "mermaid";
-import { render_webmentions } from "webmention-io";
+import { render_webmention } from "webmention-io";
 
 function init() {
 	const webmentions_div = document.getElementById("webmentions");
@@ -8,7 +8,7 @@ function init() {
 	if (webmentions_div) {
 		const page_url = webmentions_div.getAttribute("data-page-url");
 		if (page_url) {
-			render_webmentions(page_url)
+			render_webmention(page_url)
 				.then((webmentions: string) => {
 					webmentions_div.innerHTML = webmentions;
 				})

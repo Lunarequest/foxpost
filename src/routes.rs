@@ -32,7 +32,7 @@ pub async fn about(config: &State<Config>) -> Template {
 
 #[get("/static/<type>/<asset>")]
 pub async fn static_files(r#type: String, asset: PathBuf) -> Option<NamedFile> {
-	match r#type.as_str() {
+	match &r#type as &str {
 		"css" => {
 			let path = Path::new("./static/css").join(asset);
 			if path.is_dir() {

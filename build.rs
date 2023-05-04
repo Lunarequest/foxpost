@@ -15,7 +15,7 @@ fn is_program_in_path(program: &str) -> bool {
 }
 
 fn main() {
-	println!("cargo:rerun-if-changed=tailwind/tailwind.config.js");
+	println!("cargo:rerun-if-changed=static_src/tailwind.config.ts");
 	let path = PathBuf::from("static/css/bundle.css");
 	if !path.exists() {
 		println!("cargo:rerun-if-changed=static/css/bundle.css");
