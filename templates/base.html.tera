@@ -6,8 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="generator" content="foxpost">
 	<meta name="rating" content="General">
+	{% if not lax %}
 	<meta http-equiv="Content-Security-Policy"
 		content="script-src static.cloudflareinsights.com static.cloudflareinsights.com 'strict-dynamic' 'self' 'nonce-odUpcNj0m++VNDqcCIiF7A==' 'unsafe-inline' 'wasm-unsafe-eval' ajax.cloudflare.com data: 'self' ajax.cloudflare.com https://*.fontawesome.com; object-src 'none'; base-uri nullrequest.com">
+	{% else %}
+	<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri nullrequest.com">
+	{% endif %}
 	{% block meta %}
 	{% endblock meta %}
 	<title>{% block title %}{{ title }}{% endblock title %}</title>

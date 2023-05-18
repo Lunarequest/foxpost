@@ -1,11 +1,10 @@
+use private::{delete_entry, drafts, edit, editor, get_content, new_post, update_post};
+use public::{posts, render_post, search_by_tag};
 use rocket::fairing::AdHoc;
-use routes::{
-	delete_entry, drafts, edit, editor, get_content, new_post, posts, render_post, search_by_tag,
-	update_post,
-};
 pub mod database;
 mod json;
-mod routes;
+mod private;
+mod public;
 
 pub fn stage() -> AdHoc {
 	AdHoc::on_ignite("Posts", |rocket| async {

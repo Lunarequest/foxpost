@@ -1,4 +1,4 @@
-{% extends "base-private" %}
+{% extends "base" %}
 {% block content %}
 <center class="text-black dark:text-white">
 	<table class="table-auto">

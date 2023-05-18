@@ -15,17 +15,23 @@ rocket_dyn_templates = { version = "0.1.0-rc.3", features = ["tera"] }
 diesel = { version = "2", features = ["postgres"] }
 diesel_migrations = { version = "2", features = ["postgres"] }
 argon2 = "0.5.0"
-serde = { version = "1.0.160", features = ["derive"] }
+serde = { version = "1.0.163", features = ["derive"] }
 chrono = { version = "0.4.24", default-features = false, features = ["clock"] }
 serde_json = "1.0.96"
 slug = "0.1.4"
 hcaptcha = { version = "2.2.2", default-features = false, features = [
-"ext",
 "rustls-backend",
 ] }
-pulldown-cmark = { version = "0.9.2", default-features = false, features = ["simd"] }
+pulldown-cmark = { version = "0.9.2", default-features = false, features = [
+"simd",
+] }
 lazy_static = "1.4.0"
 url = "2.3.1"
 
+# with 0 opts binary size in 24MB
 [profile.release]
-lto = true
+strip = true # with strip it goes down to 15MB
+lto = true # adding lto it goes down to 12MB
+opt-level = "z" # stacking opt-level z it drops to 9.6MB
+codegen-units = 1 # adding this we drop to 9.2MB
+panic = "abort" # adding panic = abort drops size to 8.5MB

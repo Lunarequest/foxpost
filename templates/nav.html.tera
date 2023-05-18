@@ -29,6 +29,10 @@
 						class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:border-0 md:p-0">About</a>
 				</li>
 				<li>
+					<a href="https://nightpdf.nullrequest.com"
+						class="block py-2 pl-3 pr-4 rounded md:hover:bg-transparent md:border-0 md:p-0">NightPDF</a>
+				</li>
+				<li>
 					<a href="/search" aria-label="Search all blog posts for specific keywords"
 						class="block py-2 pl-3 pr-4 md:border-0 md:p-0"><em class="fas fa-search fa-lg"
 							aria-hidden="true"></em></a>
