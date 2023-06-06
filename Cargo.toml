@@ -27,6 +27,11 @@ pulldown-cmark = { version = "0.9.3", default-features = false, features = [
 ] }
 url = "2.4.0"
 
+#wip to build with wasm no effect normally
+[patch.crates-io]
+tokio = { git = "https://github.com/john-sharratt/tokio.git", branch = "wasix-1.24.2" } # 👈🏼
+socket2 = { git = "https://github.com/john-sharratt/socket2.git", branch = "v0.4.7" } # 👈🏼
+libc = { git = "https://github.com/john-sharratt/libc.git", branch = "master" } # 👈🏼
 # with 0 opts binary size in 24MB
 [profile.release]
 strip = true # with strip it goes down to 15MB
