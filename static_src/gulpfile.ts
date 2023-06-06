@@ -14,28 +14,24 @@ const production = process.env.NODE_ENV === "production";
 
 const sass = gulpSass(dartSass);
 
-const plugins = [
+let plugins = [
 	tailwindcss("./tailwind.config.ts"),
 	autoprefixer({ cascade: true }),
+	cssnano({
+		preset: [
+			"advanced",
+			{
+				discardComments: {
+					removeAll: true,
+				},
+				discardEmpty: true,
+				normalizeUrl: true,
+				autoprefixer: true,
+			},
+		],
+	})
 ];
 
-if (production) {
-	plugins.push(
-		cssnano({
-			preset: [
-				"advanced",
-				{
-					discardComments: {
-						removeAll: true,
-					},
-					discardEmpty: true,
-					normalizeUrl: true,
-					autoprefixer: true,
-				},
-			],
-		}),
-	);
-}
 
 task("build-css", () => {
 	return src("src/css/bundle.scss")
