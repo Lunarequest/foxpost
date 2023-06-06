@@ -1,7 +1,7 @@
 use super::database::{NewPost, Post, Tag};
 
 use crate::auth::forms::Session;
-
+use crate::config::Config;
 use crate::db::BlogDBConn;
 use crate::diesel::{delete, ExpressionMethods, QueryDsl, RunQueryDsl};
 use crate::schema::posts as Posts;
@@ -11,6 +11,7 @@ use rocket::response::Redirect;
 use rocket::{
 	http::Status,
 	serde::json::{json, Json, Value},
+	State,
 };
 use rocket_dyn_templates::{context, Template};
 
@@ -19,6 +20,7 @@ pub async fn edit(
 	db: BlogDBConn,
 	sess: Session,
 	slug: String,
+	config: &State<Config>,
 ) -> Result<Template, (Status, String)> {
 	if sess.isadmin {
 		match db
@@ -35,6 +37,7 @@ pub async fn edit(
 				context! {
 					title: format!("edit {}",post.title),
 					post: post,
+					config: &config.other
 				},
 			)),
 		}
@@ -47,7 +50,11 @@ pub async fn edit(
 }
 
 #[get("/all")]
-pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, String)> {
+pub async fn drafts(
+	db: BlogDBConn,
+	sess: Session,
+	config: &State<Config>,
+) -> Result<Template, (Status, String)> {
 	if sess.isadmin {
 		let mut posts: Vec<Post> = match db
 			.run(move |conn| Posts::table.order_by(Posts::published).load(conn))
@@ -65,6 +72,7 @@ pub async fn drafts(db: BlogDBConn, sess: Session) -> Result<Template, (Status, 
 				posts:posts,
 				sess: sess,
 				lax: true,
+				config: &config.other,
 			},
 		))
 	} else {
@@ -120,11 +128,11 @@ pub async fn get_content(db: BlogDBConn, slug: String, sess: Session) -> String 
 }
 
 #[get("/new")]
-pub async fn editor(sess: Session) -> Result<Template, Status> {
+pub async fn editor(sess: Session, config: &State<Config>) -> Result<Template, Status> {
 	if sess.isadmin {
 		Ok(Template::render(
 			"editor",
-			context! {title:"new post",sess:sess},
+			context! {title:"new post",sess:sess, config: &config.other},
 		))
 	} else {
 		Err(Status::Unauthorized)

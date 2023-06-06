@@ -1,3 +1,5 @@
+parallel-compiler = true #without build times are 22.99s
+
 [target.x86_64-unknown-linux-gnu]
 linker = "clang"
 rustflags = ["-C", "link-arg=-fuse-ld=/usr/bin/mold"]

@@ -27,7 +27,10 @@ pub async fn favicon() -> Option<NamedFile> {
 
 #[get("/about")]
 pub async fn about(config: &State<Config>) -> Template {
-	Template::render("about", context! { title: "about",domain: &config.domain})
+	Template::render(
+		"about",
+		context! { title: "about",domain: &config.domain, config: &config.other},
+	)
 }
 
 #[get("/static/<type>/<asset>")]
@@ -103,7 +106,8 @@ pub async fn index(
 			posts:posts,
 			flash:flash,
 			sess:sess,
-			domain: &config.domain
+			domain: &config.domain,
+			config: &config.other
 		},
 	)
 }

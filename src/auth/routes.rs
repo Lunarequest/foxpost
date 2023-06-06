@@ -2,24 +2,22 @@ use super::{
 	database::User,
 	forms::{now, Login, Session},
 };
-use crate::{db, schema::users};
+use crate::{config::Config, db, schema::users};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use hcaptcha::Hcaptcha;
-use lazy_static::lazy_static;
 use rocket::{
 	form::Form,
 	http::{Cookie, CookieJar, SameSite},
 	request::FlashMessage,
 	response::{Flash, Redirect},
 	serde::json::json,
+	State,
 };
 use rocket_dyn_templates::{context, Template};
-use std::env::var;
+use std::{env::var, sync::OnceLock};
 
-lazy_static! {
-	static ref SITE_KEY: String = var("SITE_KEY").expect("Missing SITE_KEY");
-	static ref SECRET_KEY: String = var("SECRET_KEY").expect("Missing SECRET_KEY");
-}
+static SITE_KEY: OnceLock<String> = OnceLock::new();
+static SECRET_KEY: OnceLock<String> = OnceLock::new();
 
 #[post("/login", data = "<login>")]
 pub async fn login(
@@ -28,7 +26,17 @@ pub async fn login(
 	login: Form<Login>,
 ) -> Result<Flash<Redirect>, Flash<Redirect>> {
 	let login_value = login.clone();
-	match login.valid_response(&SECRET_KEY, None).await {
+	match login
+		.valid_response(
+			&SECRET_KEY.get_or_init(|| {
+				eprintln!("SECRET_KEY not set using developer keys");
+				var("SECRET_KEY")
+					.unwrap_or("0x0000000000000000000000000000000000000000".to_string())
+			}),
+			None,
+		)
+		.await
+	{
 		Ok(_) => {}
 		Err(e) => {
 			eprintln!("{e}");
@@ -86,6 +94,7 @@ pub async fn login(
 pub async fn login_get(
 	sess: Option<Session>,
 	flash: Option<FlashMessage<'_>>,
+	config: &State<Config>,
 ) -> Result<Template, Flash<Redirect>> {
 	match sess {
 		Some(_) => Err(Flash::error(
@@ -94,7 +103,15 @@ pub async fn login_get(
 		)),
 		None => Ok(Template::render(
 			"login",
-			context! {title:"login",site_key: SITE_KEY.clone(), flash:flash},
+			context! {
+					title:"login",
+					site_key: SITE_KEY.get_or_init(||{
+						eprintln!("SITE_KEY not set using developer keys");
+						var("SITE_KEY").unwrap_or("10000000-ffff-ffff-ffff-000000000001".to_string())
+					}),
+					config: &config.other,
+					flash:flash
+			},
 		)),
 	}
 }

@@ -1,28 +1,23 @@
 <center>
 	<footer class="bg-white-200 text-black dark:text-white dark:bg-black-600">
 		<div class="container pt-9">
-			<div class="mb-9 flex justify-center">
-				<div class="social-icons">
-					<a rel="me" href="https://www.instagram.com/lunarequest/" name="instagram"
-						aria-label="A link to my instagram account">
-						<em class="fab fa-instagram fa-2x" aria-hidden="true"></em>
-					</a>
-					&nbsp;&nbsp;
-					<a rel="me" href="https://social.nullrequest.com/@lunarequest" name="mastodon"
-						aria-label="My mastodon where i'm most active">
-						<em class="fa-brands fa-mastodon fa-2x"></em>
-					</a>
-					&nbsp;&nbsp;
-					<a href="https://github.com/lunarequest" rel="me authn"
-						aria-label="My github where you can find most of my projects"><em
-							class="fa-brands fa-github fa-2x"></em></a>
-					&nbsp;&nbsp;
-					<a rel="me" href="mailto:luna@nullrequest.com" name="mail"
-						aria-label="Email me if you like the old school stuff">
-						<em class="fas fa-envelope-open-text fa-2x" aria-hidden="true"></em>
-					</a>
+			{% if config %}
+				<div class="mb-9 flex justify-center">
+				{% for entry in config.social %}
+							<div class="social-icons">
+								{% if entry.auth %}
+									<a rel="me authn" class="social-icon" href="{{entry.url}}" name="{{entry.name}}" aria-label="{{entry.url}}">
+										<em class="{{entry.icon}}" aria-hidden="true"></em>
+									</a>
+								{% else %}
+									<a rel="me" class="social-icon" href="{{entry.url}}" name="{{entry.name}}" aria-label="{{entry.url}}">
+										<em class="{{entry.icon}}" aria-hidden="true"></em>
+									</a>
+								{%endif%}
+							</div>
+				{% endfor %}
 				</div>
-			</div>
+			{% endif%}
 		</div>
 
 		<div class="bg-black-300 p-4 text-center text-black-700 dark:bg-black-700 dark:text-black-200">

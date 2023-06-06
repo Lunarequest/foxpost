@@ -1,4 +1,4 @@
-use crate::auth::forms::Session;
+use crate::{auth::forms::Session, config::Config};
 use rocket::{
 	data::ToByteUnit,
 	form::Form,
@@ -6,7 +6,7 @@ use rocket::{
 	http::Status,
 	request::FlashMessage,
 	response::{Flash, Redirect},
-	FromForm,
+	FromForm, State,
 };
 use rocket_dyn_templates::{context, Template};
 use std::path::{Path, PathBuf};
@@ -68,12 +68,13 @@ pub async fn upload(
 #[get("/create")]
 pub async fn image_form(
 	sess: Session,
+	config: &State<Config>,
 	flash: Option<FlashMessage<'_>>,
 ) -> Result<Template, (Status, Flash<Redirect>)> {
 	if sess.isadmin {
 		Ok(Template::render(
 			"image",
-			context! {title:"Upload a image",flash:flash},
+			context! {title:"Upload a image",flash:flash, config: &config.other},
 		))
 	} else {
 		Err((

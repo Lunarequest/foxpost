@@ -22,7 +22,11 @@ fn convert(timestamp: i64) -> String {
 }
 
 #[get("/tag/<tag>")]
-pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Status, String)> {
+pub async fn search_by_tag(
+	db: BlogDBConn,
+	tag: String,
+	config: &State<Config>,
+) -> Result<Template, (Status, String)> {
 	let tag_cloned = tag.clone();
 	let mut posts: Vec<Post> = match db
 		.run(move |conn| {
@@ -41,6 +45,7 @@ pub async fn search_by_tag(db: BlogDBConn, tag: String) -> Result<Template, (Sta
 		"tags",
 		context! {
 			title: format!("all posts with tag {}", tag),
+			config: &config.other,
 			posts: posts
 		},
 	))
@@ -73,7 +78,8 @@ pub async fn render_post(db: BlogDBConn, slug: String, config: &State<Config>) -
 			title: post.title.clone(),
 			content:content,
 			post: post,
-			domain: &config.domain
+			domain: &config.domain,
+			config: &config.other
 		},
 	))
 }

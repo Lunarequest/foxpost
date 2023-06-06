@@ -4,5 +4,6 @@
     "static_src/**/.pnp.*": true
   },
   "typescript.tsdk": "static_src/.yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "ansible.python.interpreterPath": "/home/luna/.zi/plugins/pyenv/versions/3.12-dev/bin/python"
 }
