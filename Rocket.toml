@@ -2,3 +2,29 @@
 domain = "https://nullrequest.com"
 [default.databases.blog]
 url = "postgres://luna:luna@localhost/luna"
+
+
+[[default.social]]
+	name="instagram"
+	url= "https://www.instagram.com/lunarequest/"
+	icon = "fab fa-instagram fa-2x"
+	label = "A link to my instagram account"
+
+[[default.social]]
+	name="mastodon"
+	url= "https://social.nullrequest.com/@lunarequest"
+	icon = "fa-brands fa-mastodon fa-2x"
+	label = "My mastodon where i'm most active"
+
+[[default.social]]
+	name="github"
+	authn=true
+	url= "https://github.com/lunarequest"
+	icon = "fa-brands fa-github fa-2x"
+	label = "My github where you can find most of my projects"
+
+[[default.social]]
+	name="email"
+	url= "mailto:luna@nullrequest.com"
+	icon = "fas fa-envelope-open-text fa-2x"
+	label = "Email me if you like the old school stuff"
