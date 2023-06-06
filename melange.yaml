@@ -2,9 +2,6 @@ package:
   name: foxpost
   version: 1.1.0
   description: Luna's blog
-  target-architecture:
-    - amd64
-    - aarch64
   copyright:
     - license: GPL-2.0-only
       paths:
@@ -20,7 +17,11 @@ environment:
     keyring:
       - https://packages.wolfi.dev/os/wolfi-signing.rsa.pub
     packages:
-      - gcc
+      - clang-15
+      - llvm15-dev
+      - libLLVM-15
+      - mold
+      - build-base
       - wolfi-baselayout
       - ca-certificates-bundle
       - pkgconf
@@ -37,7 +38,6 @@ pipeline:
       BLOG_HOME="${{targets.destdir}}/"
       TARGETDIR="/var/cache/melange/blog"
       mkdir -p "${BLOG_HOME}/media" "${EXEC_DIR}"
-      rm -rf .cargo
       cargo build --release --target-dir "${TARGETDIR}"
       cd static_src
       yarn && yarn compile:prod
