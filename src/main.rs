@@ -37,7 +37,6 @@ async fn run_migrations_fairing(rocket: Rocket<Build>) -> Rocket<Build> {
 }
 
 fn convert(args: &HashMap<String, Value>) -> Result<Value, Error> {
-	#[allow(clippy::or_fun_call)]
 	let timestamp = match from_value::<i64>(
 		args.get("timestamp")
 			.ok_or::<Error>("no timestamp".into())?

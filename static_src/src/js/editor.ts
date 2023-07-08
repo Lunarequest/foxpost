@@ -57,7 +57,7 @@ if (editorelem) {
 		e.preventDefault();
 		const btn_submit = document.getElementById("submit") as HTMLButtonElement;
 		btn_submit.disabled = true;
-		setTimeout(() => (btn_submit.disabled = false), 2000);
+		setTimeout(() => btn_submit.disabled === false, 2000);
 		const form = new FormData(editor);
 		const json = {
 			title: form.get("title"),

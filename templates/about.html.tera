@@ -22,16 +22,18 @@
 {% block content %}
 <article class="article text-black dark:text-white">
 	<p><img src="/static/images/icon.png" width="15%" class="center" alt="a picture of a huamnoid fox"></p>
-	<center style="margin-left: 10%;margin-right:10%;">
-		<p>Most people know me as null. I am an 19 year old programer in love with linux. Over the past few years I
-			picked
-			up a variety of skill including google-fu and a knack of containerizing applications. I am currently run
-			arch linux, debian and nixos on my computers. I like working on a varity of projects. Feel free to reach out
-			to me
-			through my <a href="mailto:nullrequest@vivaldi.net">email</a>.</p>
-		<p>If you want to know where I got my profile pic. It was drawn by KamidoRei(super grateful for the free art)
-			you can
-			check out her <a href="https://www.deviantart.com/kamidorei">devient art</a>.</p>
+	<center style="margin-left: 20%;margin-right:20%;">
+		<p>
+			Hi, my name is luna, I'm <a id="age">20</a> I love all things linux and have been working on various linux things since I was 15. I now work at SUSE.
+			All opinions expressed in this blog are my own and not my employers. This blog is related to all non-work things.
+			Various projects I work on in my free time and ideas that are in my head.
+			This includes everything from this blog you are reading to more esoteric project that will be reviled in the future(read when ever i actually finish them :D).
+		</p>
 	</center>
 </article>
+<noscript>
+	age maybe wrong unless js in enabled because I'm forgetful about updating it
+</noscript>
+<script nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/about.js"></script>
+
 {% endblock content %}

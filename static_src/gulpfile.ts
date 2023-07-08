@@ -14,7 +14,7 @@ const production = process.env.NODE_ENV === "production";
 
 const sass = gulpSass(dartSass);
 
-let plugins = [
+const plugins = [
 	tailwindcss("./tailwind.config.ts"),
 	autoprefixer({ cascade: true }),
 	cssnano({
@@ -29,9 +29,8 @@ let plugins = [
 				autoprefixer: true,
 			},
 		],
-	})
+	}),
 ];
-
 
 task("build-css", () => {
 	return src("src/css/bundle.scss")

@@ -4,7 +4,6 @@ use super::{
 };
 use crate::{config::Config, db, schema::users};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
-use hcaptcha::Hcaptcha;
 use rocket::{
 	form::Form,
 	http::{Cookie, CookieJar, SameSite},
@@ -27,14 +26,14 @@ pub async fn login(
 ) -> Result<Flash<Redirect>, Flash<Redirect>> {
 	let login_value = login.clone();
 	match login
-		.valid_response(
-			&SECRET_KEY.get_or_init(|| {
-				eprintln!("SECRET_KEY not set using developer keys");
-				var("SECRET_KEY")
-					.unwrap_or("0x0000000000000000000000000000000000000000".to_string())
-			}),
-			None,
-		)
+		.clone()
+		.valid_response(SECRET_KEY.get_or_init(|| match var("SECRET_KEY") {
+			Ok(var) => var,
+			Err(_e) => {
+				eprintln!("Failed to get env var using dev keys");
+				"0x0000000000000000000000000000000000000000".to_string()
+			}
+		}))
 		.await
 	{
 		Ok(_) => {}
@@ -106,8 +105,14 @@ pub async fn login_get(
 			context! {
 					title:"login",
 					site_key: SITE_KEY.get_or_init(||{
-						eprintln!("SITE_KEY not set using developer keys");
-						var("SITE_KEY").unwrap_or("10000000-ffff-ffff-ffff-000000000001".to_string())
+
+						match var("SITE_KEY"){
+							Ok(a) => a,
+							Err(_) =>	{
+								eprintln!("SITE_KEY not set using developer keys");
+								"10000000-ffff-ffff-ffff-000000000001".to_string()
+							}
+						}
 					}),
 					config: &config.other,
 					flash:flash

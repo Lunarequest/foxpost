@@ -1,4 +1,4 @@
-use hcaptcha::Hcaptcha;
+use reqwest::Client;
 use rocket::{
 	form::FromForm,
 	http::Status,
@@ -6,6 +6,7 @@ use rocket::{
 	serde::{Deserialize, Serialize},
 	Request,
 };
+const VERIFY_URL: &str = "https://hcaptcha.com/siteverify";
 
 pub fn now() -> i64 {
 	chrono::Utc::now().timestamp()
@@ -22,13 +23,18 @@ pub struct SignUp {
 	pub h_captcha_response: String,
 } */
 
-#[derive(Debug, Clone, FromForm, Hcaptcha)]
+#[derive(Debug, Clone, FromForm)]
 pub struct Login {
 	pub username: String,
 	pub passwd: String,
-	#[captcha]
 	#[field(name = "h-captcha-response")]
 	pub h_captcha_response: String,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct HcaptchaResponse {
+	pub success: bool, // is the passcode valid, and does it meet security criteria you specified, e.g. sitekey?
+	pub error_codes: Option<Vec<String>>, // optional: any error codes
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
@@ -63,5 +69,37 @@ impl<'r> FromRequest<'r> for Session {
 			return Outcome::Failure((Status::Forbidden, "Session has timed out"));
 		}
 		rocket::outcome::Outcome::Success(session)
+	}
+}
+
+impl Login {
+	pub async fn valid_response(self, secret_key: &String) -> Result<(), String> {
+		let params = [
+			("response", &self.h_captcha_response),
+			("secret", secret_key),
+		];
+		let client = Client::new();
+		let response = match client.post(VERIFY_URL).form(&params).send().await {
+			Ok(resp) => resp,
+			Err(e) => {
+				eprintln!("{e}");
+				return Err("Unkown error making request to hcaptcha".to_string());
+			}
+		};
+		let json = match response.json::<HcaptchaResponse>().await {
+			Ok(json) => json,
+			Err(e) => {
+				eprintln!("{e}");
+				return Err("Unkown error parsing response form hcaptcha".to_string());
+			}
+		};
+		if json.success == true {
+			Ok(())
+		} else {
+			match json.error_codes {
+				Some(error_codes) => Err(error_codes.join(" ")),
+				None => Err("Unkown error returned of error".to_string()),
+			}
+		}
 	}
 }

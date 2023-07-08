@@ -15,27 +15,28 @@ rocket_dyn_templates = { version = "0.1.0-rc.3", features = ["tera"] }
 diesel = { version = "2", features = ["postgres"] }
 diesel_migrations = { version = "2", features = ["postgres"] }
 argon2 = "0.5.0"
-serde = { version = "1.0.163", features = ["derive"] }
+serde = { version = "1.0.164", features = ["derive"] }
 chrono = { version = "0.4.26", default-features = false, features = ["clock"] }
-serde_json = "1.0.96"
+serde_json = "1.0.99"
 slug = "0.1.4"
-hcaptcha = { version = "2.2.2", default-features = false, features = [
-"rustls-backend",
-] }
 pulldown-cmark = { version = "0.9.3", default-features = false, features = [
 "simd",
 ] }
 url = "2.4.0"
-
+reqwest = { version = "0.11.18", default-features = false, features = [
+"rustls-tls",
+"json",
+] }
 #wip to build with wasm no effect normally
-[patch.crates-io]
-tokio = { git = "https://github.com/john-sharratt/tokio.git", branch = "wasix-1.24.2" } # 👈🏼
-socket2 = { git = "https://github.com/john-sharratt/socket2.git", branch = "v0.4.7" } # 👈🏼
-libc = { git = "https://github.com/john-sharratt/libc.git", branch = "master" } # 👈🏼
+#[patch.crates-io]
+#tokio = { git = "https://github.com/john-sharratt/tokio.git", branch = "wasix-1.24.2" } # 👈🏼
+#socket2 = { git = "https://github.com/john-sharratt/socket2.git", branch = "v0.4.7" } # 👈🏼
+#libc = { git = "https://github.com/john-sharratt/libc.git", branch = "master" } # 👈🏼
+
 # with 0 opts binary size in 24MB
 [profile.release]
-strip = true # with strip it goes down to 15MB
-lto = true # adding lto it goes down to 12MB
-opt-level = "z" # stacking opt-level z it drops to 9.6MB
+strip = true      # with strip it goes down to 15MB
+lto = true        # adding lto it goes down to 12MB
+opt-level = "z"   # stacking opt-level z it drops to 9.6MB
 codegen-units = 1 # adding this we drop to 9.2MB
-panic = "abort" # adding panic = abort drops size to 8.5MB
+panic = "abort"   # adding panic = abort drops size to 8.5MB after writing a custom hcaptcha component it drops to 8.1M
