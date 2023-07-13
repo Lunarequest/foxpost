@@ -1,6 +1,6 @@
 {
   "name": "tailwind",
-  "packageManager": "yarn@4.0.0-rc.47",
+  "packageManager": "yarn@4.0.0-rc.48",
   "scripts": {
     "compile": "gulp",
     "compile:prod": "NODE_ENV=production yarn compile",

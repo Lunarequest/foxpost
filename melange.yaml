@@ -9,6 +9,8 @@ package:
   dependencies:
     runtime:
       - libpq-15
+      - ca-certificates-bundle
+      - wolfi-baselayout
 
 environment:
   contents:

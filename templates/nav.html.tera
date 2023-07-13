@@ -2,8 +2,8 @@
 	class="border-white-200 dark:border-black-200 bg-white dark:bg-black text-black dark:text-white px-2 sm:px-4 py-2.5 rounded">
 	<div class="container flex flex-wrap items-center justify-between mx-auto">
 		<a href="/" class="flex items-center">
-			<img loading="lazy" src="/static/images/iconx50.avif" height="50%" width="50%"
-				srcset="/static/images/icon36.avif 36w,/static/images/icon46.avif 46w,/static/images/icon100.avif 100w"
+			<img loading="lazy" src="/static/images/icon50.png" height="50%" width="50%"
+				srcset="/static/images/icon36.png 36w,/static/images/icon46.png 46w,/static/images/icon100.png 100w"
 				sizes="50vw" class="h-6 mr-3 sm:h-9" alt="Luna's sona" />
 			<span
 				class="self-center text-xl font-semibold whitespace-nowrap text-black dark:text-white">Nullrequest</span>
