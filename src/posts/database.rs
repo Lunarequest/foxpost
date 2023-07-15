@@ -36,6 +36,7 @@ pub struct Post {
 	pub author: String,
 	pub published: i64,
 	pub tags: Vec<Option<String>>,
+	pub noteid: Option<String>,
 }
 
 #[derive(Debug, Clone, Insertable, Queryable, Identifiable)]
@@ -51,27 +52,30 @@ pub struct NewPost {
 	pub content: Option<String>,
 	pub tags: String,
 	pub draft: bool,
+	pub noteid: Option<String>,
 }
 
 impl Post {
 	pub fn new(
-		title: String,
-		description: Option<String>,
-		content: Option<String>,
+		title: &String,
+		description: &Option<String>,
+		content: &Option<String>,
 		draft: bool,
 		tags: Vec<Option<String>>,
 		author: String,
+		noteid: &Option<String>,
 	) -> Self {
 		let slug = slugify(title.clone());
 		Post {
 			slug,
-			title,
-			description,
-			content,
+			title: title.to_owned(),
+			description: description.to_owned(),
+			content: content.to_owned(),
 			draft,
 			author,
 			tags,
 			published: now(),
+			noteid: noteid.to_owned(),
 		}
 	}
 

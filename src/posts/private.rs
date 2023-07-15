@@ -162,14 +162,15 @@ pub async fn new_post(
 			}]);
 		}
 		let post = Post::new(
-			post_value.title.clone(),
-			post_value.description.clone(),
-			post_value.content.clone(),
+			&post_value.title,
+			&post_value.description,
+			&post_value.content,
 			post_value.draft,
 			tags,
 			sess.user,
+			&post_value.noteid,
 		);
-		let slug = post.slug.clone();
+		let slug = post.slug.to_owned();
 		match db
 			.run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
 			.await

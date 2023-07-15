@@ -27,6 +27,12 @@
 				<input type="text" name="tags" id="tags"
 					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
 			</div>
+			<label for="noteid"
+				class="relative sm:flex-grow sm:flex-1 pt-2 pb-2 mb-0 leading-normal">noteId:</label>
+			<div class="sm:w-5/6 pr-4 pl-4">
+				<input type="text" name="noteid" id="noteid" maxlength="200"
+					class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded">
+			</div>
 		</div>
 		<div class="relative block mb-2 form-switch">
 			<label class="text-white-700 pl-6 mb-0" style="margin-right: 3%;" for="draft">Publish?</label>
