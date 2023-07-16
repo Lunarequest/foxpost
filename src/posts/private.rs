@@ -170,6 +170,7 @@ pub async fn new_post(
 			sess.user,
 			&post_value.noteid,
 		);
+
 		let slug = post.slug.to_owned();
 		match db
 			.run(move |conn| diesel::insert_into(Posts::table).values(post).execute(conn))
