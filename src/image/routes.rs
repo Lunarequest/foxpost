@@ -37,7 +37,6 @@ pub async fn upload(
 				),
 			));
 		}
-		println!("{:#?}", image.image.path());
 		match image.image.copy_to(path).await {
 			Ok(_) => Ok(Flash::success(
 				Redirect::to("/media/create"),

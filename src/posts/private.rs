@@ -32,17 +32,14 @@ pub async fn edit(
 			.await
 		{
 			Err(e) => Err((Status::UnprocessableEntity, e.to_string())),
-			Ok(post) => {
-				println!("{:#?}", post);
-				Ok(Template::render(
-					"edit_post",
-					context! {
-						title: format!("edit {}",post.title),
-						post: post,
-						config: &config.other
-					},
-				))
-			}
+			Ok(post) => Ok(Template::render(
+				"edit_post",
+				context! {
+					title: format!("edit {}",post.title),
+					post: post,
+					config: &config.other
+				},
+			)),
 		}
 	} else {
 		Err((
