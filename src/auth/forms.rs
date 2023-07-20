@@ -93,7 +93,7 @@ impl Login {
 				return Err("Unkown error parsing response form hcaptcha".to_string());
 			}
 		};
-		if json.success == true {
+		if json.success {
 			Ok(())
 		} else {
 			match json.error_codes {
