@@ -71,6 +71,7 @@ pub async fn render_post(db: BlogDBConn, slug: String, config: &State<Config>) -
 	if post.draft {
 		return None;
 	}
+	println!("{:#?}", post);
 	let content = render_to_html(post.clone().content.unwrap_or_default());
 	Some(Template::render(
 		"post",

@@ -51,7 +51,7 @@ const RAW_RUNTIME_STATE =
           ["mermaid", "npm:10.2.4"],\
           ["postcss", "npm:8.4.26"],\
           ["rome", "npm:12.1.3"],\
-          ["sass", "npm:1.63.6"],\
+          ["sass", "npm:1.64.0"],\
           ["tailwindcss", "npm:3.3.3"],\
           ["ts-node", "virtual:b7c8c2746d7d90b689617da78a19466e4d526568cb46887bcae6b07d46b42c7e48a7f790fdfc335a88c8750f9c5e533604f2e83a0d01fa3ef256974a7232d807#npm:10.9.1"],\
           ["typescript", "patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"]\
@@ -6961,10 +6961,10 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["sass", [\
-      ["npm:1.63.6", {\
-        "packageLocation": "./.yarn/cache/sass-npm-1.63.6-f415fe5e15-16e0d01563.zip/node_modules/sass/",\
+      ["npm:1.64.0", {\
+        "packageLocation": "./.yarn/cache/sass-npm-1.64.0-637fa4382e-04d415f557.zip/node_modules/sass/",\
         "packageDependencies": [\
-          ["sass", "npm:1.63.6"],\
+          ["sass", "npm:1.64.0"],\
           ["chokidar", "npm:3.5.3"],\
           ["immutable", "npm:4.3.0"],\
           ["source-map-js", "npm:1.0.2"]\
@@ -7449,7 +7449,7 @@ const RAW_RUNTIME_STATE =
           ["mermaid", "npm:10.2.4"],\
           ["postcss", "npm:8.4.26"],\
           ["rome", "npm:12.1.3"],\
-          ["sass", "npm:1.63.6"],\
+          ["sass", "npm:1.64.0"],\
           ["tailwindcss", "npm:3.3.3"],\
           ["ts-node", "virtual:b7c8c2746d7d90b689617da78a19466e4d526568cb46887bcae6b07d46b42c7e48a7f790fdfc335a88c8750f9c5e533604f2e83a0d01fa3ef256974a7232d807#npm:10.9.1"],\
           ["typescript", "patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"]\

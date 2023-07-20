@@ -8,6 +8,7 @@ declare global {
 		content: string | null;
 		tags: string;
 		draft: boolean | string | null;
+		noteid: string|null;
 	};
 }
 
@@ -65,6 +66,7 @@ if (editorelem) {
 			tags: form.get("tags"),
 			draft: form.get("draft"),
 			content: form.get("content"),
+			noteid: form.get("noteid"),
 		} as PostForm;
 
 		if (json.draft === "not_draft") {
