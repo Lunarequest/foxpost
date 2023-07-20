@@ -77,4 +77,5 @@
 	</div>
 </center>
 <script async defer type="module" nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/post.js"></script>
+<script async defer type="module" nonce="odUpcNj0m++VNDqcCIiF7A==" src="/static/js/comment.js"></script>
 {% endblock content %}

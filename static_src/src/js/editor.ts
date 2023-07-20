@@ -8,7 +8,7 @@ declare global {
 		content: string | null;
 		tags: string;
 		draft: boolean | string | null;
-		noteid: string|null;
+		noteid: string | null;
 	};
 }
 
