@@ -136,7 +136,7 @@ function init() {
 					   </div>
 					   <div class="content">
 						 <div class="author">
-						   <a href="${HOST}/@${reply.user.username}" rel="nofollow">
+						   <a href="https://${host}/@${reply.user.username}" rel="nofollow">
 							 <span>${reply.user.username}</span>
 							 <span class="MastoHost">${host}</span>
 						   </a>
