@@ -66,6 +66,77 @@ async function init() {
 			limit: 100,
 			depth: 100,
 		};
+
+		const parent_resp = await fetch(
+			"https://social.nullrequest.com/api/notes/show",
+			{
+				method: "POST",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(payload),
+			},
+		);
+
+		const parent_reply: Reply = await parent_resp.json();
+		const host = HOST.replace("https://", "").replace("/", "");
+		let mastodonComment;
+		if (parent_reply.cw) {
+			mastodonComment = `<div class="mastodon-comment">
+			<div class="avatar">
+			  <img src="${escapeHtml(parent_reply.user.avatarUrl)}" width=60 alt="">
+			</div>
+			<div class="content">
+			  <div class="author">
+				<a href="${HOST}/@${parent_reply.user.username}" rel="nofollow">
+				  <span>@${parent_reply.user.username}</span>
+				  <span class="MastoHost">${host}</span>
+				</a>
+				<a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
+				  ${parent_reply.createdAt.substr(0, 10)}
+				 </a>
+			  </div>
+			  <a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
+			  <details>
+				  <summary>
+					Content Warning: ${parent_reply.cw}
+				</summary>
+				<div class="mastodon-comment-content"><p>${parent_reply.text}<p></div>
+			  </details> 
+			  </a>
+			</div>
+
+		  </div>`;
+		} else {
+			mastodonComment = `<div class="mastodon-comment">
+		   <div class="avatar">
+			 <img src="${escapeHtml(parent_reply.user.avatarUrl)}" width=60 alt="">
+		   </div>
+		   <div class="content">
+			 <div class="author">
+			   <a href="https://${host}/@${parent_reply.user.username}" rel="nofollow">
+				 <span>@${parent_reply.user.username}</span>
+				 <span class="MastoHost">${host}</span>
+			   </a>
+			   <a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
+				 ${parent_reply.createdAt.substr(0, 10)}
+				</a>
+			 </div>
+			 <a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
+			 <div class="mastodon-comment-content"><p>${parent_reply.text}<p></div> 
+			 </a>
+		   </div>
+
+		 </div>`;
+		}
+
+		output.push({
+			html: DOMPurify.sanitize(mastodonComment, {
+				RETURN_DOM_FRAGMENT: true,
+			}),
+			date: parent_reply.createdAt,
+		});
 		const resp = await fetch(
 			"https://social.nullrequest.com/api/notes/children",
 			{
