@@ -12,7 +12,7 @@ type Emoji = {
 
 type User = {
 	username: string;
-    name: string;
+	name: string;
 	avatarUrl: string;
 	emojis: Emoji[];
 };
@@ -27,6 +27,7 @@ type Reply = {
 	user: User;
 	emojis: Emoji[];
 	createdAt: string;
+	cw: null | string;
 };
 
 function escapeHtml(unsafe: string): string {
@@ -60,8 +61,6 @@ async function init() {
 			html: DocumentFragment;
 			date: string;
 		}[] = [];
-
-		comments.innerHTML = "Loading";
 		const payload = {
 			noteId: id,
 			limit: 100,
@@ -83,7 +82,7 @@ async function init() {
 		if (data && Array.isArray(data) && data.length > 0) {
 			if (comments) {
 				if (data.length === 0) {
-					comments.innerHTML = "There are no comments";
+					comments.innerHTML = "There are no comments maybe make one <3";
 					return;
 				}
 				comments.innerHTML = "Loading Comments";
@@ -94,7 +93,7 @@ async function init() {
 
 					reply.text = escapeHtml(reply.text);
 
-                    reply.user.name = escapeHtml(reply.user.name);
+					reply.user.name = escapeHtml(reply.user.name);
 
 					const array = [...reply.text.matchAll(re)];
 
@@ -136,14 +135,41 @@ async function init() {
 					const json: UserDetails[] = await userdetails.json();
 					const user = json[0];
 					let host;
+					let mastodonComment: string;
 
 					if (user.host) {
 						host = user.host;
 					} else {
 						host = HOST.replace("https://", "").replace("/", "");
 					}
-
-					const mastodonComment = `<div class="mastodon-comment">
+					if (reply.cw) {
+						mastodonComment = `<div class="mastodon-comment">
+						<div class="avatar">
+						  <img src="${escapeHtml(reply.user.avatarUrl)}" width=60 alt="">
+						</div>
+						<div class="content">
+						  <div class="author">
+							<a href="https://${host}/@${reply.user.username}" rel="nofollow">
+							  <span>@${reply.user.username}</span>
+							  <span class="MastoHost">${host}</span>
+							</a>
+							<a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
+							  ${reply.createdAt.substr(0, 10)}
+							 </a>
+						  </div>
+						  <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
+						  <details>
+						  	<summary>
+								Content Warning: ${reply.cw}
+							</summary>
+							<div class="mastodon-comment-content"><p>${reply.text}<p></div>
+						  </details> 
+						  </a>
+						</div>
+ 
+					  </div>`;
+					} else {
+						mastodonComment = `<div class="mastodon-comment">
 					   <div class="avatar">
 						 <img src="${escapeHtml(reply.user.avatarUrl)}" width=60 alt="">
 					   </div>
@@ -163,6 +189,7 @@ async function init() {
 					   </div>
 
 					 </div>`;
+					}
 
 					output.push({
 						html: DOMPurify.sanitize(mastodonComment, {

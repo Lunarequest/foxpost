@@ -1,78 +1,119 @@
-.mastodon-comment {
-	background-color: var(--body-background);
-	border-radius: var(--card-border-radius);
-	padding: var(--card-padding);
-	margin-bottom: 1rem;
-	display: flex;
+section#comment_container {
 
-	.content {
-		flex-grow: 2;
-	}
+    .mastodon-comment {
+        background-color: var(--body-background);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        margin-bottom: 1rem;
+        display: flex;
 
-	.avatar img {
-		margin-right: 1rem;
-		min-width: 60px;
-	}
+        .content {
+            flex-grow: 2;
+        }
 
-	.author {
-		padding-top: 0;
-		display: flex;
+        .avatar img {
+            margin-right: 1rem;
+            min-width: 60px;
+        }
 
-		.date {
-			margin-left: auto;
-		}
-	}
+        .author {
+            padding-top: 0;
+            display: flex;
 
-	.disabled {
-		color: var(--accent-color)
-	}
+            .date {
+                margin-left: auto;
+            }
+        }
+
+        .disabled {
+            color: var(--accent-color)
+        }
+    }
+
+    .mastodon-comment-content p:first-child {
+        margin-top: 0;
+    }
+
+    .MastoHost {
+        background-color: lightgreen;
+        border-radius: 9999px;
+        color: var(--neutral);
+        font-size: smaller;
+        font-weight: normal;
+        padding: 0.25em 0.75em;
+
+        &:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+    }
+
+
+    .MastodonUsername {
+        background-color: lightcyan;
+        border-radius: 9999px;
+        color: var(--neutral);
+        font-size: smaller;
+        font-weight: normal;
+        padding: 0.25em 0.75em;
+
+        &:hover {
+            opacity: 0.8;
+            text-decoration: none;
+        }
+    }
+
+    .mastodon-comment-content p {
+        display: block;
+    }
+
+    .mastodon-comment-content img {
+        display: inline;
+    }
+
+
+    .comments-header {
+        justify-self: left;
+        text-align: left;
+
+        a:link {
+            color: #26f7fd;
+        }
+
+        a:visited {
+            color: #66FF00;
+        }
+    }
+
+    details {
+        summary {
+            border-radius: 0.25rem;
+            color: inherit;
+            cursor: default;
+            margin-top: 0.925rem;
+            padding: 1em;
+
+            &::after {
+                content: "▸";
+                display: inline-block;
+                margin-left: 0.5em;
+                transition: transform 250ms ease;
+            }
+        }
+
+        &[open] summary::after {
+            transform: rotate(90deg);
+        }
+    }
 }
 
-.mastodon-comment-content p:first-child {
-	margin-top: 0;
-}
+.dark section#comment_container {
 
-.MastoHost {
-	background-color:  lightgreen;
-	border-radius: 9999px;
-	color: var(--neutral);
-	font-size: smaller;
-	font-weight: normal;
-	padding: 0.25em 0.75em;
+    .MastodonUsername {
+        background-color: blue;
+    }
 
-	&:hover {
-	  opacity: 0.8;
-	  text-decoration: none;
-	}
-  }
-
-
-.dark .MastoHost {
-	background-color: green;
-}
-
-.MastodonUsername {
-	background-color:  lightcyan;
-	border-radius: 9999px;
-	color: var(--neutral);
-	font-size: smaller;
-	font-weight: normal;
-	padding: 0.25em 0.75em;
-
-	&:hover {
-	  opacity: 0.8;
-	  text-decoration: none;
-	}
-}
-
-.mastodon-comment-content p {
-    display: block;
-}
-
-.mastodon-comment-content img {
-    display: inline;
-}
-
-.dark .MastodonUsername {
-	background-color:blue;
+    .MastoHost {
+        background-color: green;
+    }
 }

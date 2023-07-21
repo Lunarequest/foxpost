@@ -68,11 +68,20 @@
 			</div>
 		</div>
 		{% if post.noteid %}
-		<div id="comments" data-noteid="{{post.noteid}}" class="comments">
-			<noscript>
-				<p>If you do not have javascript enabled you will not see these webmentions</p>
-			</noscript>
-		</div>
+		<section id="comment_container">
+			<div class="comments-header">
+				<h2>Comments</h2>
+				<p>Comment on this blog post by publicly replying to <a
+						href="https://social.nullrequest.com/notes/{{post.noteid}}">this Firefish post</a> using a
+					Mastodon, or other ActivityPub/​Fediverse account. Known non-private replies are displayed below.
+				</p>
+			</div>
+			<div id="comments" data-noteid="{{post.noteid}}" class="comments">
+				<noscript>
+					<p>If you do not have javascript enabled you will not see these webmentions</p>
+				</noscript>
+			</div>
+		</section>
 		{% endif %}
 	</div>
 </center>
