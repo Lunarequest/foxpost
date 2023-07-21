@@ -4,7 +4,7 @@ section#comment_container {
         background-color: var(--body-background);
         border-radius: var(--card-border-radius);
         padding: var(--card-padding);
-        margin-bottom: 1rem;
+        margin-bottom: 5%;
         display: flex;
 
         .content {
@@ -13,7 +13,7 @@ section#comment_container {
 
         .avatar img {
             margin-right: 1rem;
-            min-width: 60px;
+            border-radius: 45%;
         }
 
         .author {
