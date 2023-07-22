@@ -1,4 +1,4 @@
-use super::database::{NewPost, Post, Tag};
+use super::database::{now, NewPost, Post, Tag};
 
 use crate::auth::forms::Session;
 use crate::config::Config;
@@ -242,48 +242,96 @@ pub async fn update_post(
 			tag: tag.to_string(),
 		}]);
 	}
-	//over write tags in posts and update tags db
-	match db
-		.run(move |conn| {
-			diesel::update(Posts::table.find(slugval))
-				.set((
-					Posts::dsl::draft.eq(post.draft),
-					Posts::dsl::title.eq(post.title.clone()),
-					Posts::dsl::description.eq(post.description.clone()),
-					Posts::dsl::content.eq(post.content.clone()),
-					Posts::dsl::tags.eq(tags),
-					Posts::dsl::noteid.eq(post.noteid.clone()),
-				))
-				.execute(conn)
-		})
-		.await
-	{
-		Err(e) => {
-			eprintln!("{e}");
-			Err((
-				Status::InternalServerError,
-				json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
-			))
-		}
-		Ok(_) => {
-			match db
-				.run(move |conn| {
-					diesel::insert_into(Tags::table)
-						.values(&tag_insert)
-						.on_conflict_do_nothing()
-						.execute(conn)
-				})
-				.await
-			{
-				Ok(_) => Ok(json!({"status":"sucess"})),
-				Err(e) => {
-					eprintln!("{e}");
-					Err((
-						Status::InternalServerError,
-						json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+	if posts.draft {
+		match db
+			.run(move |conn| {
+				diesel::update(Posts::table.find(slugval))
+					.set((
+						Posts::dsl::draft.eq(post.draft),
+						Posts::dsl::title.eq(post.title.clone()),
+						Posts::dsl::description.eq(post.description.clone()),
+						Posts::dsl::content.eq(post.content.clone()),
+						Posts::dsl::tags.eq(tags),
+						Posts::dsl::noteid.eq(post.noteid.clone()),
+						Posts::dsl::published.eq(now()),
 					))
+					.execute(conn)
+			})
+			.await
+		{
+			Err(e) => {
+				eprintln!("{e}");
+				Err((
+					Status::InternalServerError,
+					json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+				))
+			}
+			Ok(_) => {
+				match db
+					.run(move |conn| {
+						diesel::insert_into(Tags::table)
+							.values(&tag_insert)
+							.on_conflict_do_nothing()
+							.execute(conn)
+					})
+					.await
+				{
+					Ok(_) => Ok(json!({"status":"sucess"})),
+					Err(e) => {
+						eprintln!("{e}");
+						Err((
+							Status::InternalServerError,
+							json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+						))
+					}
+				}
+			}
+		}
+	} else {
+		match db
+			.run(move |conn| {
+				diesel::update(Posts::table.find(slugval))
+					.set((
+						Posts::dsl::draft.eq(post.draft),
+						Posts::dsl::title.eq(post.title.clone()),
+						Posts::dsl::description.eq(post.description.clone()),
+						Posts::dsl::content.eq(post.content.clone()),
+						Posts::dsl::tags.eq(tags),
+						Posts::dsl::noteid.eq(post.noteid.clone()),
+					))
+					.execute(conn)
+			})
+			.await
+		{
+			Err(e) => {
+				eprintln!("{e}");
+				Err((
+					Status::InternalServerError,
+					json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+				))
+			}
+			Ok(_) => {
+				match db
+					.run(move |conn| {
+						diesel::insert_into(Tags::table)
+							.values(&tag_insert)
+							.on_conflict_do_nothing()
+							.execute(conn)
+					})
+					.await
+				{
+					Ok(_) => Ok(json!({"status":"sucess"})),
+					Err(e) => {
+						eprintln!("{e}");
+						Err((
+							Status::InternalServerError,
+							json!({"status":"error","Errors":"a error occrued while trying to insert into the database"}),
+						))
+					}
 				}
 			}
 		}
 	}
+
+	//over write tags in posts and update tags db
 }
