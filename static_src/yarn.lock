@@ -438,6 +438,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/figlet@npm:^1":
+  version: 1.5.6
+  resolution: "@types/figlet@npm:1.5.6"
+  checksum: 7f39978ba4ece2c3eacf4034348d1738060da542dde62f1b6ef53bb216a12bdad62be1a45f635e33e5a01626543b9c3f2271cebd256465219f24b176afaf37ee
+  languageName: node
+  linkType: hard
+
 "@types/flexsearch@npm:^0.7.3":
   version: 0.7.3
   resolution: "@types/flexsearch@npm:0.7.3"
@@ -569,10 +576,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.4.2":
-  version: 20.4.2
-  resolution: "@types/node@npm:20.4.2"
-  checksum: d013c11ea228921ae319f7db5f2f65e9d3f58537919bca9e6409f6b380d1ef05625389e7d0dd0e8c4bbb90560a12b9ae6fab98b4722e19611b3de9052a0e2f94
+"@types/node@npm:^20.4.4":
+  version: 20.4.4
+  resolution: "@types/node@npm:20.4.4"
+  checksum: 2efae59d93520e98d3d346160ae1d86ac57804e461250db60edd1253e06dbd2120e07659e535d536e70c7503b58828a84a03641fdde635c0d40d66a53ff0c8b8
   languageName: node
   linkType: hard
 
@@ -1189,6 +1196,13 @@ __metadata:
   version: 1.0.30001482
   resolution: "caniuse-lite@npm:1.0.30001482"
   checksum: a0562c1f83e00a3c0aef2db58e76dbe6fcaee2086ed91ad45e57bb8f3af13a853c171e0609feeeb44554d03713a11c0cb31697a8cb047a9926b5eea3fb46e92f
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "chalk@npm:5.3.0"
+  checksum: 6373caaab21bd64c405bfc4bd9672b145647fc9482657b5ea1d549b3b2765054e9d3d928870cdf764fb4aad67555f5061538ff247b8310f110c5c888d92397ea
   languageName: node
   linkType: hard
 
@@ -2589,6 +2603,15 @@ __metadata:
   dependencies:
     reusify: "npm:^1.0.4"
   checksum: 67c01b1c972e2d5b6fea197a1a39d5d582982aea69ff4c504badac71080d8396d4843b165a9686e907c233048f15a86bbccb0e7f83ba771f6fa24bcde059d0c3
+  languageName: node
+  linkType: hard
+
+"figlet@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "figlet@npm:1.6.0"
+  bin:
+    figlet: bin/index.js
+  checksum: ffc17bb3eedc9d39e5d1eee31378cd3bdd25a86a345db261328ed20b59530162a9e7f448ba6a166d67098d12cc68933395153147ec139b4e305a87f99f707eba
   languageName: node
   linkType: hard
 
@@ -5341,14 +5364,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.26":
-  version: 8.4.26
-  resolution: "postcss@npm:8.4.26"
+"postcss@npm:^8.4.27":
+  version: 8.4.27
+  resolution: "postcss@npm:8.4.27"
   dependencies:
     nanoid: "npm:^3.3.6"
     picocolors: "npm:^1.0.0"
     source-map-js: "npm:^1.0.2"
-  checksum: d220ac966369b32a0b58a3816fdb3c0040c1ae9740681f50415d0df6e589044b3e753e9f24d8d6d1433788e4c4fa0a4fd8922ec232e129c22a5aca28d653079b
+  checksum: 57143e3c5ddaba9813ebd81de3e38e3ac198b0a1634e57752d29cd4936f1301eba38e43bda1302859679af047a6efc4366952d294c64358f8b90fbf49ba7d121
   languageName: node
   linkType: hard
 
@@ -5795,16 +5818,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.64.0":
-  version: 1.64.0
-  resolution: "sass@npm:1.64.0"
+"sass@npm:^1.64.1":
+  version: 1.64.1
+  resolution: "sass@npm:1.64.1"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 04d415f55705aae35d75f1fe0c6b7e2b768bf77b6d8aee36297c9a8b0d00e553402eed053cf2751687fad979828206b2eb349ec5dddc483790f4266c036d83c9
+  checksum: 77da9edc7b6db33a8ff408ffa6ff02884465eae64ef6b2ba5caf29325ea6bdc88eb213ff0762bec79487c8b081d532199430f9db5808c0dee6814e0a4189d375
   languageName: node
   linkType: hard
 
@@ -6211,18 +6234,21 @@ __metadata:
   dependencies:
     "@tailwindcss/forms": "npm:^0.5.4"
     "@types/dompurify": "npm:^3.0.2"
+    "@types/figlet": "npm:^1"
     "@types/flexsearch": "npm:^0.7.3"
     "@types/gulp": "npm:^4.0.13"
     "@types/gulp-postcss": "npm:^8.0.3"
     "@types/gulp-sass": "npm:^5.0.1"
     "@types/mark.js": "npm:^8.11.8"
-    "@types/node": "npm:^20.4.2"
+    "@types/node": "npm:^20.4.4"
     autoprefixer: "npm:^10.4.14"
+    chalk: "npm:^5.3.0"
     cssnano: "npm:^6.0.1"
     cssnano-preset-advanced: "npm:^6.0.1"
     dompurify: "npm:^3.0.5"
     easymde: "npm:^2.18.0"
     esbuild-plugin-wasm: "npm:^1.1.0"
+    figlet: "npm:^1.6.0"
     flexsearch: "npm:^0.7.31"
     gulp: "npm:^4.0.2"
     gulp-concat: "npm:^2.6.1"
@@ -6232,9 +6258,9 @@ __metadata:
     highlight.js: "npm:^11.8.0"
     mark.js: "npm:^8.11.1"
     mermaid: "npm:^10.2.4"
-    postcss: "npm:^8.4.26"
+    postcss: "npm:^8.4.27"
     rome: "npm:^12.1.3"
-    sass: "npm:^1.64.0"
+    sass: "npm:^1.64.1"
     tailwindcss: "npm:^3.3.3"
     ts-node: "npm:^10.9.1"
     typescript: "npm:^5.1.6"
