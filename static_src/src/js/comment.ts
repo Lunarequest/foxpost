@@ -1,8 +1,9 @@
 import DOMPurify from "dompurify";
 
 const HOST = "https://social.nullrequest.com/";
-const re =
-	/@[A-Za-z0-9_.]+@(((?!-))(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]{1,1}\.)*(xn--)?([a-z0-9][a-z0-9\-]{0,60}|[a-z0-9-]{1,30}\.[a-z]{2,})/g;
+const re = new RegExp(
+	"@[A-Za-z0-9_.]+@(((?!-))(xn--|_)?[a-z0-9-]{0,61}[a-z0-9]{1,1}.)*(xn--)?([a-z0-9][a-z0-9-]{0,60}|[a-z0-9-]{1,30}.[a-z]{2,})",
+);
 
 type Emoji = {
 	id: string;
@@ -52,6 +53,60 @@ function replace_emoji(input: string, emojis: Emoji[]): string {
 	return output;
 }
 
+function assemble_comment(reply: Reply, host: string): string {
+	let mastodonComment;
+	if (reply.cw) {
+		mastodonComment = `<div class="mastodon-comment">
+		<div class="avatar">
+		  <img src="${escapeHtml(reply.user.avatarUrl)}" width=60 alt="">
+		</div>
+		<div class="content">
+		  <div class="author">
+			<a href="${HOST}/@${reply.user.username}" rel="nofollow">
+			  <span>@${reply.user.username}</span>
+			  <span class="MastoHost">${host}</span>
+			</a>
+			<a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
+			  ${reply.createdAt.substring(0, 10)}
+			 </a>
+		  </div>
+		  <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
+		  <details>
+			  <summary>
+				Content Warning: ${reply.cw}
+			</summary>
+			<div class="mastodon-comment-content"><p>${reply.text}<p></div>
+		  </details> 
+		  </a>
+		</div>
+
+	  </div>`;
+	} else {
+		mastodonComment = `<div class="mastodon-comment">
+	   <div class="avatar">
+		 <img src="${escapeHtml(reply.user.avatarUrl)}" width=60 alt="">
+	   </div>
+	   <div class="content">
+		 <div class="author">
+		   <a href="https://${host}/@${reply.user.username}" rel="nofollow">
+			 <span>@${reply.user.username}</span>
+			 <span class="MastoHost">${host}</span>
+		   </a>
+		   <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
+			 ${reply.createdAt.substr(0, 10)}
+			</a>
+		 </div>
+		 <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
+		 <div class="mastodon-comment-content"><p>${reply.text}<p></div> 
+		 </a>
+	   </div>
+
+	 </div>`;
+	}
+
+	return mastodonComment;
+}
+
 async function init() {
 	const comments = document.getElementById("comments");
 	console.log("loading comments");
@@ -61,11 +116,6 @@ async function init() {
 			html: DocumentFragment;
 			date: string;
 		}[] = [];
-		const payload = {
-			noteId: id,
-			limit: 100,
-			depth: 100,
-		};
 
 		const parent_resp = await fetch(
 			"https://social.nullrequest.com/api/notes/show",
@@ -75,64 +125,19 @@ async function init() {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(payload),
+				body: JSON.stringify({
+					noteId: id,
+					limit: 100,
+					depth: 100,
+				}),
 			},
 		);
 
 		const parent_reply: Reply = await parent_resp.json();
 		const host = HOST.replace("https://", "").replace("/", "");
-		let mastodonComment;
-		if (parent_reply.cw) {
-			mastodonComment = `<div class="mastodon-comment">
-			<div class="avatar">
-			  <img src="${escapeHtml(parent_reply.user.avatarUrl)}" width=60 alt="">
-			</div>
-			<div class="content">
-			  <div class="author">
-				<a href="${HOST}/@${parent_reply.user.username}" rel="nofollow">
-				  <span>@${parent_reply.user.username}</span>
-				  <span class="MastoHost">${host}</span>
-				</a>
-				<a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
-				  ${parent_reply.createdAt.substr(0, 10)}
-				 </a>
-			  </div>
-			  <a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
-			  <details>
-				  <summary>
-					Content Warning: ${parent_reply.cw}
-				</summary>
-				<div class="mastodon-comment-content"><p>${parent_reply.text}<p></div>
-			  </details> 
-			  </a>
-			</div>
-
-		  </div>`;
-		} else {
-			mastodonComment = `<div class="mastodon-comment">
-		   <div class="avatar">
-			 <img src="${escapeHtml(parent_reply.user.avatarUrl)}" width=60 alt="">
-		   </div>
-		   <div class="content">
-			 <div class="author">
-			   <a href="https://${host}/@${parent_reply.user.username}" rel="nofollow">
-				 <span>@${parent_reply.user.username}</span>
-				 <span class="MastoHost">${host}</span>
-			   </a>
-			   <a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
-				 ${parent_reply.createdAt.substr(0, 10)}
-				</a>
-			 </div>
-			 <a class="date" href="${HOST}/notes/${parent_reply.id}" rel="nofollow">
-			 <div class="mastodon-comment-content"><p>${parent_reply.text}<p></div> 
-			 </a>
-		   </div>
-
-		 </div>`;
-		}
 
 		output.push({
-			html: DOMPurify.sanitize(mastodonComment, {
+			html: DOMPurify.sanitize(assemble_comment(parent_reply, host), {
 				RETURN_DOM_FRAGMENT: true,
 			}),
 			date: parent_reply.createdAt,
@@ -145,7 +150,7 @@ async function init() {
 					Accept: "application/json",
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(payload),
+				body: JSON.stringify(JSON.stringify({ noteId: id })),
 			},
 		);
 
@@ -187,83 +192,32 @@ async function init() {
 						);
 					}
 
-					const payload = {
-						query: reply.user.username,
-						offset: 0,
-						limit: 1,
-						origin: "combined",
-						detail: false,
-					};
-
 					const userdetails = await fetch(`${HOST}api/users/search`, {
 						method: "POST",
 						headers: {
 							Accept: "application/json",
 							"Content-Type": "application/json",
 						},
-						body: JSON.stringify(payload),
+						body: JSON.stringify({
+							query: reply.user.username,
+							offset: 0,
+							limit: 1,
+							origin: "combined",
+							detail: false,
+						}),
 					});
 					const json: UserDetails[] = await userdetails.json();
 					const user = json[0];
 					let host;
-					let mastodonComment: string;
 
 					if (user.host) {
 						host = user.host;
 					} else {
 						host = HOST.replace("https://", "").replace("/", "");
 					}
-					if (reply.cw) {
-						mastodonComment = `<div class="mastodon-comment">
-						<div class="avatar">
-						  <img src="${escapeHtml(reply.user.avatarUrl)}" width=60 alt="">
-						</div>
-						<div class="content">
-						  <div class="author">
-							<a href="https://${host}/@${reply.user.username}" rel="nofollow">
-							  <span>@${reply.user.username}</span>
-							  <span class="MastoHost">${host}</span>
-							</a>
-							<a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
-							  ${reply.createdAt.substr(0, 10)}
-							 </a>
-						  </div>
-						  <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
-						  <details>
-						  	<summary>
-								Content Warning: ${reply.cw}
-							</summary>
-							<div class="mastodon-comment-content"><p>${reply.text}<p></div>
-						  </details> 
-						  </a>
-						</div>
- 
-					  </div>`;
-					} else {
-						mastodonComment = `<div class="mastodon-comment">
-					   <div class="avatar">
-						 <img src="${escapeHtml(reply.user.avatarUrl)}" width=60 alt="">
-					   </div>
-					   <div class="content">
-						 <div class="author">
-						   <a href="https://${host}/@${reply.user.username}" rel="nofollow">
-							 <span>@${reply.user.username}</span>
-							 <span class="MastoHost">${host}</span>
-						   </a>
-						   <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
-							 ${reply.createdAt.substr(0, 10)}
-							</a>
-						 </div>
-						 <a class="date" href="${HOST}/notes/${reply.id}" rel="nofollow">
-						 <div class="mastodon-comment-content"><p>${reply.text}<p></div> 
-						 </a>
-					   </div>
-
-					 </div>`;
-					}
 
 					output.push({
-						html: DOMPurify.sanitize(mastodonComment, {
+						html: DOMPurify.sanitize(assemble_comment(reply, host), {
 							RETURN_DOM_FRAGMENT: true,
 						}),
 						date: reply.createdAt,

@@ -115,6 +115,6 @@ function renderResults(
 	}
 }
 
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", () => {
 	init();
-};
+});

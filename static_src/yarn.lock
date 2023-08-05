@@ -406,6 +406,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/d3-scale-chromatic@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@types/d3-scale-chromatic@npm:3.0.0"
+  checksum: c92ec398e1f6aa1b43fe4db06017367ba588d0a2372a1c0476078142f7a03fccf5aef7c336ed61dd30a4169c694797663029af2e1c21c7b563f63afe2a6ab678
+  languageName: node
+  linkType: hard
+
+"@types/d3-scale@npm:^4.0.3":
+  version: 4.0.3
+  resolution: "@types/d3-scale@npm:4.0.3"
+  dependencies:
+    "@types/d3-time": "npm:*"
+  checksum: 294e2fc71cab2d3b800c8fc1a5e1aa2cd7e6215b72d22b16240411330c6907f5e092e7924e0df5726bec89192f467b26448cded41ecdd68536bbbc54e93e53a8
+  languageName: node
+  linkType: hard
+
+"@types/d3-time@npm:*":
+  version: 3.0.0
+  resolution: "@types/d3-time@npm:3.0.0"
+  checksum: 7ef819c98eb0254dc5df901c94ec7f435f9becdedff048c89f905403b934a4d8dee7730659549d60e5ce18e0e9010009b1ab1522aadc724751edaecafc54ba53
+  languageName: node
+  linkType: hard
+
 "@types/debug@npm:^4.0.0":
   version: 4.1.8
   resolution: "@types/debug@npm:4.1.8"
@@ -438,7 +461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/figlet@npm:^1":
+"@types/figlet@npm:^1.5.6":
   version: 1.5.6
   resolution: "@types/figlet@npm:1.5.6"
   checksum: 7f39978ba4ece2c3eacf4034348d1738060da542dde62f1b6ef53bb216a12bdad62be1a45f635e33e5a01626543b9c3f2271cebd256465219f24b176afaf37ee
@@ -576,10 +599,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.4.4":
-  version: 20.4.4
-  resolution: "@types/node@npm:20.4.4"
-  checksum: 2efae59d93520e98d3d346160ae1d86ac57804e461250db60edd1253e06dbd2120e07659e535d536e70c7503b58828a84a03641fdde635c0d40d66a53ff0c8b8
+"@types/node@npm:^20.4.6":
+  version: 20.4.6
+  resolution: "@types/node@npm:20.4.6"
+  checksum: fd8423181df18a8b62ef3760bf2fbaae28e078dba5d8c39976875bb19dc16a3dd8d68531d8431429ec8a39bb57701af73ea260a71eeaabc7602ee837b6f1a8cd
   languageName: node
   linkType: hard
 
@@ -1671,6 +1694,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-array@npm:1 - 2":
+  version: 2.12.1
+  resolution: "d3-array@npm:2.12.1"
+  dependencies:
+    internmap: "npm:^1.0.0"
+  checksum: 9fdfb91f428915006e126090fe9aa9d5fcbecc78e925eceb32de9dfb989135f6ad940a8f1b086d0b569523679f85453c5335772aa9e6d5d41b480c2610857c7f
+  languageName: node
+  linkType: hard
+
 "d3-array@npm:2 - 3, d3-array@npm:2.10.0 - 3, d3-array@npm:2.5.0 - 3, d3-array@npm:3, d3-array@npm:^3.2.0":
   version: 3.2.3
   resolution: "d3-array@npm:3.2.3"
@@ -1831,6 +1863,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"d3-path@npm:1":
+  version: 1.0.9
+  resolution: "d3-path@npm:1.0.9"
+  checksum: 6ce1747837ea2a449d9ea32e169a382978ab09a4805eb408feb6bbc12cb5f5f6ce29aefc252dd9a815d420f4813d672f75578b78b3bbaf7811f54d8c7f93fd11
+  languageName: node
+  linkType: hard
+
 "d3-path@npm:1 - 3, d3-path@npm:3, d3-path@npm:^3.1.0":
   version: 3.1.0
   resolution: "d3-path@npm:3.1.0"
@@ -1856,6 +1895,16 @@ __metadata:
   version: 3.0.1
   resolution: "d3-random@npm:3.0.1"
   checksum: 9f41d6ca3a1826cea8d88392917b5039504337d442a4d1357c870fa3031701e60209a2689a6ddae7df8fca824383d038c957eb545bc49a7428c71aaf3b11f56f
+  languageName: node
+  linkType: hard
+
+"d3-sankey@npm:^0.12.3":
+  version: 0.12.3
+  resolution: "d3-sankey@npm:0.12.3"
+  dependencies:
+    d3-array: "npm:1 - 2"
+    d3-shape: "npm:^1.2.0"
+  checksum: d5c679135a26d435e9970de3fc0778c6ef5c911f0c878b246939517b57a8daa2e2db6ef99318a0dad16e6079e4b89ef9166f1f661d8d247637875b764628094d
   languageName: node
   linkType: hard
 
@@ -1895,6 +1944,15 @@ __metadata:
   dependencies:
     d3-path: "npm:^3.1.0"
   checksum: 2e861f4d4781ee8abd85d2b435f848d667479dcf01a4e0db3a06600a5bdeddedb240f88229ec7b3bf7fa300c2b3526faeaf7e75f9a24dbf4396d3cc5358ff39d
+  languageName: node
+  linkType: hard
+
+"d3-shape@npm:^1.2.0":
+  version: 1.3.7
+  resolution: "d3-shape@npm:1.3.7"
+  dependencies:
+    d3-path: "npm:1"
+  checksum: 1e40fdcfdc8edc9c53a77a6aaea2dbf31bf06df12ebd66cc8d91f76bbde753049ad21dfee0577f7dc5d0a4468554ede4783f6df7d809e291745334dba977c09e
   languageName: node
   linkType: hard
 
@@ -2206,14 +2264,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:3.0.3":
-  version: 3.0.3
-  resolution: "dompurify@npm:3.0.3"
-  checksum: 2b42ffa4b345e6cca47ce7943ef99f5922d85863dfd1c8b1a274a0c7d64e7eb83e5a0be8aaa3b468d81a1af112c439b7e3d24d2c582945f47aace1c5b7eb7b25
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:^3.0.5":
+"dompurify@npm:3.0.5, dompurify@npm:^3.0.5":
   version: 3.0.5
   resolution: "dompurify@npm:3.0.5"
   checksum: 24ed3a26486806ec77dd4e3ab248d9c617e851237e3989609d5188312bbb5461028ea08a851f688cde8773cf45eacfeb0bff66c166ef9699fc3ed6a60a565169
@@ -3323,6 +3374,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"internmap@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "internmap@npm:1.0.1"
+  checksum: 429cb9e28f393f10c73a826d71ba9e359711b7e42345bd684aba708f43b8139ce90f09b15abbf977a981474ac61615294854e5b9520d3f65187d0f6a2ff27665
+  languageName: node
+  linkType: hard
+
 "interpret@npm:^1.4.0":
   version: 1.4.0
   resolution: "interpret@npm:1.4.0"
@@ -3989,18 +4047,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mermaid@npm:^10.2.4":
-  version: 10.2.4
-  resolution: "mermaid@npm:10.2.4"
+"mermaid@npm:^10.3.0":
+  version: 10.3.0
+  resolution: "mermaid@npm:10.3.0"
   dependencies:
     "@braintree/sanitize-url": "npm:^6.0.2"
+    "@types/d3-scale": "npm:^4.0.3"
+    "@types/d3-scale-chromatic": "npm:^3.0.0"
     cytoscape: "npm:^3.23.0"
     cytoscape-cose-bilkent: "npm:^4.1.0"
     cytoscape-fcose: "npm:^2.1.0"
     d3: "npm:^7.4.0"
+    d3-sankey: "npm:^0.12.3"
     dagre-d3-es: "npm:7.0.10"
     dayjs: "npm:^1.11.7"
-    dompurify: "npm:3.0.3"
+    dompurify: "npm:3.0.5"
     elkjs: "npm:^0.8.2"
     khroma: "npm:^2.0.0"
     lodash-es: "npm:^4.17.21"
@@ -4010,7 +4071,7 @@ __metadata:
     ts-dedent: "npm:^2.2.0"
     uuid: "npm:^9.0.0"
     web-worker: "npm:^1.2.0"
-  checksum: 00c9d0706148fa12f3dbff1ad38f515a7eadd7072d373a0534934114e46322b1dcba420d7e1689e9ce724109dc9b8260a384b54bc63ea199cc487898b5d42445
+  checksum: a58a3eb6441180dc04d4881035cfcc3dca4775dfd4a97c462e6ad2f664c42c8b996830b248626486b08c9eb01f1d92528345d5f48a7c7399ddb40531c15a0c58
   languageName: node
   linkType: hard
 
@@ -5818,16 +5879,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.64.1":
-  version: 1.64.1
-  resolution: "sass@npm:1.64.1"
+"sass@npm:^1.64.2":
+  version: 1.64.2
+  resolution: "sass@npm:1.64.2"
   dependencies:
     chokidar: "npm:>=3.0.0 <4.0.0"
     immutable: "npm:^4.0.0"
     source-map-js: "npm:>=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 77da9edc7b6db33a8ff408ffa6ff02884465eae64ef6b2ba5caf29325ea6bdc88eb213ff0762bec79487c8b081d532199430f9db5808c0dee6814e0a4189d375
+  checksum: 2c32f833501aac2e34727f80193c386ada310d51d7b8fec47ab0c1bcb5b96839c793bf7e26ff92f98fd28ad1316ba480e77cfd3d8f10ef37e52ea79450176ab1
   languageName: node
   linkType: hard
 
@@ -6234,13 +6295,13 @@ __metadata:
   dependencies:
     "@tailwindcss/forms": "npm:^0.5.4"
     "@types/dompurify": "npm:^3.0.2"
-    "@types/figlet": "npm:^1"
+    "@types/figlet": "npm:^1.5.6"
     "@types/flexsearch": "npm:^0.7.3"
     "@types/gulp": "npm:^4.0.13"
     "@types/gulp-postcss": "npm:^8.0.3"
     "@types/gulp-sass": "npm:^5.0.1"
     "@types/mark.js": "npm:^8.11.8"
-    "@types/node": "npm:^20.4.4"
+    "@types/node": "npm:^20.4.6"
     autoprefixer: "npm:^10.4.14"
     chalk: "npm:^5.3.0"
     cssnano: "npm:^6.0.1"
@@ -6257,10 +6318,10 @@ __metadata:
     gulp-sass: "npm:^5.1.0"
     highlight.js: "npm:^11.8.0"
     mark.js: "npm:^8.11.1"
-    mermaid: "npm:^10.2.4"
+    mermaid: "npm:^10.3.0"
     postcss: "npm:^8.4.27"
     rome: "npm:^12.1.3"
-    sass: "npm:^1.64.1"
+    sass: "npm:^1.64.2"
     tailwindcss: "npm:^3.3.3"
     ts-node: "npm:^10.9.1"
     typescript: "npm:^5.1.6"

@@ -1,16 +1,14 @@
 import EasyMDE from "easymde";
 
-declare global {
-	type PostForm = {
-		slug: string;
-		title: string;
-		description: string | null;
-		content: string | null;
-		tags: string;
-		draft: boolean | string | null;
-		noteid: string | null;
-	};
-}
+type PostForm = {
+	slug: string;
+	title: string;
+	description: string | null;
+	content: string | null;
+	tags: string;
+	draft: boolean | string | null;
+	noteid: string | null;
+};
 
 async function getData(url: string): Promise<string> {
 	return await new Promise<string>((resolve, _reject) => {
@@ -97,6 +95,7 @@ if (editorelem) {
 					} else {
 						alert("post has been successfully updated");
 					}
+					btn_submit.disabled = false;
 				});
 		} else {
 			fetch("/api/posts/new", {
@@ -119,6 +118,7 @@ if (editorelem) {
 					} else {
 						alert(resp.Errors);
 					}
+					btn_submit.disabled = false;
 				});
 		}
 	}

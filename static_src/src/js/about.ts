@@ -1,6 +1,6 @@
-function bday() {
+document.addEventListener("DOMContentLoaded", () => {
+	console.log("bday script loaded");
 	const bday_element = document.getElementById("age");
-	console.log(bday_element);
 	const EPOCH = new Date(0);
 	const EPOCH_YEAR = EPOCH.getFullYear();
 
@@ -12,9 +12,4 @@ function bday() {
 
 		bday_element.innerHTML = age.toString();
 	}
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-	console.log("bday script loaded");
-	bday();
 });

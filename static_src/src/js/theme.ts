@@ -34,10 +34,6 @@ function ShareOnMastodon(): void {
 	}
 }
 
-MastodonShareButton?.addEventListener("click", () => {
-	ShareOnMastodon();
-});
-
 function setTheme(mode: string): void {
 	if (mode === "dark") {
 		document.documentElement.classList.add("dark");
@@ -63,53 +59,58 @@ function setTheme(mode: string): void {
 	localStorage.setItem("theme", mode);
 }
 
-if (button != null) {
-	button.addEventListener("click", () => {
-		if (menu != null) {
-			menu.classList.toggle("hidden");
-		}
+document.addEventListener("DOMContentLoaded", () => {
+	MastodonShareButton?.addEventListener("click", () => {
+		ShareOnMastodon();
 	});
-}
-
-if (toggle != null) {
-	if (
-		localStorage.theme === "light" ||
-		(!("theme" in localStorage) &&
-			window.matchMedia("(prefers-color-scheme: light)").matches)
-	) {
-		document.documentElement.classList.remove("dark");
-		toggle.innerHTML =
-			'<i id="darkmode_icon" class="fa-solid fa-moon" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
-		if (ThemeRailcasts != null && ThemeTomorrow != null) {
-			console.log("theme switch");
-			ThemeTomorrow.removeAttribute("disabled");
-			ThemeRailcasts.setAttribute("disabled", "disabled");
-		}
-	} else {
-		document.documentElement.classList.add("dark");
-		toggle.innerHTML =
-			'<i id="darkmode_icon" class="fa-solid fa-sun" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
-		if (ThemeRailcasts != null && ThemeTomorrow != null) {
-			ThemeRailcasts.removeAttribute("disabled");
-			ThemeTomorrow.setAttribute("disabled", "disabled");
-		}
+	if (button != null) {
+		button.addEventListener("click", () => {
+			if (menu != null) {
+				menu.classList.toggle("hidden");
+			}
+		});
 	}
 
-	toggle.addEventListener("click", () => {
-		console.log("click");
-		const icon = document.getElementById("darkmode_icon");
-		if (icon != null) {
-			if (
-				icon.classList.contains("fa-moon") ||
-				localStorage.getItem("theme") === "light"
-			) {
-				setTheme("dark");
-			} else if (
-				icon.classList.contains("fa-sun") ||
-				localStorage.getItem("theme") === "dark"
-			) {
-				setTheme("light");
+	if (toggle != null) {
+		if (
+			localStorage.theme === "light" ||
+			(!("theme" in localStorage) &&
+				window.matchMedia("(prefers-color-scheme: light)").matches)
+		) {
+			document.documentElement.classList.remove("dark");
+			toggle.innerHTML =
+				'<i id="darkmode_icon" class="fa-solid fa-moon" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
+			if (ThemeRailcasts != null && ThemeTomorrow != null) {
+				console.log("theme switch");
+				ThemeTomorrow.removeAttribute("disabled");
+				ThemeRailcasts.setAttribute("disabled", "disabled");
+			}
+		} else {
+			document.documentElement.classList.add("dark");
+			toggle.innerHTML =
+				'<i id="darkmode_icon" class="fa-solid fa-sun" aria-label="Switch between dark and light mode" aria-hidden="true"></i>';
+			if (ThemeRailcasts != null && ThemeTomorrow != null) {
+				ThemeRailcasts.removeAttribute("disabled");
+				ThemeTomorrow.setAttribute("disabled", "disabled");
 			}
 		}
-	});
-}
+
+		toggle.addEventListener("click", () => {
+			console.log("click");
+			const icon = document.getElementById("darkmode_icon");
+			if (icon != null) {
+				if (
+					icon.classList.contains("fa-moon") ||
+					localStorage.getItem("theme") === "light"
+				) {
+					setTheme("dark");
+				} else if (
+					icon.classList.contains("fa-sun") ||
+					localStorage.getItem("theme") === "dark"
+				) {
+					setTheme("light");
+				}
+			}
+		});
+	}
+});
